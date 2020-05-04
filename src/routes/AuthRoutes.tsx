@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { AuthLayout } from "../layouts/AuthLayout";
-import { LOGIN, REGISTRATION } from "../constants/url";
+import { LOGIN, REGISTRATION } from "../constants/route.urls";
 import { LoginPage } from "../pages/LoginPage";
 import { RegistrationPage } from "../pages/RegistrationPage";
 

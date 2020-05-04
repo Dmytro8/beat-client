@@ -13,10 +13,8 @@ const validPasswordRegex = new RegExp(
 const validUsernameRegex = /^[a-zA-Z]{2,}$/;
 
 export const LoginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .required("email is a required field")
-    .matches(validEmailRegex, "enter a valid email"),
+  email: yup.string().required("email or username is a required field"),
+  //   .matches(validEmailRegex, "enter a valid email"),
   password: yup
     .string()
     .required("password is a required field")

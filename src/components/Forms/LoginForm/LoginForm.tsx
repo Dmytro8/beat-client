@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -8,20 +8,20 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Grid from "@material-ui/core/Grid";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
-import { grey, pink } from "@material-ui/core/colors";
-import { TextField } from "@material-ui/core";
 import { Button } from "@material-ui/core";
-
-// import {
-//   StyledTextField,
-//   AccentButton,
-//   FormError,
-// } from "../../common/FormControls";
-
 import { LoginSchema } from "../FormValidation";
 import classes from "./LoginForm.module.scss";
 import { authAPI } from "../../../api/authApi";
+import { StyledTextField, Spinner } from "../../common/FormControls";
+import { AuthContext } from "../../../contexts/AuthContext/authContext";
+import {
+  updateAuthentication,
+  updateToken,
+  updateAuthorizing,
+} from "../../../contexts/AuthContext/actions";
+
 const LoginForm = () => {
+  const [state, dispatch] = useContext(AuthContext);
   const { handleSubmit, control, errors } = useForm({
     validationSchema: LoginSchema,
   });
@@ -41,12 +41,10 @@ const LoginForm = () => {
   const onSubmit = async (data: any) => {
     const { email, password } = data;
     try {
-      const response = await authAPI.auth(email, password);
-      console.log(JSON.stringify(response));
-      if (response.status == 200) {
-        await authAPI.login();
-      }
-      // console.log(email, password);
+      dispatch(updateAuthorizing(true));
+      const response = await authAPI.login(email, password);
+      await dispatch(updateAuthentication(!!response.data.accessToken));
+      await dispatch(updateToken(response.data.accessToken));
     } catch (e) {
       // console.log(e.message);
     }
@@ -76,7 +74,7 @@ const LoginForm = () => {
             <>
               <Controller
                 error
-                as={TextField}
+                as={StyledTextField}
                 style={{ width: "100%" }}
                 name="email"
                 label="Email"
@@ -87,7 +85,7 @@ const LoginForm = () => {
             </>
           ) : (
             <Controller
-              as={TextField}
+              as={StyledTextField}
               style={{ width: "100%" }}
               name="email"
               label="Email"
@@ -120,7 +118,7 @@ const LoginForm = () => {
             <Controller
               error
               label="Password"
-              as={TextField}
+              as={StyledTextField}
               style={{ width: "100%" }}
               name="password"
               type={values.showPassword ? "text" : "password"}
@@ -143,7 +141,7 @@ const LoginForm = () => {
             />
           ) : (
             <Controller
-              as={TextField}
+              as={StyledTextField}
               style={{ width: "100%" }}
               name="password"
               type={values.showPassword ? "text" : "password"}
@@ -173,7 +171,7 @@ const LoginForm = () => {
         // disabled={loading}
         style={{ marginTop: "20px", backgroundColor: "#f26a6a", color: "#fff" }}
       >
-        Login
+        {state.isAuthorizing ? <Spinner /> : "Login"}
       </Button>
     </form>
   );
