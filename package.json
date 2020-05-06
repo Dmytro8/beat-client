@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -7,6 +8,12 @@
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
+=======
+  "name": "beat-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+>>>>>>> 0b9ccaf9198a3634340cc8c0fc0a9ef1953c498e
     "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",

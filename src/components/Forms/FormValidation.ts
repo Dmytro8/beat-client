@@ -10,6 +10,7 @@ const validEmailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const validPasswordRegex = new RegExp(
   `${AtLeastOneLowercaseAlphabetical}${AtLeastOneUppercaseAlphabetical}${AtLeastOneNumeric}`
 );
+<<<<<<< HEAD
 const validUsernameRegex = /^[a-z0-9]+([._]?[a-z0-9]+)*$/;
 
 export const LoginSchema = yup.object().shape({
@@ -44,6 +45,11 @@ export const SignupSchema = yup.object().shape({
   //     validUsernameRegex,
   //     "surname must match only alphabetical character"
   //   ),
+=======
+const validUsernameRegex = /^[a-zA-Z]{2,}$/;
+
+export const LoginSchema = yup.object().shape({
+>>>>>>> 0b9ccaf9198a3634340cc8c0fc0a9ef1953c498e
   email: yup
     .string()
     .required("email is a required field")
