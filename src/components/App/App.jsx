@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment, useContext } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthRoutes } from "../../routes/AuthRoutes";
+import { ProfileRoutes } from "../../routes/ProfileRoutes";
 import { AuthContext } from "../../contexts/AuthContext/authContext";
 import { ACCESS_TOKEN } from "../../constants";
 import { authAPI } from "../../api/authApi";
@@ -9,25 +10,30 @@ import {
   updateToken,
   updateAuthorizing,
 } from "../../contexts/AuthContext/actions";
-import { ProfileProvider } from "../../contexts/ProfileContext/profileContext";
+import {
+  ProfileProvider,
+  ProfileContext,
+} from "../../contexts/ProfileContext/profileContext";
 import { AppSpinner } from "../common/FormControls";
+import { setProfile } from "../../contexts/ProfileContext/actions";
 
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [state, dispatch] = useContext(AuthContext);
+  const [stateAuth, dispatchAuth] = useContext(AuthContext);
+  const [stateProfile, dispatchProfile] = useContext(ProfileContext);
   const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
   useEffect(() => {
-    dispatch(updateAuthentication(!!localStorage.getItem(ACCESS_TOKEN)));
-    dispatch(updateToken(localStorage.getItem(ACCESS_TOKEN)));
+    dispatchAuth(updateAuthentication(!!localStorage.getItem(ACCESS_TOKEN)));
+    dispatchAuth(updateToken(localStorage.getItem(ACCESS_TOKEN)));
     if (isAuthenticated) {
       const fetchData = async () => {
         const user = await authAPI.getCurrentUser(
           localStorage.getItem(ACCESS_TOKEN)
         );
         console.log(user);
-        // setProfile(responseData);
+        dispatchProfile(setProfile(user));
         setIsAuthorized(true);
-        dispatch(updateAuthorizing(false));
+        dispatchAuth(updateAuthorizing(false));
         // loginSocketEmit(userId);
       };
       fetchData();
@@ -35,21 +41,11 @@ const App = () => {
     return () => {
       setIsAuthorized(false);
     };
-  }, [isAuthenticated, dispatch]);
+  }, [isAuthenticated, dispatchProfile, dispatchAuth]);
   return (
     <Router>
       {isAuthenticated ? (
-        <Fragment>
-          {isAuthorized ? (
-            <ProfileProvider>
-              {/* There must be component with profile routes, 
-              instead the div with User Page */}
-              <div>User page</div>
-            </ProfileProvider>
-          ) : (
-            <AppSpinner />
-          )}
-        </Fragment>
+        <Fragment>{isAuthorized ? <ProfileRoutes /> : <AppSpinner />}</Fragment>
       ) : (
         <AuthRoutes />
       )}

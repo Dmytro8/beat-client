@@ -13,7 +13,7 @@ export const ProfileContext = createContext();
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_PROFILE: {
-      return { ...state, token: action.token };
+      return { ...state, profile: action.profile };
     }
     default: {
       throw new Error(`Unhandled action type`);
@@ -22,9 +22,12 @@ const profileReducer = (state = initialState, action) => {
 };
 
 export const ProfileProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(profileReducer, initialState);
+  const [profileState, profileDispatch] = useReducer(
+    profileReducer,
+    initialState
+  );
   return (
-    <ProfileContext.Provider value={[state, dispatch]}>
+    <ProfileContext.Provider value={[profileState, profileDispatch]}>
       {children}
     </ProfileContext.Provider>
   );

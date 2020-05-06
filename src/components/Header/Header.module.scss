@@ -1,0 +1,9 @@
+.buttons {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  gap: 30px;
+  a {
+    text-decoration: none;
+  }
+}

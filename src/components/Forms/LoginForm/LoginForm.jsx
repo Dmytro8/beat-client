@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -24,6 +24,8 @@ import {
 } from "../../../contexts/AuthContext/actions";
 
 const LoginForm = () => {
+  const [isRequestError, setIsRequestError] = useState(false);
+  const [errorField, setErrorField] = useState(null);
   const [state, dispatch] = useContext(AuthContext);
   const { handleSubmit, control, errors } = useForm({
     validationSchema: LoginSchema,
@@ -46,8 +48,23 @@ const LoginForm = () => {
     try {
       dispatch(updateAuthorizing(true));
       const response = await authAPI.login(email, password);
-      await dispatch(updateAuthentication(!!response.data.accessToken));
-      await dispatch(updateToken(response.data.accessToken));
+      console.log(response);
+      if (response === 401) {
+        dispatch(updateAuthorizing(false));
+        setIsRequestError(true);
+        setErrorField("Email or password is incorrect");
+      } else if (response === 500) {
+        dispatch(updateAuthorizing(false));
+        setIsRequestError(true);
+        setErrorField("Something went wrong.");
+      } else {
+        setIsRequestError(false);
+        setTimeout(async () => {
+          await dispatch(updateAuthentication(!!response.data.accessToken));
+          await dispatch(updateToken(response.data.accessToken));
+        }, 5000);
+        dispatch(updateAuthorizing(false));
+      }
     } catch (e) {
       // console.log(e.message);
     }
@@ -59,7 +76,7 @@ const LoginForm = () => {
       className={classes.loginForm}
     >
       <Grid container alignItems="flex-end">
-        {errors.email ? (
+        {errors.email || isRequestError ? (
           <Grid
             item
             style={{ width: "10%", display: "grid", alignSelf: "center" }}
@@ -73,7 +90,7 @@ const LoginForm = () => {
         )}
 
         <Grid item style={{ width: "90%" }}>
-          {errors.email ? (
+          {errors.email || isRequestError ? (
             <>
               <Controller
                 error
@@ -99,7 +116,7 @@ const LoginForm = () => {
         </Grid>
       </Grid>
       <Grid container alignItems="flex-end">
-        {errors.password ? (
+        {errors.password || isRequestError ? (
           <Grid
             item
             style={{ width: "10%", display: "grid", alignSelf: "center" }}
@@ -117,7 +134,7 @@ const LoginForm = () => {
         )}
 
         <Grid item style={{ width: "90%" }}>
-          {errors.password ? (
+          {errors.password || isRequestError ? (
             <Controller
               error
               label="Password"
@@ -168,12 +185,15 @@ const LoginForm = () => {
           )}
         </Grid>
       </Grid>
+      {isRequestError ? (
+        <p style={{ color: "#f44336", marginTop: "8px" }}>{errorField}</p>
+      ) : null}
       <StyledButton
         type="submit"
+        disabled={state.isAuthorizing}
         variant="contained"
-        // disabled={loading}
       >
-        {state.isAuthorizing ? <ButtonSpinner /> : "Login"}
+        {state.isAuthorizing && !isRequestError ? <ButtonSpinner /> : "Login"}
       </StyledButton>
     </form>
   );

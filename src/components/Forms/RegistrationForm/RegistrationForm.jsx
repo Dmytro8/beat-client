@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import { SignupSchema } from "../FormValidation";
@@ -29,6 +29,8 @@ const RegistrationForm = () => {
     weightRange: "",
     showPassword: false,
   });
+  const [username, setUsername] = useState("");
+  const [isUsernameExist, setIsUsernameExist] = useState(false);
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -48,6 +50,11 @@ const RegistrationForm = () => {
       console.log(e.message);
     }
   };
+  const onUsernameBlur = async () => {
+    try {
+      // const response = await authAPI.checkUsername(username);
+    } catch (error) {}
+  };
 
   return (
     <form
@@ -57,54 +64,49 @@ const RegistrationForm = () => {
     >
       <Grid container alignItems="flex-end">
         <Grid item style={{ width: "100%" }}>
-          {errors.name ? (
+          {errors.username ? (
             <Controller
               error
               as={StyledTextField}
               style={{ width: "100%" }}
-              name="name"
-              label="Name"
+              name="username"
+              label="Username"
+              onBlur={onUsernameBlur}
               control={control}
+              value={username}
+              onChange={([event]) => {
+                setUsername(event.target.value);
+                return event;
+              }}
               defaultValue=""
-              helperText={errors.name ? errors.name.message : null}
+              helperText={errors.username ? errors.username.message : null}
             />
           ) : (
             <Controller
               as={StyledTextField}
               style={{ width: "100%" }}
-              name="name"
-              label="Name"
+              name="username"
+              label="Username"
+              onBlur={onUsernameBlur}
               control={control}
+              value={username}
+              onChange={([event]) => {
+                setUsername(event.target.value);
+                return event;
+              }}
               defaultValue=""
+              helperText={
+                isUsernameExist ? (
+                  <p style={{ color: "#f44336" }}>
+                    That username is taken. Try another.
+                  </p>
+                ) : null
+              }
             />
           )}
         </Grid>
       </Grid>
-      <Grid container alignItems="flex-end">
-        <Grid item style={{ width: "100%" }}>
-          {errors.surname ? (
-            <Controller
-              error
-              as={StyledTextField}
-              style={{ width: "100%" }}
-              name="surname"
-              label="Surname"
-              control={control}
-              defaultValue=""
-              helperText={errors.surname ? errors.surname.message : null}
-            />
-          ) : (
-            <Controller
-              as={StyledTextField}
-              style={{ width: "100%" }}
-              name="surname"
-              label="Surname"
-              control={control}
-              defaultValue=""
-            />
-          )}
-        </Grid>
-      </Grid>
+
       <Grid container alignItems="flex-end">
         <Grid item style={{ width: "100%" }}>
           {errors.email ? (

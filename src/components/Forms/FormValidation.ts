@@ -10,7 +10,7 @@ const validEmailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const validPasswordRegex = new RegExp(
   `${AtLeastOneLowercaseAlphabetical}${AtLeastOneUppercaseAlphabetical}${AtLeastOneNumeric}`
 );
-const validUsernameRegex = /^[a-zA-Z]{2,}$/;
+const validUsernameRegex = /^[a-z0-9]+([._]?[a-z0-9]+)*$/;
 
 export const LoginSchema = yup.object().shape({
   email: yup.string().required("email or username is a required field"),
@@ -26,19 +26,24 @@ export const LoginSchema = yup.object().shape({
 });
 
 export const SignupSchema = yup.object().shape({
-  name: yup
-    .string()
-    .required("username is a required field")
-    .min(2)
-    .matches(validUsernameRegex, "name must match only alphabetical character"),
-  surname: yup
+  username: yup
     .string()
     .required("username is a required field")
     .min(2)
     .matches(
       validUsernameRegex,
-      "surname must match only alphabetical character"
+      "username must match only lowercase, digits, underscore and dot. \
+      Underscore and dot can't be next to each other and at the end or start of a username"
     ),
+  // .matches(validUsernameRegex, "name must match only alphabetical character"),
+  // surname: yup
+  //   .string()
+  //   .required("username is a required field")
+  //   .min(2)
+  //   .matches(
+  //     validUsernameRegex,
+  //     "surname must match only alphabetical character"
+  //   ),
   email: yup
     .string()
     .required("email is a required field")
