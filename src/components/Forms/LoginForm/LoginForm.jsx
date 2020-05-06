@@ -8,11 +8,14 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Grid from "@material-ui/core/Grid";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
-import { Button } from "@material-ui/core";
 import { LoginSchema } from "../FormValidation";
 import classes from "./LoginForm.module.scss";
 import { authAPI } from "../../../api/authApi";
-import { StyledTextField, Spinner } from "../../common/FormControls";
+import {
+  StyledTextField,
+  ButtonSpinner,
+  StyledButton,
+} from "../../common/FormControls";
 import { AuthContext } from "../../../contexts/AuthContext/authContext";
 import {
   updateAuthentication,
@@ -35,10 +38,10 @@ const LoginForm = () => {
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
-  const handleMouseDownPassword = (event: any) => {
+  const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data) => {
     const { email, password } = data;
     try {
       dispatch(updateAuthorizing(true));
@@ -77,7 +80,7 @@ const LoginForm = () => {
                 as={StyledTextField}
                 style={{ width: "100%" }}
                 name="email"
-                label="Email"
+                label="Email or Username"
                 control={control}
                 defaultValue=""
                 helperText={errors.email ? errors.email.message : ""}
@@ -88,7 +91,7 @@ const LoginForm = () => {
               as={StyledTextField}
               style={{ width: "100%" }}
               name="email"
-              label="Email"
+              label="Email or Username"
               control={control}
               defaultValue=""
             />
@@ -165,14 +168,13 @@ const LoginForm = () => {
           )}
         </Grid>
       </Grid>
-      <Button
+      <StyledButton
         type="submit"
         variant="contained"
         // disabled={loading}
-        style={{ marginTop: "20px", backgroundColor: "#f26a6a", color: "#fff" }}
       >
-        {state.isAuthorizing ? <Spinner /> : "Login"}
-      </Button>
+        {state.isAuthorizing ? <ButtonSpinner /> : "Login"}
+      </StyledButton>
     </form>
   );
 };

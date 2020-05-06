@@ -9,6 +9,8 @@ import {
   updateToken,
   updateAuthorizing,
 } from "../../contexts/AuthContext/actions";
+import { ProfileProvider } from "../../contexts/ProfileContext/profileContext";
+import { AppSpinner } from "../common/FormControls";
 
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -19,7 +21,10 @@ const App = () => {
     dispatch(updateToken(localStorage.getItem(ACCESS_TOKEN)));
     if (isAuthenticated) {
       const fetchData = async () => {
-        await authAPI.getCurrentUser(localStorage.getItem(ACCESS_TOKEN));
+        const user = await authAPI.getCurrentUser(
+          localStorage.getItem(ACCESS_TOKEN)
+        );
+        console.log(user);
         // setProfile(responseData);
         setIsAuthorized(true);
         dispatch(updateAuthorizing(false));
@@ -33,10 +38,17 @@ const App = () => {
   }, [isAuthenticated, dispatch]);
   return (
     <Router>
-      {isAuthorized ? (
+      {isAuthenticated ? (
         <Fragment>
-          <div>User page</div>
-          {/* {isAuthorized ? <div>User page</div> : <div>Loading...</div>} */}
+          {isAuthorized ? (
+            <ProfileProvider>
+              {/* There must be component with profile routes, 
+              instead the div with User Page */}
+              <div>User page</div>
+            </ProfileProvider>
+          ) : (
+            <AppSpinner />
+          )}
         </Fragment>
       ) : (
         <AuthRoutes />

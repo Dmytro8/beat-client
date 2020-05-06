@@ -1,0 +1,33 @@
+@import "../../../styles/_vars.scss";
+.socialSignup {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin: 20px 0 40px 0;
+  .socialIcons {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 12px;
+    svg {
+      color: white;
+      padding: 10px;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+    }
+    .facebookIcon {
+      background-color: $facebookColor;
+    }
+    .googleIcon {
+      background-color: $googleColor;
+    }
+  }
+}
+.login {
+  display: grid;
+  justify-content: center;
+  a {
+    margin-left: 5px;
+    color: inherit;
+  }
+}

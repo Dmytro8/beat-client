@@ -24,3 +24,31 @@ export const LoginSchema = yup.object().shape({
       "password must match at least one lowercase, one uppercase and one numeric character"
     ),
 });
+
+export const SignupSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required("username is a required field")
+    .min(2)
+    .matches(validUsernameRegex, "name must match only alphabetical character"),
+  surname: yup
+    .string()
+    .required("username is a required field")
+    .min(2)
+    .matches(
+      validUsernameRegex,
+      "surname must match only alphabetical character"
+    ),
+  email: yup
+    .string()
+    .required("email is a required field")
+    .matches(validEmailRegex, "enter a valid email"),
+  password: yup
+    .string()
+    .required("password is a required field")
+    .min(8)
+    .matches(
+      validPasswordRegex,
+      "password must match at least one lowercase, one uppercase and one numeric character"
+    ),
+});

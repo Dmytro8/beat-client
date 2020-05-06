@@ -4,7 +4,7 @@ import {
   UPDATE_AUTHORIZING,
 } from "./types";
 
-export type UpdateAuthenticationActionType = {
+type UpdateAuthenticationActionType = {
   type: typeof UPDATE_AUTHENTICATION;
   isAuthenticated: boolean;
 };
@@ -17,7 +17,7 @@ export const updateAuthentication = (
   };
 };
 
-export type UpdateAuthorizingActionType = {
+type UpdateAuthorizingActionType = {
   type: typeof UPDATE_AUTHORIZING;
   isAuthorizing: boolean;
 };
@@ -30,7 +30,7 @@ export const updateAuthorizing = (
   };
 };
 
-export type UpdateTokenActionType = {
+type UpdateTokenActionType = {
   type: typeof UPDATE_TOKEN;
   token: string | null;
 };
