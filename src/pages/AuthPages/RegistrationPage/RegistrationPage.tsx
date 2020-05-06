@@ -1,5 +1,4 @@
 import React from "react";
-import { Paper } from "@material-ui/core";
 import { AuthPaper } from "../AuthPaper";
 import { FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL } from "../../../constants";
 import { LOGIN } from "../../../constants/route.urls";

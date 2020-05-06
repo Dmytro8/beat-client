@@ -1,5 +1,4 @@
 import React from "react";
-import { Paper } from "@material-ui/core";
 import classes from "./LoginPage.module.scss";
 import { LoginForm } from "../../../components/Forms/LoginForm";
 import { NavLink } from "react-router-dom";

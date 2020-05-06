@@ -3,11 +3,7 @@ import Button from "@material-ui/core/Button";
 
 import classes from "./AuthLayout.module.scss";
 import { NavLink } from "react-router-dom";
-<<<<<<< HEAD
 import { LOGIN, REGISTRATION } from "../../constants/route.urls";
-=======
-import { LOGIN, REGISTRATION } from "../../constants/url";
->>>>>>> 0b9ccaf9198a3634340cc8c0fc0a9ef1953c498e
 import authBg from "../../static/images/authBg.jpg";
 import HeadsetIcon from "@material-ui/icons/Headset";
 
@@ -22,11 +18,7 @@ const authBgStyle = {
 const childrenWrapperStyle = {
   height: "100%",
   display: "grid",
-<<<<<<< HEAD
   alignContent: "center",
-=======
-  placeContent: "center",
->>>>>>> 0b9ccaf9198a3634340cc8c0fc0a9ef1953c498e
 };
 
 const AuthLayout: FC<AuthLayoutType> = ({ children }) => {
