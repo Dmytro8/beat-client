@@ -41,14 +41,11 @@ const RegistrationForm = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       // const response = await authAPI.signup(data);
       // await dispatch(updateAuthentication(!!response.data.accessToken));
       // await dispatch(updateToken(response.data.accessToken));
-    } catch (e) {
-      console.log(e.message);
-    }
+    } catch (e) {}
   };
   const onUsernameBlur = async () => {
     try {

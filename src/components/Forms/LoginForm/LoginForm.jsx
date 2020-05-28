@@ -64,9 +64,7 @@ const LoginForm = () => {
         }, 5000);
         dispatch(updateAuthorizing(false));
       }
-    } catch (e) {
-      // console.log(e.message);
-    }
+    } catch (e) {}
   };
   return (
     <form

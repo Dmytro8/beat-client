@@ -67,13 +67,11 @@ const PlayerControls = () => {
   };
 
   const handleKeyPressPlay = (event) => {
-    console.log(event.key);
     if (event.key === "Space") {
       playCurrentSong();
     }
   };
   const handleKeyPressPause = (event) => {
-    console.log(event.key);
     if (event.key === "Space") {
       pauseCurrentSong();
     }

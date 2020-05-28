@@ -14,23 +14,11 @@ const ProfilePage = () => {
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [isSongsLoading, setIsSongsLoading] = useState(true);
-  // useEffect(() => {
-  //   const getSong = async () => {
-  //     setIsSongsLoading(true);
-  //     const response = await musicAPI.getSong("1");
-  //     setSong(response);
-  //     setIsSongsLoading(false);
-  //     console.log(response);
-  //   };
-  //   getSong();
-  //   return () => {};
-  // }, []);
   useEffect(() => {
     const getAllSongs = async () => {
       setIsSongsLoading(true);
       const response = await musicAPI.getAllSongs();
       dispatchPlayer(setPlaylist(response.slice(0, 3)));
-      // dispatchPlayer(setPlaylist(response));
       setIsSongsLoading(false);
     };
     getAllSongs();
