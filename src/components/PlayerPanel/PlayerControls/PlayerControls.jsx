@@ -36,7 +36,6 @@ const PlayerControls = () => {
     }
     statePlayer.currentSong.howl.on("end", function () {
       dispatchPlayer(setSeekPosition(0));
-
       if (!statePlayer.isRepeat) {
         setIsSongEnded(true);
         dispatchPlayer(togglePaused(true));
@@ -45,9 +44,6 @@ const PlayerControls = () => {
     statePlayer.currentSong.howl.on("play", function () {
       setIsSongEnded(false);
     });
-    if (isSongEnded && !statePlayer.isRepeat) {
-      skipToNextSong();
-    }
     return () => {};
   }, [
     statePlayer.isRepeat,
@@ -56,6 +52,13 @@ const PlayerControls = () => {
     statePlayer.isRandom,
     isSongEnded,
   ]);
+
+  useEffect(() => {
+    if (isSongEnded && !statePlayer.isRepeat) {
+      skipToNextSong();
+    }
+    return () => {};
+  }, [isSongEnded]);
 
   const playCurrentSong = () => {
     statePlayer.currentSong.howl.play();
