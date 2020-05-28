@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment, useContext } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthRoutes } from "../../routes/AuthRoutes";
 import { ProfileRoutes } from "../../routes/ProfileRoutes";
-import { AuthContext } from "../../contexts/AuthContext/authContext";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { ACCESS_TOKEN } from "../../constants";
 import { authAPI } from "../../api/authApi";
 import {
@@ -10,10 +10,7 @@ import {
   updateToken,
   updateAuthorizing,
 } from "../../contexts/AuthContext/actions";
-import {
-  ProfileProvider,
-  ProfileContext,
-} from "../../contexts/ProfileContext/profileContext";
+import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 import { AppSpinner } from "../common/FormControls";
 import { setProfile } from "../../contexts/ProfileContext/actions";
 
@@ -30,7 +27,6 @@ const App = () => {
         const user = await authAPI.getCurrentUser(
           localStorage.getItem(ACCESS_TOKEN)
         );
-        console.log(user);
         dispatchProfile(setProfile(user));
         setIsAuthorized(true);
         dispatchAuth(updateAuthorizing(false));

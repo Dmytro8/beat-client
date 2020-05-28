@@ -1,0 +1,103 @@
+@import "../../styles/_vars.scss";
+
+.songRow {
+  &:hover {
+    // cursor: pointer;
+    td {
+      background-color: #3b3b3b;
+    }
+
+    .hoverPlay {
+      display: grid !important;
+    }
+  }
+  td:first-child {
+    padding-left: 25px;
+  }
+  td:last-child {
+    padding-right: 25px;
+    padding-left: 0;
+  }
+  .songImageCell {
+    display: grid;
+    // justify-content: center;
+
+    align-content: center;
+
+    .songImage {
+      display: block;
+      background-color: #dbdbdb;
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      .musicNoteIcon {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        height: inherit;
+        width: inherit;
+        svg {
+          font-size: 1.7rem;
+        }
+      }
+      img {
+        // width: 100%;
+        height: 100%;
+      }
+      .hoverPlay {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-content: center;
+        svg {
+          font-size: 30px;
+          color: $playlistAddColor;
+          padding: 5px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border-radius: 50%;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .artistCell {
+    a {
+      width: fit-content;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  td {
+    color: $playlistFontColor;
+    border-bottom: 1px solid $playlistFontColor;
+  }
+  td:nth-child(2) {
+    color: white;
+  }
+  &:nth-last-child(1) {
+    td {
+      border-bottom: none;
+    }
+  }
+  .addButton {
+    background-color: $playlistAddColor;
+    padding: 5px;
+    color: white;
+    &:hover {
+      background-color: $playlistAddColorClick;
+    }
+  }
+}
+.songRowActive {
+  td {
+    background-color: #3b3b3b;
+  }
+}

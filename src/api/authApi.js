@@ -1,8 +1,16 @@
 import axios from "axios";
-import { API_BASE_URL_GLOBAL, ACCESS_TOKEN } from "../constants/index";
+import {
+  API_BASE_URL_GLOBAL,
+  API_BASE_URL_LOCAL,
+  ACCESS_TOKEN,
+} from "../constants/index";
 
 const instance = axios.create({
+  // Global API
   baseURL: `${API_BASE_URL_GLOBAL}`,
+
+  // Local API
+  // baseURL: `${API_BASE_URL_LOCAL}`,
 });
 
 export const authAPI = {

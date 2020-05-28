@@ -60,3 +60,10 @@ export const ButtonSpinner = withStyles({
     width: "23px !important",
   },
 })(CircularProgress);
+export const Spinner = withStyles({
+  root: {
+    color: "#f26a6a",
+    height: "30px !important",
+    width: "30px !important",
+  },
+})(CircularProgress);

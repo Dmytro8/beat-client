@@ -1,0 +1,22 @@
+@import "../../styles/_vars.scss";
+.playlistContainer {
+  width: 800px;
+  height: 600px;
+  background-color: #282828;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  // overflow: hidden;
+  // overflow-y: scroll;
+  overflow: auto;
+  overflow-x: hidden;
+  position: relative;
+  .playlistTable {
+    th {
+      color: $playlistFontColor;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: #282828;
+    }
+  }
+}

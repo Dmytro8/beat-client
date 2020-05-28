@@ -14,3 +14,7 @@ export const FACEBOOK_AUTH_URL =
   API_BASE_URL_GLOBAL +
   "/oauth2/authorize/facebook?redirect_uri=" +
   OAUTH2_REDIRECT_GLOBAL;
+
+export const AUDIO_SERVER = "https://beatstart.herokuapp.com/audio/stream";
+export const AUDIO_IMAGE_SERVER =
+  "https://beatstart.herokuapp.com/audio/getAudioImage";

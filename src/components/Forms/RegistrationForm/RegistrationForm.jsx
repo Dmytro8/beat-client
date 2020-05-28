@@ -10,7 +10,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Grid from "@material-ui/core/Grid";
 
 import { StyledTextField, StyledButton } from "../../common/FormControls";
-import { AuthContext } from "../../../contexts/AuthContext/authContext";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import {
   updateAuthentication,
   updateToken,

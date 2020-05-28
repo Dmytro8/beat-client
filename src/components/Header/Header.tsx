@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { StyledButton } from "../common/FormControls";
-import { AuthContext } from "../../contexts/AuthContext/authContext";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { authAPI } from "../../api/authApi";
 import {
   updateAuthentication,

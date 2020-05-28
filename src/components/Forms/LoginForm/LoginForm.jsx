@@ -16,7 +16,7 @@ import {
   ButtonSpinner,
   StyledButton,
 } from "../../common/FormControls";
-import { AuthContext } from "../../../contexts/AuthContext/authContext";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import {
   updateAuthentication,
   updateToken,
@@ -48,7 +48,6 @@ const LoginForm = () => {
     try {
       dispatch(updateAuthorizing(true));
       const response = await authAPI.login(email, password);
-      console.log(response);
       if (response === 401) {
         dispatch(updateAuthorizing(false));
         setIsRequestError(true);
