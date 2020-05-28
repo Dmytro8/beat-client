@@ -10,6 +10,8 @@ import {
   setSeekPosition,
 } from "../../../contexts/PlayerContext/actions";
 
+import KeyboardEventHandler from "react-keyboard-event-handler";
+
 // icons
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import RepeatIcon from "@material-ui/icons/Repeat";
@@ -32,9 +34,6 @@ const PlayerControls = () => {
     } else {
       statePlayer.currentSong.howl.loop(false);
     }
-    if (isSongEnded) {
-      skipToNextSong();
-    }
     statePlayer.currentSong.howl.on("end", function () {
       dispatchPlayer(setSeekPosition(0));
 
@@ -46,6 +45,9 @@ const PlayerControls = () => {
     statePlayer.currentSong.howl.on("play", function () {
       setIsSongEnded(false);
     });
+    if (isSongEnded && !statePlayer.isRepeat) {
+      skipToNextSong();
+    }
     return () => {};
   }, [
     statePlayer.isRepeat,
@@ -62,6 +64,49 @@ const PlayerControls = () => {
   const pauseCurrentSong = () => {
     statePlayer.currentSong.howl.pause();
     dispatchPlayer(togglePaused(true));
+  };
+
+  const handleKeyPressPlay = (event) => {
+    console.log(event.key);
+    if (event.key === "Space") {
+      playCurrentSong();
+    }
+  };
+  const handleKeyPressPause = (event) => {
+    console.log(event.key);
+    if (event.key === "Space") {
+      pauseCurrentSong();
+    }
+  };
+  const togglePlay = () => {
+    if (statePlayer.isPaused) {
+      playCurrentSong();
+    } else {
+      pauseCurrentSong();
+    }
+  };
+  const fastForwardSong = () => {
+    if (
+      statePlayer.currentSong.howl.duration() - 10 < statePlayer.seekPosition &&
+      statePlayer.seekPosition < statePlayer.currentSong.howl.duration()
+    ) {
+      skipToNextSong();
+    } else {
+      statePlayer.currentSong.howl.seek(statePlayer.seekPosition + 4);
+      if (statePlayer.isPaused) {
+        dispatchPlayer(setSeekPosition(statePlayer.seekPosition + 4));
+      }
+    }
+  };
+  const fastRewindSong = () => {
+    if (0 < statePlayer.seekPosition && statePlayer.seekPosition < 10) {
+      skipToPreviousSong();
+    } else {
+      statePlayer.currentSong.howl.seek(statePlayer.seekPosition - 4);
+      if (statePlayer.isPaused) {
+        dispatchPlayer(setSeekPosition(statePlayer.seekPosition - 4));
+      }
+    }
   };
 
   const skipToNextSong = () => {
@@ -168,10 +213,30 @@ const PlayerControls = () => {
       )}
       <SkipPreviousIcon onClick={skipToPreviousSong} />
       {statePlayer.isPaused ? (
-        <PlayCircleFilledIcon onClick={playCurrentSong} />
+        <PlayCircleFilledIcon
+          onClick={playCurrentSong}
+          onKeyPress={handleKeyPressPlay}
+          tabIndex="0"
+        />
       ) : (
-        <PauseCircleFilledIcon onClick={pauseCurrentSong} />
+        <PauseCircleFilledIcon
+          onClick={pauseCurrentSong}
+          onKeyPress={handleKeyPressPause}
+          tabIndex="0"
+        />
       )}
+      <KeyboardEventHandler
+        handleKeys={["space"]}
+        onKeyEvent={(key, e) => togglePlay()}
+      />
+      <KeyboardEventHandler
+        handleKeys={["left"]}
+        onKeyEvent={(key, e) => fastRewindSong()}
+      />
+      <KeyboardEventHandler
+        handleKeys={["right"]}
+        onKeyEvent={(key, e) => fastForwardSong()}
+      />
       <SkipNextIcon onClick={skipToNextSong} />
       {statePlayer.isRandom ? (
         <ShuffleIcon
