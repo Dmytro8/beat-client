@@ -10,6 +10,7 @@ import {
   TOGGLE_PAUSED,
   SET_VOLUME,
   SET_SEEK_POSITION,
+  SET_RANDOM_INDEX,
 } from "./types";
 
 let initialState = {
@@ -21,6 +22,7 @@ let initialState = {
   isPaused: false,
   volume: 50,
   isMuted: false,
+  randomIndex: 0,
   seekPosition: 0.0,
 };
 
@@ -45,6 +47,11 @@ const playerReducer = (state = initialState, action) => {
           }
           return song;
         }),
+      };
+    case SET_RANDOM_INDEX:
+      return {
+        ...state,
+        randomIndex: action.data,
       };
     case SET_VOLUME: {
       return {

@@ -8,6 +8,7 @@ import {
   TOGGLE_PAUSED,
   SET_VOLUME,
   SET_SEEK_POSITION,
+  SET_RANDOM_INDEX,
 } from "./types";
 
 export type SongType = {
@@ -41,6 +42,17 @@ export const setHowl = (howl: any, songId: number): SetHowlActionType => {
     type: SET_HOWL,
     howl,
     songId,
+  };
+};
+
+type SetRandomIndexActionType = {
+  type: typeof SET_RANDOM_INDEX;
+  data: number;
+};
+export const setRandomIndex = (songIndex: number): SetRandomIndexActionType => {
+  return {
+    type: SET_RANDOM_INDEX,
+    data: songIndex,
   };
 };
 
@@ -131,4 +143,5 @@ export type PlayerActionTypes =
   | TogglePlayingActionType
   | TogglePausedActionType
   | SetHowlActionType
-  | SetSeekPositionActioType;
+  | SetSeekPositionActioType
+  | SetRandomIndexActionType;

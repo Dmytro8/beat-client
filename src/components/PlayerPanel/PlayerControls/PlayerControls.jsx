@@ -8,6 +8,7 @@ import {
   toggleRandom,
   setCurrentSong,
   setSeekPosition,
+  setRandomIndex,
 } from "../../../contexts/PlayerContext/actions";
 
 import KeyboardEventHandler from "react-keyboard-event-handler";
@@ -24,15 +25,17 @@ import ShuffleIcon from "@material-ui/icons/Shuffle";
 
 const PlayerControls = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
-  const [randomIndex, setRandomIndex] = useState(0);
   const [isSongEnded, setIsSongEnded] = useState(false);
-  // const [isSkiped, setIsSkiped] = useState(false);
 
   useEffect(() => {
     if (statePlayer.isRepeat) {
       statePlayer.currentSong.howl.loop(true);
     } else {
       statePlayer.currentSong.howl.loop(false);
+    }
+    if (statePlayer.isRandom) {
+      let num = generateRandomIndex();
+      dispatchPlayer(setRandomIndex(num));
     }
     statePlayer.currentSong.howl.on("end", function () {
       dispatchPlayer(setSeekPosition(0));
@@ -64,6 +67,7 @@ const PlayerControls = () => {
     statePlayer.currentSong.howl.play();
     dispatchPlayer(togglePaused(false));
   };
+
   const pauseCurrentSong = () => {
     statePlayer.currentSong.howl.pause();
     dispatchPlayer(togglePaused(true));
@@ -74,11 +78,13 @@ const PlayerControls = () => {
       playCurrentSong();
     }
   };
+
   const handleKeyPressPause = (event) => {
     if (event.key === "Space") {
       pauseCurrentSong();
     }
   };
+
   const togglePlay = () => {
     if (statePlayer.isPaused) {
       playCurrentSong();
@@ -86,6 +92,7 @@ const PlayerControls = () => {
       pauseCurrentSong();
     }
   };
+
   const fastForwardSong = () => {
     if (
       statePlayer.currentSong.howl.duration() - 10 < statePlayer.seekPosition &&
@@ -99,6 +106,7 @@ const PlayerControls = () => {
       }
     }
   };
+
   const fastRewindSong = () => {
     if (0 < statePlayer.seekPosition && statePlayer.seekPosition < 10) {
       skipToPreviousSong();
@@ -110,95 +118,49 @@ const PlayerControls = () => {
     }
   };
 
-  const skipToNextSong = () => {
-    let index = statePlayer.currentSong.id;
-    setRandomIndex(Math.floor(Math.random() * statePlayer.songs.length));
-    if (index >= 1 && index < statePlayer.songs.length) {
-      statePlayer.songs[statePlayer.currentSong.id - 1].howl.stop();
-      dispatchPlayer(togglePaused(false));
-      dispatchPlayer(setSeekPosition(0));
-      if (statePlayer.isRandom) {
-        statePlayer.songs[randomIndex].howl.volume(
-          (statePlayer.volume / 100).toFixed(1)
-        );
-        statePlayer.songs[randomIndex].howl.play();
-      } else {
-        statePlayer.songs[statePlayer.currentSong.id].howl.volume(
-          (statePlayer.volume / 100).toFixed(1)
-        );
-        statePlayer.songs[statePlayer.currentSong.id].howl.play();
-      }
+  const generateRandomIndex = () => {
+    let num = Math.floor(Math.random() * statePlayer.songs.length);
+    return num === statePlayer.currentSong.id - 1 ? generateRandomIndex() : num;
+  };
+
+  const setSongToPlay = (songId) => {
+    statePlayer.songs[statePlayer.currentSong.id - 1].howl.stop();
+    dispatchPlayer(togglePaused(false));
+    dispatchPlayer(setSeekPosition(0));
+    if (statePlayer.isRandom) {
+      prepareSongToPlay(statePlayer.randomIndex);
     } else {
-      statePlayer.songs[statePlayer.songs.length - 1].howl.stop();
-      dispatchPlayer(togglePaused(false));
-      dispatchPlayer(setSeekPosition(0));
-      if (statePlayer.isRandom) {
-        statePlayer.songs[randomIndex].howl.volume(
-          (statePlayer.volume / 100).toFixed(1)
-        );
-        statePlayer.songs[randomIndex].howl.play();
-      } else {
-        statePlayer.songs[
-          statePlayer.currentSong.id - statePlayer.songs.length
-        ].howl.volume((statePlayer.volume / 100).toFixed(1));
-        statePlayer.songs[
-          statePlayer.currentSong.id - statePlayer.songs.length
-        ].howl.play();
-      }
+      prepareSongToPlay(songId);
+    }
+  };
+
+  const prepareSongToPlay = (songId) => {
+    statePlayer.songs[songId].howl.volume(
+      (statePlayer.volume / 100).toFixed(1)
+    );
+    statePlayer.songs[songId].howl.play();
+  };
+
+  const skipToNextSong = () => {
+    if (
+      statePlayer.currentSong.id >= 1 &&
+      statePlayer.currentSong.id < statePlayer.songs.length
+    ) {
+      setSongToPlay(statePlayer.currentSong.id);
+    } else {
+      setSongToPlay(statePlayer.currentSong.id - statePlayer.songs.length);
     }
   };
   const skipToPreviousSong = () => {
-    let index = statePlayer.currentSong.id;
-    setRandomIndex(Math.floor(Math.random() * statePlayer.songs.length));
-    if (index > 1 && index < statePlayer.songs.length) {
-      statePlayer.songs[
-        statePlayer.songs.length - statePlayer.currentSong.id
-      ].howl.stop();
-      dispatchPlayer(togglePaused(false));
-      dispatchPlayer(setSeekPosition(0));
-      if (statePlayer.isRandom) {
-        statePlayer.songs[randomIndex].howl.volume(
-          (statePlayer.volume / 100).toFixed(1)
-        );
-        statePlayer.songs[randomIndex].howl.play();
-      } else {
-        statePlayer.songs[
-          statePlayer.songs.length - statePlayer.currentSong.id - 1
-        ].howl.volume((statePlayer.volume / 100).toFixed(1));
-        statePlayer.songs[
-          statePlayer.songs.length - statePlayer.currentSong.id - 1
-        ].howl.play();
-      }
-    } else if (index === statePlayer.songs.length) {
-      statePlayer.songs[statePlayer.currentSong.id - 1].howl.stop();
-      dispatchPlayer(togglePaused(false));
-      dispatchPlayer(setSeekPosition(0));
-      if (statePlayer.isRandom) {
-        statePlayer.songs[randomIndex].howl.volume(
-          (statePlayer.volume / 100).toFixed(1)
-        );
-        statePlayer.songs[randomIndex].howl.play();
-      } else {
-        statePlayer.songs[statePlayer.currentSong.id - 2].howl.volume(
-          (statePlayer.volume / 100).toFixed(1)
-        );
-        statePlayer.songs[statePlayer.currentSong.id - 2].howl.play();
-      }
+    if (
+      statePlayer.currentSong.id > 1 &&
+      statePlayer.currentSong.id < statePlayer.songs.length
+    ) {
+      setSongToPlay(statePlayer.currentSong.id);
+    } else if (statePlayer.currentSong.id === statePlayer.songs.length) {
+      setSongToPlay(statePlayer.currentSong.id - 2);
     } else {
-      statePlayer.songs[statePlayer.currentSong.id - 1].howl.stop();
-      dispatchPlayer(togglePaused(false));
-      dispatchPlayer(setSeekPosition(0));
-      if (statePlayer.isRandom) {
-        statePlayer.songs[randomIndex].howl.volume(
-          (statePlayer.volume / 100).toFixed(1)
-        );
-        statePlayer.songs[randomIndex].howl.play();
-      } else {
-        statePlayer.songs[statePlayer.songs.length - 1].howl.volume(
-          (statePlayer.volume / 100).toFixed(1)
-        );
-        statePlayer.songs[statePlayer.songs.length - 1].howl.play();
-      }
+      setSongToPlay(statePlayer.songs.length - 1);
     }
   };
 
@@ -214,17 +176,9 @@ const PlayerControls = () => {
       )}
       <SkipPreviousIcon onClick={skipToPreviousSong} />
       {statePlayer.isPaused ? (
-        <PlayCircleFilledIcon
-          onClick={playCurrentSong}
-          onKeyPress={handleKeyPressPlay}
-          tabIndex="0"
-        />
+        <PlayCircleFilledIcon onClick={playCurrentSong} />
       ) : (
-        <PauseCircleFilledIcon
-          onClick={pauseCurrentSong}
-          onKeyPress={handleKeyPressPause}
-          tabIndex="0"
-        />
+        <PauseCircleFilledIcon onClick={pauseCurrentSong} />
       )}
       <KeyboardEventHandler
         handleKeys={["space"]}
