@@ -6,7 +6,6 @@ import {
   togglePaused,
   toggleRepeat,
   toggleRandom,
-  setCurrentSong,
   setSeekPosition,
   setRandomIndex,
 } from "../../../contexts/PlayerContext/actions";
@@ -71,18 +70,6 @@ const PlayerControls = () => {
   const pauseCurrentSong = () => {
     statePlayer.currentSong.howl.pause();
     dispatchPlayer(togglePaused(true));
-  };
-
-  const handleKeyPressPlay = (event) => {
-    if (event.key === "Space") {
-      playCurrentSong();
-    }
-  };
-
-  const handleKeyPressPause = (event) => {
-    if (event.key === "Space") {
-      pauseCurrentSong();
-    }
   };
 
   const togglePlay = () => {
