@@ -1,9 +1,27 @@
-.buttons {
+@import "../../styles/_vars.scss";
+.header {
   display: grid;
-  grid-auto-flow: column;
-  justify-content: start;
-  gap: 30px;
-  a {
-    text-decoration: none;
+  nav {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: 40px;
+    font-size: 20px;
+    align-content: center;
+    .link {
+      color: #fff;
+    }
+    .activeLink {
+      color: $accentColor;
+    }
+  }
+  .rightContols {
+    position: absolute;
+    left: 80vw;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    height: $headerHeight;
+    gap: 20px;
   }
 }

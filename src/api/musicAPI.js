@@ -15,10 +15,10 @@ const request = (
     method: method,
     url: `${API_BASE_URL_GLOBAL}${urlEndPoint}`,
     data: data,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem(ACCESS_TOKEN),
-      ...customHeaders,
-    },
+    // headers: {
+    //   Authorization: "Bearer " + localStorage.getItem(ACCESS_TOKEN),
+    //   ...customHeaders,
+    // },
   })
     .then((response) => {
       return response.data;

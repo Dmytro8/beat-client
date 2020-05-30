@@ -2,34 +2,59 @@ import React, { useContext } from "react";
 import { StyledButton } from "../common/FormControls";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { authAPI } from "../../api/authApi";
-import {
-  updateAuthentication,
-  updateToken,
-} from "../../contexts/AuthContext/actions";
 
 import classes from "./Header.module.scss";
-import { Link } from "react-router-dom";
-import { MAIN, PROPRAMMERS } from "../../constants/route.urls";
+import { NavLink } from "react-router-dom";
+import { HOME, MUSIC } from "../../constants/route.urls";
+
+import {
+  StyledBadge,
+  ShoppingBasket,
+  AccountCircle,
+} from "../common/HeaderControls";
+import { IconButton } from "@material-ui/core";
 
 const Header = () => {
-  const [state, dispatch] = useContext(AuthContext);
-  const logoutHandler = async () => {
-    await authAPI.logout();
-    await dispatch(updateAuthentication(false));
-    await dispatch(updateToken(null));
-  };
+  // const [state, dispatch] = useContext(AuthContext);
+  // const logoutHandler = async () => {
+  //   await authAPI.logout();
+  //   await dispatch(updateAuthentication(false));
+  //   await dispatch(updateToken(null));
+  // };
   return (
-    <div className={classes.buttons}>
-      <StyledButton variant="contained" onClick={logoutHandler}>
+    <header className={classes.header}>
+      <nav>
+        <NavLink
+          exact
+          to={HOME}
+          className={classes.link}
+          activeClassName={classes.activeLink}
+        >
+          Home
+        </NavLink>
+        <NavLink
+          exact
+          to={MUSIC}
+          className={classes.link}
+          activeClassName={classes.activeLink}
+        >
+          Music
+        </NavLink>
+      </nav>
+      <div className={classes.rightContols}>
+        <IconButton aria-label="cart">
+          <StyledBadge badgeContent={4}>
+            <ShoppingBasket />
+          </StyledBadge>
+        </IconButton>
+        <IconButton aria-label="cart">
+          <AccountCircle />
+        </IconButton>
+      </div>
+      {/* <StyledButton variant="contained" onClick={logoutHandler}>
         Logout
-      </StyledButton>
-      <Link to={MAIN}>
-        <StyledButton variant="contained">Main profile page</StyledButton>
-      </Link>
-      <Link to={PROPRAMMERS}>
-        <StyledButton variant="contained">Don't click me!</StyledButton>
-      </Link>
-    </div>
+      </StyledButton> */}
+    </header>
   );
 };
 

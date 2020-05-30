@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Song } from "../Song";
+import { Song } from "./Song";
 import { PlayerContext } from "../../contexts/PlayerContext/PlayerContext";
 import { Howl, Howler } from "howler";
 
@@ -7,7 +7,7 @@ import classes from "./Playlist.module.scss";
 import { AUDIO_SERVER } from "../../constants";
 
 import { setHowl } from "../../contexts/PlayerContext/actions";
-import { PlayerPanel } from "../PlayerPanel";
+import { PlayerPanel } from "./PlayerPanel";
 
 const Playlist = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
@@ -40,7 +40,6 @@ const Playlist = () => {
               <th>Title</th>
               <th>Artist</th>
               <th>Time</th>
-              <th></th>
               <th></th>
             </tr>
           </thead>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 
-import { Song } from "../../components/Song";
+import { Song } from "../../components/Playlist/Song";
 import { musicAPI } from "../../api/musicAPI";
 import { Spinner } from "../../components/common/FormControls";
 import { Playlist } from "../../components/Playlist";

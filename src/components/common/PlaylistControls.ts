@@ -1,5 +1,6 @@
 import { withStyles } from "@material-ui/core/styles";
 import { Slider, Button } from "@material-ui/core";
+import MusicNoteIcon from "@material-ui/icons/MusicNote";
 
 export const PrettoSlider = withStyles({
   root: {
@@ -20,7 +21,7 @@ export const PrettoSlider = withStyles({
     left: "calc(-50% + 4px)",
   },
   track: {
-    color: "#919191",
+    color: "#0883fc",
     height: 4,
     borderRadius: 2,
   },
@@ -41,3 +42,9 @@ export const PlaylistButton = withStyles({
     },
   },
 })(Button);
+
+export const MusicNote = withStyles({
+  root: {
+    color: "white",
+  },
+})(MusicNoteIcon);

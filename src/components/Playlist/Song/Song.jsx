@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment, useContext } from "react";
-import { Spinner } from "../common/FormControls";
+import { Spinner } from "../../common/FormControls";
 import Button from "@material-ui/core/Button";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -7,20 +7,20 @@ import PauseIcon from "@material-ui/icons/Pause";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 
 import { Howl, Howler } from "howler";
-import { musicAPI } from "../../api/musicAPI";
+import { musicAPI } from "../../../api/musicAPI";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import classes from "./Song.module.scss";
 import classnames from "classnames";
-import { PlayerContext } from "../../contexts/PlayerContext/PlayerContext";
+import { PlayerContext } from "../../../contexts/PlayerContext/PlayerContext";
 import {
   setCurrentSong,
   togglePlaying,
   setHowl,
   togglePaused,
   setSeekPosition,
-} from "../../contexts/PlayerContext/actions";
-import { AUDIO_IMAGE_SERVER } from "../../constants";
+} from "../../../contexts/PlayerContext/actions";
+import { AUDIO_IMAGE_SERVER } from "../../../constants";
 
 const Song = ({ songId }) => {
   // const { togglePlayPause, ready, loading, playing } = useAudioPlayer({
@@ -157,13 +157,12 @@ const Song = ({ songId }) => {
             <a href={`#${song.artist}`}>{song.artist}</a>
           </td>
           <td>{song.length}</td>
-          <td>$27</td>
-          <td>
+          <td className={classes.price}>
             <Button
               className={classes.addButton}
-              startIcon={<ShoppingCartIcon />}
+              startIcon={<ShoppingCartIcon className={classes.shoppingCart} />}
             >
-              Add
+              $27
             </Button>
           </td>
         </tr>

@@ -1,15 +1,23 @@
-@import "../../styles/_vars.scss";
+@import "../../../styles/_vars.scss";
 
 .songRow {
   &:hover {
     // cursor: pointer;
     td {
-      background-color: #3b3b3b;
+      background-color: $songHoverColor;
     }
-
+    .addButton {
+      background-color: $playlistAddColor;
+    }
+    .shoppingCart {
+      display: inline;
+    }
     .hoverPlay {
       display: grid !important;
     }
+  }
+  .shoppingCart {
+    display: none;
   }
   td:first-child {
     padding-left: 25px;
@@ -88,16 +96,16 @@
     }
   }
   .addButton {
-    background-color: $playlistAddColor;
+    // background-color: $playlistAddColor;
     padding: 5px;
     color: white;
-    &:hover {
-      background-color: $playlistAddColorClick;
-    }
+    // &:hover {
+    //   background-color: $playlistAddColorClick;
+    // }
   }
 }
 .songRowActive {
   td {
-    background-color: #3b3b3b;
+    background-color: $songHoverColor;
   }
 }

@@ -1,22 +1,61 @@
 @import "../../styles/_vars.scss";
 .playlistContainer {
-  width: 800px;
-  height: 600px;
-  background-color: #282828;
+  height: 60vh;
   display: grid;
-  grid-template-rows: auto 1fr;
-  // overflow: hidden;
-  // overflow-y: scroll;
+  justify-content: end;
   overflow: auto;
   overflow-x: hidden;
-  position: relative;
+  // Start Table styles
+  table {
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    color: white;
+    // grid-template-columns: 100px 150px 150px 100px 100px;
+    grid-template-columns:
+      minmax(100px, 1fr) minmax(150px, 3fr) minmax(150px, 3fr)
+      minmax(100px, 1fr) minmax(100px, 1fr);
+  }
+
+  thead,
+  tbody,
+  tr {
+    display: contents;
+  }
+
+  th,
+  td {
+    padding: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  th {
+    text-align: left;
+    font-weight: normal;
+    font-size: 1.1rem;
+  }
+
+  th:last-child {
+    border: 0;
+  }
+
+  td {
+    display: grid;
+    align-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  // End Table styles
+  th {
+    color: $playlistFontColor;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    font-size: 15px;
+    padding: 0 0 0 15px;
+  }
   .playlistTable {
-    th {
-      color: $playlistFontColor;
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      background-color: #282828;
-    }
   }
 }

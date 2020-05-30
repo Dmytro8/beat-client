@@ -1,5 +1,5 @@
-export const MAIN = "/";
-export const PROPRAMMERS = "/programmers";
+export const HOME = "/";
+export const MUSIC = "/music";
 
 export const LOGIN = "/login";
 export const REGISTRATION = "/registration";

@@ -1,13 +1,15 @@
-@import "../../styles/_vars.scss";
+@import "../../../styles/_vars.scss";
 .audioPlayer {
   border-top: 4px double $playlistFontColor;
   color: white;
   align-self: end;
-  padding: 0 25px 10px 25px;
-  position: sticky;
-  width: 750px;
+  position: absolute;
   bottom: 0;
-  background-color: #282828;
+  left: 0;
+  width: 100%;
+  .audioPlayerWrapper {
+    padding: 0 25px 10px 25px;
+  }
   .playerProgress {
     display: grid;
     grid-auto-flow: column;
