@@ -140,11 +140,10 @@ const PlayerControls = () => {
   };
   const skipToPreviousSong = () => {
     if (
-      statePlayer.currentSong.id > 1 &&
-      statePlayer.currentSong.id < statePlayer.songs.length
+      (statePlayer.currentSong.id > 1 &&
+        statePlayer.currentSong.id < statePlayer.songs.length) ||
+      statePlayer.currentSong.id === statePlayer.songs.length
     ) {
-      setSongToPlay(statePlayer.currentSong.id);
-    } else if (statePlayer.currentSong.id === statePlayer.songs.length) {
       setSongToPlay(statePlayer.currentSong.id - 2);
     } else {
       setSongToPlay(statePlayer.songs.length - 1);
