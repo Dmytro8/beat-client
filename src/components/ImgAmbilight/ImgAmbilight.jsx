@@ -18,13 +18,15 @@ const ImgAmbilight = () => {
         />
       </div>
       <div className={classes.image}>
-        <LazyLoadImage
-          alt={statePlayer.currentSong.name}
-          effect="blur"
-          src={`${AUDIO_IMAGE_SERVER}/${statePlayer.currentSong.uuid}.${statePlayer.currentSong.imageType}`}
-          height={"100%"}
-          visibleByDefault={true}
-        />
+        <div className={classes.imageWrapper}>
+          <LazyLoadImage
+            alt={statePlayer.currentSong.name}
+            effect="blur"
+            src={`${AUDIO_IMAGE_SERVER}/${statePlayer.currentSong.uuid}.${statePlayer.currentSong.imageType}`}
+            height={"100%"}
+            visibleByDefault={true}
+          />
+        </div>
       </div>
     </div>
   );

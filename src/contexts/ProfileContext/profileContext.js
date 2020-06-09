@@ -6,6 +6,7 @@ let initialState = {
     username: "",
     email: "",
   },
+  favouriteSongs: [],
 };
 
 export const ProfileContext = createContext();

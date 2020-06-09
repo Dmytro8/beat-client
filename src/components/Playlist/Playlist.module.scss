@@ -14,7 +14,7 @@
     // grid-template-columns: 100px 150px 150px 100px 100px;
     grid-template-columns:
       minmax(100px, 1fr) minmax(150px, 3fr) minmax(150px, 3fr)
-      minmax(100px, 1fr) minmax(100px, 1fr);
+      minmax(50px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
   }
 
   thead,
@@ -22,9 +22,7 @@
   tr {
     display: contents;
   }
-
-  th,
-  td {
+  %table-cell {
     padding: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -32,30 +30,30 @@
   }
 
   th {
+    @extend %table-cell;
+    @extend %darkenFont;
     text-align: left;
     font-weight: normal;
-    font-size: 1.1rem;
-  }
-
-  th:last-child {
-    border: 0;
-  }
-
-  td {
-    display: grid;
-    align-content: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  // End Table styles
-  th {
-    color: $playlistFontColor;
     position: sticky;
     top: 0;
     z-index: 2;
     font-size: 15px;
     padding: 0 0 0 15px;
+    &:last-child {
+      border: 0;
+    }
   }
+
+  td {
+    @extend %table-cell;
+    display: grid;
+    align-content: center;
+    padding: auto {
+      top: 10px;
+      bottom: 10px;
+    }
+  }
+  // End Table styles
   .playlistTable {
   }
 }

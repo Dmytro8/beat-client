@@ -1,0 +1,24 @@
+@import "./_vars.scss";
+@mixin rounded {
+  border-radius: $radius;
+}
+
+@mixin square($size, $radius: 0) {
+  width: $size;
+  height: $size;
+
+  @if $radius != 0 {
+    border-radius: $radius;
+  }
+}
+
+@mixin avatar($size, $circle: false) {
+  width: $size;
+  height: $size;
+
+  @if $circle {
+    border-radius: $size / 2;
+  }
+}
+// .square-av { @include avatar(100px, $circle: false); }
+// .circle-av { @include avatar(100px, $circle: true); }

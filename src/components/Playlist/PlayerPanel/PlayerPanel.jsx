@@ -16,6 +16,7 @@ import {
   setSeekPosition,
 } from "../../../contexts/PlayerContext/actions";
 import { PlaylistButton } from "../../common/PlaylistControls";
+import { AUDIO_IMAGE_SERVER } from "../../../constants";
 
 const PlayerPanel = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
@@ -49,53 +50,65 @@ const PlayerPanel = () => {
     } else return <VolumeUpIcon />;
   };
 
+  const playerBgStyle = {
+    // background: `url(${AUDIO_IMAGE_SERVER}/${statePlayer.currentSong.uuid}.${statePlayer.currentSong.imageType})`,
+    backgroundImage: `url(${AUDIO_IMAGE_SERVER}/${statePlayer.currentSong.uuid}.${statePlayer.currentSong.imageType})`,
+    // backgroundImage: `url(https://www.publicdomainpictures.net/pictures/30000/velka/plain-white-background.jpg)`,
+    backgroundPosition: `center`,
+    backgroundRepeat: `no-repeat`,
+    backgroundSize: `cover`,
+    backgroundСolor: `rgba(255,255,255,0.72)`,
+  };
+
   return (
     <div className={classes.audioPlayer}>
-      <div className={classes.audioPlayerWrapper}>
-        <div className={classes.playerProgress}>
-          <span className={classes.progressTime}>
-            {formatTime(Math.round(statePlayer.seekPosition))}
-          </span>
-          <PrettoSlider
-            value={typeof position === "number" ? position : 0}
-            step={0.000001}
-            min={0.0}
-            max={statePlayer.currentSong.howl.duration()}
-            onChange={(event, newValue) => {
-              dispatchPlayer(setSeekPosition(newValue));
-            }}
-            onMouseUp={handleProgressChange}
-          />
-          {/* <span
+      <div className={classes.audioPlayerRelative}>
+        <div className={classes.audioPlayerBg} style={playerBgStyle}></div>
+        <div className={classes.audioPlayerContent}>
+          <div className={classes.audioPlayerWrapper}>
+            <div className={classes.playerProgress}>
+              <span className={classes.progressTime}>
+                {formatTime(Math.round(statePlayer.seekPosition))}
+              </span>
+              <PrettoSlider
+                value={typeof position === "number" ? position : 0}
+                step={0.000001}
+                min={0.0}
+                max={statePlayer.currentSong.howl.duration()}
+                onChange={(event, newValue) => {
+                  dispatchPlayer(setSeekPosition(newValue));
+                }}
+                onMouseUp={handleProgressChange}
+              />
+              {/* <span
           className={classes.playerProgressLine}
           style={{ "--width-line-after": `${progressRate}px` }}
         ></span> */}
-          <span className={classes.progressTime}>
-            {formatTime(Math.round(statePlayer.currentSong.howl.duration()))}
-          </span>
-        </div>
-        <div className={classes.audioPlayerBottom}>
-          <div className={classes.songTitle}>
-            <span className={classes.title}>
-              {statePlayer.currentSong.name}
-            </span>
-            <a href="#artist" className={classes.artist}>
-              {statePlayer.currentSong.artist}
-            </a>
-          </div>
-          <PlayerControls />
-          <div className={classes.volumeCart}>
-            <div className={classes.volume}>
-              {setVolumeIcon()}
-              <PrettoSlider
-                onChange={handleVolumeChange}
-                value={statePlayer.volume}
-              />
+              <span className={classes.progressTime}>
+                {formatTime(
+                  Math.round(statePlayer.currentSong.howl.duration())
+                )}
+              </span>
             </div>
-            <div>
-              <PlaylistButton startIcon={<ShoppingCartIcon />}>
-                Cart
-              </PlaylistButton>
+            <div className={classes.audioPlayerBottom}>
+              <div className={classes.songTitle}>
+                <span className={classes.title}>
+                  {statePlayer.currentSong.name}
+                </span>
+                <a href="#artist" className={classes.artist}>
+                  {statePlayer.currentSong.artist}
+                </a>
+              </div>
+              <PlayerControls />
+              <div className={classes.volumeCart}>
+                <div className={classes.volume}>
+                  {setVolumeIcon()}
+                  <PrettoSlider
+                    onChange={handleVolumeChange}
+                    value={statePlayer.volume}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

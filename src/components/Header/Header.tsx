@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { StyledButton } from "../common/FormControls";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { authAPI } from "../../api/authApi";
+import classnames from "classnames";
 
 import classes from "./Header.module.scss";
 import { NavLink } from "react-router-dom";
@@ -15,12 +16,16 @@ import {
 import { IconButton } from "@material-ui/core";
 
 const Header = () => {
-  // const [state, dispatch] = useContext(AuthContext);
+  const [authState, authDispatch] = useContext(AuthContext);
   // const logoutHandler = async () => {
   //   await authAPI.logout();
   //   await dispatch(updateAuthentication(false));
   //   await dispatch(updateToken(null));
   // };
+  const basketIconStyle = classnames({
+    shoppingBasket: true,
+    hidden: !authState.isAuthenticated,
+  });
   return (
     <header className={classes.header}>
       <nav>
@@ -42,7 +47,7 @@ const Header = () => {
         </NavLink>
       </nav>
       <div className={classes.rightContols}>
-        <IconButton aria-label="cart">
+        <IconButton aria-label="cart" className={basketIconStyle}>
           <StyledBadge badgeContent={4}>
             <ShoppingBasket />
           </StyledBadge>

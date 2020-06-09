@@ -1,4 +1,6 @@
 @import "../../styles/_vars.scss";
+// @use "sass:map";
+
 .header {
   display: grid;
   nav {
@@ -12,7 +14,7 @@
       color: #fff;
     }
     .activeLink {
-      color: $accentColor;
+      color: map-get($map: $webPaletteColors, $key: "accent");
     }
   }
   .rightContols {

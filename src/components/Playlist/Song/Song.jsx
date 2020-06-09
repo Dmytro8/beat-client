@@ -5,6 +5,8 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
+import AddIcon from "@material-ui/icons/Add";
+import DoneIcon from "@material-ui/icons/Done";
 
 import { Howl, Howler } from "howler";
 import { musicAPI } from "../../../api/musicAPI";
@@ -21,20 +23,12 @@ import {
   setSeekPosition,
 } from "../../../contexts/PlayerContext/actions";
 import { AUDIO_IMAGE_SERVER } from "../../../constants";
+import { LikeButon } from "../../common/PlaylistControls";
 
 const Song = ({ songId }) => {
-  // const { togglePlayPause, ready, loading, playing } = useAudioPlayer({
-  //   src: `https://beatstart.herokuapp.com/audio/music`,
-  //   format: song.type,
-  //   autoplay: false,
-  // });
-
-  // if (!ready && !loading) return <div>No audio to play</div>;
-  // if (loading) return <Spinner />;
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [songFetchingError, setSongFetchingError] = useState(false);
   const [isSongLoading, setIsSongLoading] = useState(false);
-  const [songTime, setSongTime] = useState(null);
   const [song, setSong] = useState("");
 
   useEffect(() => {
@@ -76,10 +70,8 @@ const Song = ({ songId }) => {
     // onpause: (songId) => {},
     // setSong(songHowl);
     // Fires when the sound finishes playing.
-
     return () => {
       dispatchPlayer(togglePlaying(false));
-      // setIsSongLoaded(false);
     };
   }, []);
 
@@ -109,6 +101,9 @@ const Song = ({ songId }) => {
       setIsSongLoading(true);
     }
   };
+
+  const addSongToCart = () => {};
+
   return (
     <Fragment>
       {songFetchingError ? (
@@ -145,11 +140,6 @@ const Song = ({ songId }) => {
                   <PlayArrowIcon />
                 )}
               </div>
-              {/* <img
-                src={`https://beatstart.herokuapp.com/audio/getAudioImage/${songDetails.uuid}.${songDetails.imageType}`}
-                alt={songDetails.name}
-                srcSet=""
-              /> */}
             </div>
           </td>
           <td>{song.name}</td>
@@ -157,9 +147,12 @@ const Song = ({ songId }) => {
             <a href={`#${song.artist}`}>{song.artist}</a>
           </td>
           <td>{song.length}</td>
-          <td className={classes.price}>
+          <td className={classes.likeSongCell}>
+            <AddIcon />
+          </td>
+          <td className={classes.priceCell}>
             <Button
-              className={classes.addButton}
+              className={classes.addToCartButton}
               startIcon={<ShoppingCartIcon className={classes.shoppingCart} />}
             >
               $27

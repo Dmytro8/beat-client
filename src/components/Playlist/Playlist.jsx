@@ -41,6 +41,7 @@ const Playlist = () => {
               <th>Artist</th>
               <th>Time</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>{songItems}</tbody>

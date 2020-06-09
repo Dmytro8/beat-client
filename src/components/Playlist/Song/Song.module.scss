@@ -1,13 +1,30 @@
 @import "../../../styles/_vars.scss";
+// $songActiveAmount: 5%;
 
 .songRow {
-  &:hover {
-    // cursor: pointer;
+  &:nth-last-child(1) {
     td {
-      background-color: $songHoverColor;
+      border-bottom: none;
     }
-    .addButton {
-      background-color: $playlistAddColor;
+  }
+  &:hover {
+    td {
+      @extend %lightenBackground;
+    }
+    .addToCartButton {
+      background-color: $activeColor;
+    }
+    .addToLikedButton {
+      background-color: transparent;
+      color: $activeColor;
+    }
+    .likeSongCell {
+      // text-align: center;
+
+      svg {
+        color: $activeColor;
+        cursor: pointer;
+      }
     }
     .shoppingCart {
       display: inline;
@@ -19,19 +36,9 @@
   .shoppingCart {
     display: none;
   }
-  td:first-child {
-    padding-left: 25px;
-  }
-  td:last-child {
-    padding-right: 25px;
-    padding-left: 0;
-  }
   .songImageCell {
     display: grid;
-    // justify-content: center;
-
     align-content: center;
-
     .songImage {
       display: block;
       background-color: #dbdbdb;
@@ -64,7 +71,7 @@
         align-content: center;
         svg {
           font-size: 30px;
-          color: $playlistAddColor;
+          color: $accentColor;
           padding: 5px;
           background-color: rgba(255, 255, 255, 0.9);
           border-radius: 50%;
@@ -75,6 +82,10 @@
       }
     }
   }
+  .likeSongCell {
+    display: grid;
+    justify-content: center;
+  }
   .artistCell {
     a {
       width: fit-content;
@@ -84,28 +95,30 @@
     }
   }
   td {
-    color: $playlistFontColor;
-    border-bottom: 1px solid $playlistFontColor;
-  }
-  td:nth-child(2) {
-    color: white;
-  }
-  &:nth-last-child(1) {
-    td {
-      border-bottom: none;
+    @extend %darkenFont;
+    border-bottom: 1px solid
+      darken($color: $fontMainColor, $amount: $amounFontDarken);
+    &:nth-child(2) {
+      color: white;
+    }
+    &:first-child {
+      padding-left: 25px;
+    }
+    &:last-child {
+      padding-right: 25px;
+      padding-left: 0;
     }
   }
-  .addButton {
-    // background-color: $playlistAddColor;
+  .addToCartButton {
     padding: 5px;
     color: white;
-    // &:hover {
-    //   background-color: $playlistAddColorClick;
-    // }
+  }
+  .addToLikedButton {
+    color: white;
   }
 }
 .songRowActive {
   td {
-    background-color: $songHoverColor;
+    @extend %lightenBackground;
   }
 }

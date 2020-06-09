@@ -40,6 +40,22 @@ export const PlaylistButton = withStyles({
     "&:hover": {
       backgroundColor: "#006fe8",
     },
+    ".MuiButton-startIcon": {
+      marginLeft: "unset",
+      marginRight: "unset",
+    },
+  },
+})(Button);
+
+export const LikeButon = withStyles({
+  root: {
+    "& .MuiButton-startIcon": {
+      marginLeft: "unset",
+      marginRight: "unset",
+    },
+    "& .MuiButton-startIcon > *:first-child": {
+      fontSize: "25px",
+    },
   },
 })(Button);
 

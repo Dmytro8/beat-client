@@ -1,14 +1,31 @@
 @import "../../../styles/_vars.scss";
 .audioPlayer {
-  border-top: 4px double $playlistFontColor;
   color: white;
   align-self: end;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
+  height: 100px;
   .audioPlayerWrapper {
     padding: 0 25px 10px 25px;
+  }
+  .audioPlayerRelative {
+    position: relative;
+    width: inherit;
+    height: inherit;
+    overflow: hidden;
+  }
+  .audioPlayerBg {
+    width: inherit;
+    height: inherit;
+    filter: blur(12px);
+    opacity: 0.8;
+    position: absolute;
+  }
+  .audioPlayerContent {
+    position: absolute;
+    width: inherit;
   }
   .playerProgress {
     display: grid;
@@ -18,24 +35,9 @@
     gap: 10px;
     padding: 4px 0;
     .progressTime {
-      color: #dfdfdf;
+      color: #fff;
       font-size: 12px;
     }
-    // .playerProgressLine {
-    //   display: block;
-    //   height: 4px;
-    //   width: 100%;
-    //   background-color: $playlistFontColor;
-    //   border-radius: 2px;
-    //   &::after {
-    //     content: "";
-    //     width: var(--width-line-after);
-    //     height: 4px;
-    //     border-radius: 2px;
-    //     background-color: white;
-    //     position: absolute;
-    //   }
-    // }
   }
 
   .audioPlayerBottom {
@@ -53,7 +55,7 @@
     }
     .artist {
       font-size: 14px;
-      color: $playlistFontColor;
+      @extend %darkenFont;
       &:hover {
         text-decoration: underline;
       }
@@ -72,7 +74,7 @@
       align-items: center;
       grid-gap: 4px;
       gap: 10px;
-      width: 105px;
+      width: 130px;
     }
   }
 }

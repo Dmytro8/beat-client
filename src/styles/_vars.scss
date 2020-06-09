@@ -1,20 +1,38 @@
 $googleColor: #db4437;
 $facebookColor: #3b5998;
 
-$playlistBgColor: #252525;
-$playlistFontColor: #717175;
-$playlistAddColor: #0883fc;
-$playlistAddColorClick: #006fe8;
-
 //Web color palette
-// $mainBGColor: #252525;
-$mainBGColor: #2c2c3c;
-$activeColor: #25b55c;
+$mainBGColor: #252525;
+// $mainBGColor: #2c2c3c;
+$activeColor: darkorange;
 $accentColor: #0883fc;
 $fontMainColor: #fff;
-$fontGreyColor: #717175;
+$amountBGLighten: 5%;
+$amountBGDarken: 50%;
+$amounFontLighten: 10%;
+$amounFontDarken: 60%;
 
-$songHoverColor: #ffffff0c;
+$radius: 3px;
 
-//Heights
+$webPaletteColors: (
+  "active": darkorange,
+  "accent": #0883fc,
+  "success": #44bba4,
+  "background": #252525,
+  "fonts": #fff,
+);
+
 $headerHeight: 100px;
+
+%darkenFont {
+  color: darken($color: $fontMainColor, $amount: $amounFontDarken);
+}
+%lightenFont {
+  color: lighten($color: $fontMainColor, $amount: $amounFontLighten);
+}
+%darkenBackground {
+  background-color: darken($color: $mainBGColor, $amount: $amountBGDarken);
+}
+%lightenBackground {
+  background-color: lighten($color: $mainBGColor, $amount: $amountBGLighten);
+}
