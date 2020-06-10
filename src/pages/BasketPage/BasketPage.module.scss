@@ -1,0 +1,24 @@
+@import "../../styles/_vars.scss";
+$gap: 40px;
+
+.basket {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 300px;
+  gap: $gap;
+  padding: auto {
+    bottom: $gap;
+  }
+  %basketWrapper {
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    overflow: hidden;
+    padding: 15px;
+  }
+  .basketItems {
+    @extend %basketWrapper;
+  }
+  .basketPayment {
+    @extend %basketWrapper;
+  }
+}

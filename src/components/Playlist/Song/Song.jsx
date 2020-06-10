@@ -1,20 +1,28 @@
 import React, { useEffect, useState, Fragment, useContext } from "react";
-import { Spinner } from "../../common/FormControls";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
+//Material imports
 import Button from "@material-ui/core/Button";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import AddIcon from "@material-ui/icons/Add";
 import DoneIcon from "@material-ui/icons/Done";
+import CloseIcon from "@material-ui/icons/Close";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 
 import { Howl, Howler } from "howler";
+import { Spinner } from "../../common/FormControls";
 import { musicAPI } from "../../../api/musicAPI";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
+
 import classes from "./Song.module.scss";
 import classnames from "classnames";
+
 import { PlayerContext } from "../../../contexts/PlayerContext/PlayerContext";
+import { ProfileContext } from "../../../contexts/ProfileContext/ProfileContext";
 import {
   setCurrentSong,
   togglePlaying,
@@ -22,11 +30,16 @@ import {
   togglePaused,
   setSeekPosition,
 } from "../../../contexts/PlayerContext/actions";
+import {
+  addSongToBasket,
+  removeSongFromBasket,
+} from "../../../contexts/ProfileContext/actions";
 import { AUDIO_IMAGE_SERVER } from "../../../constants";
 import { LikeButon } from "../../common/PlaylistControls";
 
 const Song = ({ songId }) => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
+  const [stateProfile, dispatchProfile] = useContext(ProfileContext);
   const [songFetchingError, setSongFetchingError] = useState(false);
   const [isSongLoading, setIsSongLoading] = useState(false);
   const [song, setSong] = useState("");
@@ -102,7 +115,17 @@ const Song = ({ songId }) => {
     }
   };
 
-  const addSongToCart = () => {};
+  const addToBasket = (songId) => {
+    if (!stateProfile.basket.includes(songId)) {
+      dispatchProfile(addSongToBasket(songId));
+    }
+  };
+
+  const removeFromBasket = (songId) => {
+    if (stateProfile.basket.includes(songId)) {
+      dispatchProfile(removeSongFromBasket(songId));
+    }
+  };
 
   return (
     <Fragment>
@@ -151,12 +174,31 @@ const Song = ({ songId }) => {
             <AddIcon />
           </td>
           <td className={classes.priceCell}>
-            <Button
-              className={classes.addToCartButton}
-              startIcon={<ShoppingCartIcon className={classes.shoppingCart} />}
-            >
-              $27
-            </Button>
+            {stateProfile.basket.includes(songId) ? (
+              <Button
+                className={classes.cartButton}
+                onClick={() => removeFromBasket(songId)}
+              >
+                <span className={classes.basketRemove}>
+                  <RemoveShoppingCartIcon className={classes.shoppingCart} />
+                  <CloseIcon className={classes.removeIcon} />
+                </span>
+                <span className={classes.basketDone}>
+                  <ShoppingCartIcon />
+                  <DoneIcon className={classes.doneIcon} />
+                </span>
+              </Button>
+            ) : (
+              <Button
+                className={classes.cartButton}
+                startIcon={
+                  <AddShoppingCartIcon className={classes.shoppingCart} />
+                }
+                onClick={() => addToBasket(songId)}
+              >
+                $27
+              </Button>
+            )}
           </td>
         </tr>
       )}

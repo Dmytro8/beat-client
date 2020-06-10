@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { StyledButton } from "../common/FormControls";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
+
 import { authAPI } from "../../api/authApi";
 import classnames from "classnames";
 
 import classes from "./Header.module.scss";
 import { NavLink } from "react-router-dom";
-import { HOME, MUSIC } from "../../constants/route.urls";
+import { HOME, MUSIC, BASKET } from "../../constants/route.urls";
 
 import {
   StyledBadge,
@@ -14,18 +16,24 @@ import {
   AccountCircle,
 } from "../common/HeaderControls";
 import { IconButton } from "@material-ui/core";
+import { AccountMenu } from "../AccountMenu";
 
 const Header = () => {
   const [authState, authDispatch] = useContext(AuthContext);
+  const [profileState, profileDispatch] = useContext(ProfileContext);
   // const logoutHandler = async () => {
   //   await authAPI.logout();
   //   await dispatch(updateAuthentication(false));
   //   await dispatch(updateToken(null));
   // };
-  const basketIconStyle = classnames({
-    shoppingBasket: true,
-    hidden: !authState.isAuthenticated,
+  // const rightControls = classnames({
+  //   rightControls: true,
+  //   authenticated: authState.isAuthenticated,
+  // });
+  let rightControls = classnames(classes.rightControls, {
+    [classes.authenticated]: !authState.isAuthenticated,
   });
+
   return (
     <header className={classes.header}>
       <nav>
@@ -46,15 +54,27 @@ const Header = () => {
           Music
         </NavLink>
       </nav>
-      <div className={classes.rightContols}>
-        <IconButton aria-label="cart" className={basketIconStyle}>
-          <StyledBadge badgeContent={4}>
-            <ShoppingBasket />
-          </StyledBadge>
-        </IconButton>
-        <IconButton aria-label="cart">
-          <AccountCircle />
-        </IconButton>
+      <div className={rightControls}>
+        <div className={classes.authenticatedControls}>
+          <IconButton aria-label="cart">
+            <StyledBadge badgeContent={profileState.basket.length}>
+              <NavLink
+                exact
+                to={BASKET}
+                className={classes.link}
+                activeClassName={classes.activeLink}
+              >
+                <ShoppingBasket />
+              </NavLink>
+            </StyledBadge>
+          </IconButton>
+          <AccountMenu />
+        </div>
+        {/* <div className={classes.noAuthenticatedControls}>
+          <button>
+            <span>Sign in</span>
+          </button>
+        </div> */}
       </div>
       {/* <StyledButton variant="contained" onClick={logoutHandler}>
         Logout

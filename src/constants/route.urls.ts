@@ -1,5 +1,6 @@
 export const HOME = "/";
 export const MUSIC = "/music";
+export const BASKET = "/basket";
 
 export const LOGIN = "/login";
 export const REGISTRATION = "/registration";
