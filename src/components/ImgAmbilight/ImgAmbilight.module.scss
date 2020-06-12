@@ -1,7 +1,7 @@
 .imageAmbilight {
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: inherit;
+  height: inherit;
   .bgAmbilight {
     transition: all 0.3s;
     filter: blur(1.8vw);

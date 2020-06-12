@@ -19,6 +19,10 @@ export type SongType = {
   name: string;
   type: string;
   uuid: string;
+  howl: {
+    play(): any;
+    pause(): any;
+  };
 };
 
 type SetPlaylistActionType = {

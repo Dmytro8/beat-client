@@ -4,6 +4,7 @@ import { PlayerContext } from "../../contexts/PlayerContext/PlayerContext";
 import { SongType } from "../../contexts/PlayerContext/actions";
 
 import classes from "./BasketPage.module.scss";
+import { SongCard } from "../../components/SongCard";
 
 const BasketPage = () => {
   const [profileState, profileDispatch] = useContext(ProfileContext);
@@ -17,11 +18,28 @@ const BasketPage = () => {
     });
     return basketSongs;
   };
-  console.log(getBasketSongs());
+
+  const renderBasket = () => {
+    const basketSongs = getBasketSongs();
+    if (basketSongs.length === 0) {
+      return (
+        <div className={classes.emptyBasket}>
+          <p>Your basket is empty</p>
+        </div>
+      );
+    } else
+      return (
+        <div className={classes.items}>
+          {basketSongs.map((song: SongType) => {
+            return <SongCard song={song} />;
+          })}
+        </div>
+      );
+  };
 
   return (
     <div className={classes.basket}>
-      <div className={classes.basketItems}></div>
+      <div className={classes.basketItems}>{renderBasket()}</div>
       <div className={classes.basketPayment}></div>
     </div>
   );

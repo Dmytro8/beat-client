@@ -50,7 +50,7 @@ const profileReducer = (state = initialState, action) => {
       };
     }
     default: {
-      throw new Error(`Unhandled action type`);
+      return state;
     }
   }
 };

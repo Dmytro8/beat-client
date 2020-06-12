@@ -84,7 +84,7 @@ const Song = ({ songId }) => {
     // setSong(songHowl);
     // Fires when the sound finishes playing.
     return () => {
-      dispatchPlayer(togglePlaying(false));
+      // dispatchPlayer(togglePlaying(false));
     };
   }, []);
 

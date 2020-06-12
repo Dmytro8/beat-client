@@ -14,6 +14,7 @@ const MusicPage = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [isSongsLoading, setIsSongsLoading] = useState(true);
   useEffect(() => {
+    console.log(statePlayer);
     const getAllSongs = async () => {
       setIsSongsLoading(true);
       const response = await musicAPI.getAllSongs();
@@ -21,7 +22,9 @@ const MusicPage = () => {
       setIsSongsLoading(false);
     };
     getAllSongs();
-    return () => {};
+    return () => {
+      console.log(statePlayer);
+    };
   }, [dispatchPlayer]);
   return (
     <Fragment>
@@ -42,7 +45,6 @@ const MusicPage = () => {
                 statePlayer.currentSong.constructor === Object) ||
               statePlayer.currentSong.imageType === null ? (
                 <Fragment>
-                  <div className={classes.musicNoteIconAmbilight}></div>
                   <div className={classes.musicNoteIcon}>
                     <MusicNote />
                   </div>

@@ -10,15 +10,45 @@ $gap: 40px;
     bottom: $gap;
   }
   %basketWrapper {
-    border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.2);
     overflow: hidden;
-    padding: 15px;
   }
   .basketItems {
     @extend %basketWrapper;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    display: grid;
+    position: relative;
+    // grid-template-rows: repeat(auto-fill, 300px);
+    grid-template-rows: repeat(auto-fit, 300px);
+    overflow-y: auto;
+    .emptyBasket {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      .emptyBasketMessage {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+      }
+    }
+    .items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      justify-content: stretch;
+      height: fit-content;
+      padding: 15px;
+    }
   }
   .basketPayment {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
     @extend %basketWrapper;
   }
 }
