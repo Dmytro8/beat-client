@@ -10,17 +10,18 @@ import { BasketPage } from "../pages/BasketPage";
 
 export const MainRoutes = () => {
   return (
-    <MainLayout>
-      <Suspense fallback={<AppSpinner />}>
-        <Switch>
-          <Route path={HOME} exact component={HomePage} />
-          <PlayerProvider>
+    <PlayerProvider>
+      <MainLayout>
+        <Suspense fallback={<AppSpinner />}>
+          <Switch>
+            <Route path={HOME} exact component={HomePage} />
+
             <Route path={MUSIC} exact component={MusicPage} />
             <Route path={BASKET} exact component={BasketPage} />
-          </PlayerProvider>
-          <Redirect to={HOME} />
-        </Switch>
-      </Suspense>
-    </MainLayout>
+            <Redirect to={HOME} />
+          </Switch>
+        </Suspense>
+      </MainLayout>
+    </PlayerProvider>
   );
 };

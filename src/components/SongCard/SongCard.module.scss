@@ -1,3 +1,4 @@
+// @import "../../styles/_vars.scss";
 @import "../../styles/_vars.scss";
 $card-border: 5px;
 $card-description: 100px;
@@ -11,14 +12,16 @@ $card-description: 100px;
   border-radius: 10px;
   transition: 0.4s all ease;
   position: relative;
-  padding: 5px;
-  overflow: hidden;
   background-color: rgba(255, 255, 255, 0.2);
+  transition: all 1s ease;
   &:hover {
     .play {
       display: block;
     }
-    // transform: scale(1.02);
+    .cardDescription {
+      transform: translateY(0);
+    }
+    // transform: scale(1.05);
   }
   .image {
     width: inherit;
@@ -26,6 +29,7 @@ $card-description: 100px;
     span {
       width: inherit;
       height: inherit;
+      display: block !important;
       img {
         border-radius: 10px;
         object-fit: cover;
@@ -43,13 +47,13 @@ $card-description: 100px;
     background-color: rgba(255, 255, 255, 0.5);
     display: grid;
     align-self: end;
-    transform: translateY(-5px) translateX(5px);
+    transform: translateY(50px);
     border-radius: 0 0 5px 5px;
     color: white;
-    width: calc(100% - 10px);
+    width: 100%;
     height: $card-description;
     grid-auto-flow: column;
-
+    transition: all 0.3s ease;
     .title {
       justify-self: start;
       align-self: end;
@@ -60,7 +64,7 @@ $card-description: 100px;
       justify-self: end;
       align-self: end;
       margin-right: 30px;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
       cursor: pointer;
       svg {
         font-size: 60px;
