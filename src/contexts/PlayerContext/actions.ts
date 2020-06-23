@@ -146,6 +146,7 @@ export type PlayerActionTypes =
   | ToggleRepeatActionType
   | TogglePlayingActionType
   | TogglePausedActionType
+  | SetVolumeActionType
   | SetHowlActionType
   | SetSeekPositionActioType
   | SetRandomIndexActionType;

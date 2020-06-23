@@ -1,11 +1,14 @@
-import React, { useReducer, createContext } from "react";
+import React, { useReducer, createContext, FC } from "react";
 import {
   SET_PROFILE,
   ADD_SONG_TO_BASKET,
   ADD_SONG_TO_FAVOURITE,
   REMOVE_SONG_FROM_FAVOURITE,
   REMOVE_SONG_FROM_BASKET,
+  ProfileProviderPropsType,
+  ProfileStateType,
 } from "./types";
+import { ProfileActionTypes } from "./actions";
 
 let initialState = {
   profile: {
@@ -16,9 +19,12 @@ let initialState = {
   basket: [],
 };
 
-export const ProfileContext = createContext();
+export const ProfileContext = createContext({});
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (
+  state: ProfileStateType = initialState,
+  action: ProfileActionTypes
+) => {
   switch (action.type) {
     case SET_PROFILE: {
       return { ...state, profile: action.profile };
@@ -55,7 +61,7 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const ProfileProvider = ({ children }) => {
+export const ProfileProvider: FC<ProfileProviderPropsType> = ({ children }) => {
   const [profileState, profileDispatch] = useReducer(
     profileReducer,
     initialState

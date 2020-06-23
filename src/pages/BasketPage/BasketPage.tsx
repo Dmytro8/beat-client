@@ -14,9 +14,9 @@ import { blueGrey } from "@material-ui/core/colors";
 import { removeSongFromBasket } from "../../contexts/ProfileContext/actions";
 
 const BasketPage = () => {
-  const [profileState, profileDispatch] = useContext(ProfileContext);
-  const [playerState, playerDispatch] = useContext(PlayerContext);
-  const [basketItems, setBasketItems] = useState([]);
+  const [profileState, profileDispatch]: any = useContext(ProfileContext);
+  const [playerState, playerDispatch]: any = useContext(PlayerContext);
+  const [basketItems, setBasketItems]: any = useState([]);
 
   useEffect(() => {
     let basketSongs = playerState.songs.filter((song: SongType) => {

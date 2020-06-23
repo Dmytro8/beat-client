@@ -4,12 +4,13 @@ export const UPDATE_AUTHORIZING = "UPDATE_AUTHORIZING";
 
 export type AuthProviderPropsType = { children: React.ReactNode };
 
-export type InitialAuthStateType = {
-  token: string;
+export type AuthStateType = {
+  token: null | string;
   isAuthenticated: boolean;
+  isAuthorizing: boolean;
 };
 
 export type AuthContextType = {
-  state: InitialAuthStateType;
+  state: AuthStateType;
   dispatch: ({ type }: { type: string }) => void;
 };

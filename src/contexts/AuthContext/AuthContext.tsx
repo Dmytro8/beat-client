@@ -1,8 +1,11 @@
-import React, { useReducer, createContext } from "react";
+import { AuthActionTypes } from "./actions";
+import React, { useReducer, createContext, ReactNode, FC } from "react";
 import {
   UPDATE_TOKEN,
   UPDATE_AUTHENTICATION,
   UPDATE_AUTHORIZING,
+  AuthProviderPropsType,
+  AuthStateType,
 } from "./types";
 
 let initialState = {
@@ -11,9 +14,12 @@ let initialState = {
   isAuthorizing: false,
 };
 
-export const AuthContext = createContext();
+export const AuthContext = createContext({});
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (
+  state: AuthStateType = initialState,
+  action: AuthActionTypes
+) => {
   switch (action.type) {
     case UPDATE_TOKEN: {
       return { ...state, token: action.token };
@@ -30,7 +36,7 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider: FC<AuthProviderPropsType> = ({ children }) => {
   const [authState, authDispatch] = useReducer(authReducer, initialState);
   return (
     <AuthContext.Provider value={[authState, authDispatch]}>

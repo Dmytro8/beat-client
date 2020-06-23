@@ -17,10 +17,11 @@ import {
 } from "../common/HeaderControls";
 import { IconButton } from "@material-ui/core";
 import { AccountMenu } from "../AccountMenu";
+import { AuthContextType } from "../../contexts/AuthContext/types";
 
 const Header = () => {
-  const [authState, authDispatch] = useContext(AuthContext);
-  const [profileState, profileDispatch] = useContext(ProfileContext);
+  const [authState, authDispatch]: any = useContext(AuthContext);
+  const [profileState, profileDispatch]: any = useContext(ProfileContext);
   // const logoutHandler = async () => {
   //   await authAPI.logout();
   //   await dispatch(updateAuthentication(false));

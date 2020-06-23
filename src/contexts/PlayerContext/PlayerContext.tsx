@@ -1,4 +1,4 @@
-import React, { useReducer, createContext } from "react";
+import React, { useReducer, createContext, FC } from "react";
 
 import {
   SET_PLAYLIST,
@@ -11,10 +11,14 @@ import {
   SET_VOLUME,
   SET_SEEK_POSITION,
   SET_RANDOM_INDEX,
+  PlayerProviderPropsType,
+  PlayerStateType,
+  SongType,
 } from "./types";
+import { PlayerActionTypes } from "./actions";
 
 let initialState = {
-  currentSong: {},
+  currentSong: null,
   songs: [],
   isRepeat: false,
   isRandom: false,
@@ -26,9 +30,12 @@ let initialState = {
   seekPosition: 0.0,
 };
 
-export const PlayerContext = createContext();
+export const PlayerContext = createContext({});
 
-const playerReducer = (state = initialState, action) => {
+const playerReducer = (
+  state: PlayerStateType = initialState,
+  action: PlayerActionTypes
+) => {
   switch (action.type) {
     case SET_PLAYLIST:
       return {
@@ -38,7 +45,7 @@ const playerReducer = (state = initialState, action) => {
     case SET_HOWL:
       return {
         ...state,
-        songs: state.songs.map((song) => {
+        songs: state.songs.map((song: SongType) => {
           if (song.id === action.songId) {
             return {
               ...song,
@@ -95,7 +102,7 @@ const playerReducer = (state = initialState, action) => {
   }
 };
 
-export const PlayerProvider = ({ children }) => {
+export const PlayerProvider: FC<PlayerProviderPropsType> = ({ children }) => {
   const [playerState, playerDispatch] = useReducer(playerReducer, initialState);
   return (
     <PlayerContext.Provider value={[playerState, playerDispatch]}>

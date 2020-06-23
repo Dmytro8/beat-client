@@ -14,7 +14,6 @@ const MusicPage = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [isSongsLoading, setIsSongsLoading] = useState(true);
   useEffect(() => {
-    console.log(statePlayer);
     const getAllSongs = async () => {
       setIsSongsLoading(true);
       const response = await musicAPI.getAllSongs();
@@ -22,9 +21,7 @@ const MusicPage = () => {
       setIsSongsLoading(false);
     };
     getAllSongs();
-    return () => {
-      console.log(statePlayer);
-    };
+    return () => {};
   }, [dispatchPlayer]);
   return (
     <Fragment>
