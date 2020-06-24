@@ -6,12 +6,14 @@ import {
   UPDATE_AUTHORIZING,
   AuthProviderPropsType,
   AuthStateType,
+  UPDATE_ERROR_STATUS,
 } from "./types";
 
 let initialState = {
   token: null,
   isAuthenticated: false,
   isAuthorizing: false,
+  isError: false,
 };
 
 export const AuthContext = createContext({});
@@ -29,6 +31,9 @@ const authReducer = (
     }
     case UPDATE_AUTHORIZING: {
       return { ...state, isAuthorizing: action.isAuthorizing };
+    }
+    case UPDATE_ERROR_STATUS: {
+      return { ...state, isError: action.isError };
     }
     default: {
       throw new Error(`Unhandled action type`);

@@ -9,16 +9,27 @@ import classes from "./MusicPage.module.scss";
 import { AUDIO_IMAGE_SERVER } from "../../constants";
 import { MusicNote } from "../../components/common/PlaylistControls";
 import { ImgAmbilight } from "../../components/ImgAmbilight";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { updateErrorStatus } from "../../contexts/AuthContext/actions";
+import { ERROR } from "../../constants/route.urls";
+import { useHistory } from "react-router-dom";
 
 const MusicPage = () => {
+  const [authState, authDispatch] = useContext(AuthContext);
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [isSongsLoading, setIsSongsLoading] = useState(true);
+  let history = useHistory();
   useEffect(() => {
     const getAllSongs = async () => {
       setIsSongsLoading(true);
       const response = await musicAPI.getAllSongs();
-      dispatchPlayer(setPlaylist(response.slice(0, 3)));
-      setIsSongsLoading(false);
+      if (response.status !== 500) {
+        dispatchPlayer(setPlaylist(response.slice(0, 3)));
+        setIsSongsLoading(false);
+      } else {
+        authDispatch(updateErrorStatus(true));
+        history.push(ERROR);
+      }
     };
     getAllSongs();
     return () => {};

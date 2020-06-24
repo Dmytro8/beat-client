@@ -2,6 +2,7 @@ import {
   UPDATE_AUTHENTICATION,
   UPDATE_TOKEN,
   UPDATE_AUTHORIZING,
+  UPDATE_ERROR_STATUS,
 } from "./types";
 
 type UpdateAuthenticationActionType = {
@@ -41,7 +42,21 @@ export const updateToken = (token: string | null): UpdateTokenActionType => {
   };
 };
 
+type UpdateErrorStatusActionType = {
+  type: typeof UPDATE_ERROR_STATUS;
+  isError: boolean;
+};
+export const updateErrorStatus = (
+  isError: boolean
+): UpdateErrorStatusActionType => {
+  return {
+    type: UPDATE_ERROR_STATUS,
+    isError,
+  };
+};
+
 export type AuthActionTypes =
   | UpdateTokenActionType
   | UpdateAuthenticationActionType
-  | UpdateAuthorizingActionType;
+  | UpdateAuthorizingActionType
+  | UpdateErrorStatusActionType;

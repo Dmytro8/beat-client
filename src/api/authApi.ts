@@ -14,13 +14,13 @@ const instance = axios.create({
 });
 
 export const authAPI = {
-  async getCurrentUser(accessToken) {
+  async getCurrentUser(accessToken: string) {
     const response = await instance.get(`/user/me`, {
       headers: { Authorization: "Bearer " + accessToken },
     });
     return response.data;
   },
-  async checkUsername(username) {
+  async checkUsername(username: string) {
     const response = await instance
       .get(`/auth/checkUsername?username=${username}`)
       .catch((error) => {
@@ -28,7 +28,7 @@ export const authAPI = {
       });
     return response;
   },
-  async signup(user) {
+  async signup(user: object) {
     const response = await instance
       .post(`/auth/signup`, {
         ...user,
@@ -39,7 +39,7 @@ export const authAPI = {
     localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
     return response;
   },
-  async login(usernameOrEmail = "", password = "") {
+  async login(usernameOrEmail: string = "", password: string = "") {
     return await instance
       .post(`/auth/login`, {
         usernameOrEmail,
@@ -53,7 +53,7 @@ export const authAPI = {
         return error.response.status;
       });
   },
-  async logout(accessToken) {
+  async logout(accessToken: string) {
     // const response = await instance.post(`/auth/logout`, {
     //   headers: { Authorization: "Bearer " + accessToken },
     // });
