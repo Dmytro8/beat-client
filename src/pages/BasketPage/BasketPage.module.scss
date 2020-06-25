@@ -152,13 +152,20 @@ $gap: 40px;
         h4 {
           justify-self: end;
         }
-        // align-self: center;
       }
       button {
-        background: map-get($map: $webPaletteColors, $key: "success");
         color: white;
         width: 230px;
         height: 50px;
+        color: map-get($map: $webPaletteColors, $key: "success");
+        border: 1px solid map-get($map: $webPaletteColors, $key: "success");
+        &:hover,
+        &:focus {
+          box-shadow: inset 0 -51px 0 0 darken($color:
+                map-get($map: $webPaletteColors, $key: "success"), $amount: 10);
+          color: white;
+          border: 1px solid white;
+        }
       }
     }
   }
