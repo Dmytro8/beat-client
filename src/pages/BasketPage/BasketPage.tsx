@@ -89,7 +89,7 @@ const BasketPage = () => {
   };
 
   return (
-    <div className={classes.basket}>
+    <section className={classes.basket}>
       <div className={classes.basketItems}>{renderBasket()}</div>
       <div className={classes.basketPayment}>
         <div className={classes.basketPaymentHeader}>
@@ -104,7 +104,7 @@ const BasketPage = () => {
           <Button>Checkout</Button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
