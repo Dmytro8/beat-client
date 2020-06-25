@@ -4,27 +4,8 @@ import {
   API_BASE_URL_LOCAL,
   ACCESS_TOKEN,
 } from "../constants/index";
+import { MethodType } from "../types/axios";
 
-type MethodType =
-  | "get"
-  | "GET"
-  | "delete"
-  | "DELETE"
-  | "head"
-  | "HEAD"
-  | "options"
-  | "OPTIONS"
-  | "post"
-  | "POST"
-  | "put"
-  | "PUT"
-  | "patch"
-  | "PATCH"
-  | "link"
-  | "LINK"
-  | "unlink"
-  | "UNLINK"
-  | undefined;
 const request = async (
   method: MethodType = "get",
   urlEndPoint: string = API_BASE_URL_GLOBAL,

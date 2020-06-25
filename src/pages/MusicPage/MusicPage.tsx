@@ -4,9 +4,7 @@ import { musicAPI } from "../../api/musicAPI";
 import { PlayerContext } from "../../contexts/PlayerContext/PlayerContext";
 import { setPlaylist } from "../../contexts/PlayerContext/actions";
 import { Spinner } from "../../components/common/FormControls";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import classes from "./MusicPage.module.scss";
-import { AUDIO_IMAGE_SERVER } from "../../constants";
 import { MusicNote } from "../../components/common/PlaylistControls";
 import { ImgAmbilight } from "../../components/ImgAmbilight";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
@@ -15,8 +13,8 @@ import { ERROR } from "../../constants/route.urls";
 import { useHistory } from "react-router-dom";
 
 const MusicPage = () => {
-  const [authState, authDispatch] = useContext(AuthContext);
-  const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
+  const [authState, authDispatch]: any = useContext(AuthContext);
+  const [statePlayer, dispatchPlayer]: any = useContext(PlayerContext);
   const [isSongsLoading, setIsSongsLoading] = useState(true);
   let history = useHistory();
   useEffect(() => {

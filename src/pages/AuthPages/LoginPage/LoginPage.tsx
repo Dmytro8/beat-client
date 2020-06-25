@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL } from "../../../constants/index";
 import { AuthPaper } from "../AuthPaper";
-// import { } from '@fortawesome/free-solid-svg-icons'
 
 const LoginPage = () => {
   return (

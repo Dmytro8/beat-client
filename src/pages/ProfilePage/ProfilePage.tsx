@@ -1,18 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 
-import { Song } from "../../components/Playlist/Song";
 import { musicAPI } from "../../api/musicAPI";
 import { Spinner } from "../../components/common/FormControls";
 import { Playlist } from "../../components/Playlist";
 import { PlayerContext } from "../../contexts/PlayerContext/PlayerContext";
 import { setPlaylist } from "../../contexts/PlayerContext/actions";
 
-import playlist from "../../static/images/playlist.png";
-
 const ProfilePage = () => {
-  const [stateProfile, dispatchProfile] = useContext(ProfileContext);
-  const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
+  const [stateProfile, dispatchProfile]: any = useContext(ProfileContext);
+  const [statePlayer, dispatchPlayer]: any = useContext(PlayerContext);
   const [isSongsLoading, setIsSongsLoading] = useState(true);
   useEffect(() => {
     const getAllSongs = async () => {
