@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { AnimatePresence } from "framer-motion";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation, Redirect } from "react-router-dom";
+import { HOME } from "../../constants/route.urls";
 
 type RoutesProps = {
   exitBeforeEnter?: boolean;
@@ -17,6 +18,7 @@ export const AnimatedRoutes: FC<RoutesProps> = ({
     <AnimatePresence exitBeforeEnter={exitBeforeEnter} initial={initial}>
       <Switch location={location} key={location.pathname}>
         {children}
+        <Redirect to={HOME} />
       </Switch>
     </AnimatePresence>
   );

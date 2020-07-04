@@ -1,5 +1,11 @@
 import React, { Suspense } from "react";
-import { HOME, MUSIC, BASKET, ERROR } from "../constants/route.urls";
+import {
+  HOME,
+  MUSIC,
+  BASKET,
+  ERROR,
+  REGISTRATION,
+} from "../constants/route.urls";
 import { AppSpinner } from "../components/common/FormControls";
 import { PlayerProvider } from "../contexts/PlayerContext/PlayerContext";
 import { MainLayout } from "../layouts/MainLayout";
@@ -8,7 +14,10 @@ import { MusicPage } from "../pages/MusicPage";
 import { BasketPage } from "../pages/BasketPage";
 import { ErrorPage } from "../pages/ErrorPage";
 import { AnimatedRoutes } from "./common/AnimatedRoutes";
-import { RouteTransition } from "./common/RouteTransition";
+import { RouteTransition } from "./CustomRoutes/RouteTransition";
+import { RegistrationPage } from "../pages/AuthPages/RegistrationPage";
+import { PrivateRouteTransition } from "./CustomRoutes/PrivateRouteTransition";
+import { RestrictedRouteTransition } from "./CustomRoutes/RestrictedRouteTransition";
 
 export const MainRoutes = () => {
   return (
@@ -22,12 +31,15 @@ export const MainRoutes = () => {
             <RouteTransition path={MUSIC} exact>
               <MusicPage />
             </RouteTransition>
-            <RouteTransition path={BASKET} exact>
+            <PrivateRouteTransition path={BASKET} exact>
               <BasketPage />
-            </RouteTransition>
+            </PrivateRouteTransition>
             <RouteTransition path={ERROR} exact>
               <ErrorPage />
             </RouteTransition>
+            <RestrictedRouteTransition path={REGISTRATION} exact>
+              <RegistrationPage />
+            </RestrictedRouteTransition>
           </AnimatedRoutes>
         </Suspense>
       </MainLayout>

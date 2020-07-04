@@ -1,9 +1,14 @@
 @import "../../../../styles/_vars.scss";
 .modal {
-  background-image: linear-gradient(
-    20deg,
-    map-get($map: $webPaletteColors, $key: "background") 80%,
-    map-get($map: $webPaletteColors, $key: "active")
+  // background-image: linear-gradient(
+  //   20deg,
+  //   map-get($map: $webPaletteColors, $key: "background") 80%,
+  //   map-get($map: $webPaletteColors, $key: "active")
+  // );
+  background-image: radial-gradient(
+    circle at bottom left,
+    map-get($map: $webPaletteColors, $key: "background") 90%,
+    map-get($map: $webPaletteColors, $key: "active") 100%
   );
   color: white;
   border: none;
@@ -26,8 +31,37 @@
     height: 100%;
     box-sizing: border-box;
     .loginForm {
-      margin-top: 60px;
       padding: 0 10px;
+      display: grid;
+      align-content: center;
+      .socialLogin {
+        display: grid;
+        justify-items: center;
+        gap: 10px;
+        margin-top: 20px;
+        p {
+          text-transform: lowercase;
+          color: rgba(255, 255, 255, 0.5);
+        }
+        .socialIcons {
+          display: grid;
+          grid-auto-flow: column;
+          gap: 12px;
+          svg {
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+          }
+          .facebookIcon {
+            background-color: $facebookColor;
+          }
+          .googleIcon {
+            background-color: $googleColor;
+          }
+        }
+      }
     }
     .separator {
       justify-self: center;
@@ -80,10 +114,29 @@
       transform: rotateZ(180deg);
     }
   }
+  .curvedShape {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 120px;
+    height: 80px;
+    background-color: map-get($map: $webPaletteColors, $key: "active");
+    border-radius: 40% 25% 29% 72% / 59% 39% 52% 41%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    filter: drop-shadow(
+      0 0 0.75rem map-get($map: $webPaletteColors, $key: "active")
+    );
+    img {
+      width: 60%;
+    }
+  }
 }
 
 @media (max-width: 768px) {
   .modal {
+    height: 450px;
     .options {
       grid-template-columns: 1fr;
       .separator {
@@ -93,6 +146,21 @@
           padding: 0 10px;
         }
       }
+      .socialLogin {
+        margin-top: 10px !important;
+        .socialIcons {
+          svg {
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            width: 20px !important;
+            height: 20px !important;
+          }
+        }
+      }
+    }
+    .curvedShape {
+      display: none;
     }
   }
 }

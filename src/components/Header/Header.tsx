@@ -87,7 +87,7 @@ const Header = () => {
             Music
           </NavLink>
         </nav>
-        <div className={rightControls}>
+        <div className={classes.rightControls}>
           <div className={classes.authenticatedControls}>
             <IconButton aria-label="cart">
               <StyledBadge badgeContent={profileState.basket.length}>
