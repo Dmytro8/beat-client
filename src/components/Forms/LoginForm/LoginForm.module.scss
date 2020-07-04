@@ -1,3 +1,18 @@
+@import "../../../styles/_vars.scss";
 .loginForm {
   display: grid;
+  .icon {
+    color: map-get($map: $webPaletteColors, $key: "active");
+    &__error {
+      color: map-get($map: $webPaletteColors, $key: "error");
+    }
+  }
+  .textInput {
+    &:focus label {
+      color: map-get($map: $webPaletteColors, $key: "active");
+    }
+  }
+  .visibilityIcon {
+    color: white;
+  }
 }

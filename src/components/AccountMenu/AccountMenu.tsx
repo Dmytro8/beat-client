@@ -61,9 +61,6 @@ const AccountMenu = () => {
 
   return (
     <div>
-      <IconButton aria-label="cart" onClick={handleClick}>
-        <AccountCircle />
-      </IconButton>
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}

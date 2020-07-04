@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 
+import classes from "./LoginForm.module.scss";
+
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
@@ -9,7 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import { LoginSchema } from "../FormValidation";
-import classes from "./LoginForm.module.scss";
 import { authAPI } from "../../../api/authApi";
 import {
   StyledTextField,
@@ -78,11 +79,11 @@ const LoginForm = () => {
             item
             style={{ width: "10%", display: "grid", alignSelf: "center" }}
           >
-            <EmailIcon style={{ color: "#f44336" }} />
+            <EmailIcon className={classes.icon__error} />
           </Grid>
         ) : (
           <Grid item style={{ width: "10%" }}>
-            <EmailIcon style={{ color: "#f26a6a" }} />
+            <EmailIcon className={classes.icon} />
           </Grid>
         )}
 
@@ -118,15 +119,11 @@ const LoginForm = () => {
             item
             style={{ width: "10%", display: "grid", alignSelf: "center" }}
           >
-            <LockIcon
-              style={{
-                color: "#f44336",
-              }}
-            />
+            <LockIcon className={classes.icon__error} />
           </Grid>
         ) : (
           <Grid item style={{ width: "10%" }}>
-            <LockIcon style={{ color: "#f26a6a" }} />
+            <LockIcon className={classes.icon} />
           </Grid>
         )}
 
@@ -172,6 +169,7 @@ const LoginForm = () => {
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
+                      className={classes.visibilityIcon}
                     >
                       {values.showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>

@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { StyledButton } from "../common/FormControls";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 
@@ -18,10 +17,12 @@ import {
 import { IconButton } from "@material-ui/core";
 import { AccountMenu } from "../AccountMenu";
 import { AuthContextType } from "../../contexts/AuthContext/types";
+import { NotLoggingModal } from "../common/Modals/NotLoggingModal";
 
 const Header = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
+  const [openModalSign, setOpenModalSing] = useState(false);
   // const logoutHandler = async () => {
   //   await authAPI.logout();
   //   await dispatch(updateAuthentication(false));
@@ -35,52 +36,84 @@ const Header = () => {
     [classes.authenticated]: !authState.isAuthenticated,
   });
 
+  const handleOpenModalSign = () => {
+    setOpenModalSing(true);
+  };
+
+  const handleCloseModalSign = () => {
+    setOpenModalSing(false);
+  };
+
+  const basketController = () => {
+    if (authState.isAuthenticated) {
+      return (
+        <NavLink
+          exact
+          to={BASKET}
+          className={classes.link}
+          activeClassName={classes.activeLink}
+        >
+          <ShoppingBasket />
+        </NavLink>
+      );
+    } else {
+      return <ShoppingBasket onClick={handleOpenModalSign} />;
+    }
+  };
+
+  const handleClickAccount = () => {
+    if (authState.isAuthenticated) {
+    } else handleOpenModalSign();
+  };
+
   return (
-    <header className={classes.header}>
-      <nav>
-        <NavLink
-          exact
-          to={HOME}
-          className={classes.link}
-          activeClassName={classes.activeLink}
-        >
-          Home
-        </NavLink>
-        <NavLink
-          exact
-          to={MUSIC}
-          className={classes.link}
-          activeClassName={classes.activeLink}
-        >
-          Music
-        </NavLink>
-      </nav>
-      <div className={rightControls}>
-        <div className={classes.authenticatedControls}>
-          <IconButton aria-label="cart">
-            <StyledBadge badgeContent={profileState.basket.length}>
-              <NavLink
-                exact
-                to={BASKET}
-                className={classes.link}
-                activeClassName={classes.activeLink}
-              >
-                <ShoppingBasket />
-              </NavLink>
-            </StyledBadge>
-          </IconButton>
-          <AccountMenu />
-        </div>
-        {/* <div className={classes.noAuthenticatedControls}>
+    <>
+      <header className={classes.header}>
+        <nav>
+          <NavLink
+            exact
+            to={HOME}
+            className={classes.link}
+            activeClassName={classes.activeLink}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            exact
+            to={MUSIC}
+            className={classes.link}
+            activeClassName={classes.activeLink}
+          >
+            Music
+          </NavLink>
+        </nav>
+        <div className={rightControls}>
+          <div className={classes.authenticatedControls}>
+            <IconButton aria-label="cart">
+              <StyledBadge badgeContent={profileState.basket.length}>
+                {basketController()}
+              </StyledBadge>
+            </IconButton>
+            <IconButton aria-label="cart" onClick={handleClickAccount}>
+              <AccountCircle />
+            </IconButton>
+            {/* <AccountMenu /> */}
+          </div>
+          {/* <div className={classes.noAuthenticatedControls}>
           <button>
             <span>Sign in</span>
           </button>
         </div> */}
-      </div>
-      {/* <StyledButton variant="contained" onClick={logoutHandler}>
+        </div>
+        {/* <StyledButton variant="contained" onClick={logoutHandler}>
         Logout
       </StyledButton> */}
-    </header>
+      </header>
+      <NotLoggingModal
+        open={openModalSign}
+        handleCloseModalSign={handleCloseModalSign}
+      />
+    </>
   );
 };
 

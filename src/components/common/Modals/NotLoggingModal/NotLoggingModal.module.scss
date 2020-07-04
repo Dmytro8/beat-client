@@ -1,0 +1,98 @@
+@import "../../../../styles/_vars.scss";
+.modal {
+  background-image: linear-gradient(
+    20deg,
+    map-get($map: $webPaletteColors, $key: "background") 80%,
+    map-get($map: $webPaletteColors, $key: "active")
+  );
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 0 5%;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  width: 800px;
+  min-width: 300px;
+  height: 400px;
+  position: relative;
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  &:focus {
+    outline: none;
+  }
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    height: 100%;
+    box-sizing: border-box;
+    .loginForm {
+      margin-top: 60px;
+      padding: 0 10px;
+    }
+    .separator {
+      justify-self: center;
+      display: grid;
+      height: 100%;
+      width: 1px;
+      background-color: rgba(255, 255, 255, 0.1);
+      align-content: center;
+      justify-content: center;
+      span {
+        background-color: map-get($map: $webPaletteColors, $key: "background");
+        padding: 10px 0;
+      }
+    }
+    .signUp {
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      button {
+        color: white;
+        width: 150px;
+        height: 40px;
+        color: map-get($map: $webPaletteColors, $key: "active");
+        border: 1px solid map-get($map: $webPaletteColors, $key: "active");
+        transition: all 0.3s;
+        &:hover,
+        &:focus {
+          box-shadow: inset 151px 0 0 0
+            map-get($map: $webPaletteColors, $key: "active");
+          color: white;
+          border: 1px solid white;
+          padding-left: 30px;
+          svg {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  .closeModal {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.5s;
+    border-radius: 50%;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: rotateZ(180deg);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .modal {
+    .options {
+      grid-template-columns: 1fr;
+      .separator {
+        height: 1px;
+        width: 100%;
+        span {
+          padding: 0 10px;
+        }
+      }
+    }
+  }
+}
