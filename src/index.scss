@@ -36,3 +36,6 @@ a {
   background-color: map-get($map: $webPaletteColors, $key: "active");
   color: white;
 }
+img {
+  pointer-events: none;
+}
