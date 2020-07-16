@@ -5,6 +5,7 @@ import {
   BASKET,
   ERROR,
   REGISTRATION,
+  OAUTH2_REDIRECT,
 } from "../constants/route.urls";
 import { AppSpinner } from "../components/common/FormControls";
 import { PlayerProvider } from "../contexts/PlayerContext/PlayerContext";
@@ -18,6 +19,8 @@ import { RouteTransition } from "./CustomRoutes/RouteTransition";
 import { RegistrationPage } from "../pages/AuthPages/RegistrationPage";
 import { PrivateRouteTransition } from "./CustomRoutes/PrivateRouteTransition";
 import { RestrictedRouteTransition } from "./CustomRoutes/RestrictedRouteTransition";
+import { OAuth2RedirectHandler } from "../components/OAuth2RedirectHandler";
+import { Route } from "react-router-dom";
 
 export const MainRoutes = () => {
   return (
@@ -40,6 +43,7 @@ export const MainRoutes = () => {
             <RestrictedRouteTransition path={REGISTRATION} exact>
               <RegistrationPage />
             </RestrictedRouteTransition>
+            <Route path={OAUTH2_REDIRECT} component={OAuth2RedirectHandler} />
           </AnimatedRoutes>
         </Suspense>
       </MainLayout>

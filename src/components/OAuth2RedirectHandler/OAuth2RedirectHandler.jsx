@@ -1,7 +1,7 @@
 import React from "react";
 import { ACCESS_TOKEN } from "../../constants";
 import { Redirect } from "react-router-dom";
-import { MAIN, LOGIN } from "../../constants/route.urls";
+import { HOME, LOGIN } from "../../constants/route.urls";
 
 const getUrlParameter = (name, props) => {
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -23,7 +23,7 @@ const OAuth2RedirectHandler = (props) => {
     return (
       <Redirect
         to={{
-          pathname: MAIN,
+          pathname: HOME,
           state: { from: props.location },
         }}
       />

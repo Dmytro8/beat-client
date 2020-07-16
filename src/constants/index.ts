@@ -4,7 +4,7 @@ export const ACCESS_TOKEN = "accessToken";
 
 export const OAUTH2_REDIRECT_LOCAL = "http://localhost:3000/oauth2/redirect";
 export const OAUTH2_REDIRECT_GLOBAL =
-  "https://beat-client.web.app/oauth2/redirect";
+  "https://dev-beat.web.app/oauth2/redirect";
 
 export const GOOGLE_AUTH_URL =
   API_BASE_URL_GLOBAL +
