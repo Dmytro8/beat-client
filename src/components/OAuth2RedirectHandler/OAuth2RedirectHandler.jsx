@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { ACCESS_TOKEN } from "../../constants";
 import { Redirect, useHistory } from "react-router-dom";
 import { HOME, LOGIN } from "../../constants/route.urls";
@@ -7,6 +7,7 @@ import {
   updateAuthentication,
   updateToken,
 } from "../../contexts/AuthContext/actions";
+import { MotionRedirect } from "../common/MountTransition";
 
 const getUrlParameter = (name, props) => {
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -22,17 +23,13 @@ const getUrlParameter = (name, props) => {
 const OAuth2RedirectHandler = (props) => {
   const token = getUrlParameter("token", props);
   const error = getUrlParameter("error", props);
-  // let history = useHistory();
   const [authState, authDispatch] = useContext(AuthContext);
-  useEffect(() => {
-    return () => {};
-  }, [authState]);
 
   if (token) {
     localStorage.setItem(ACCESS_TOKEN, token);
     authDispatch(updateAuthentication(true));
     authDispatch(updateToken(token));
-    return <Redirect to={HOME} />;
+    return <MotionRedirect to={HOME} />;
   } else {
     return (
       <Redirect

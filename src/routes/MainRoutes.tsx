@@ -19,6 +19,7 @@ import { RouteTransition } from "./CustomRoutes/RouteTransition";
 import { RegistrationPage } from "../pages/AuthPages/RegistrationPage";
 import { PrivateRouteTransition } from "./CustomRoutes/PrivateRouteTransition";
 import { RestrictedRouteTransition } from "./CustomRoutes/RestrictedRouteTransition";
+import { RestrictedRoute } from "./CustomRoutes/RestrictedRoute";
 import { OAuth2RedirectHandler } from "../components/OAuth2RedirectHandler";
 import { Route } from "react-router-dom";
 
@@ -43,7 +44,7 @@ export const MainRoutes = () => {
             <RestrictedRouteTransition path={REGISTRATION} exact>
               <RegistrationPage />
             </RestrictedRouteTransition>
-            <Route
+            <RestrictedRoute
               path={OAUTH2_REDIRECT}
               exact
               component={OAuth2RedirectHandler}

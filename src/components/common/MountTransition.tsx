@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { motion } from "framer-motion";
+import { RedirectProps, Redirect } from "react-router-dom";
 
 type Props = {
   children: React.ReactNode;
@@ -18,5 +19,11 @@ export const MountTransition: FC<Props> = ({ children }) => (
     transition={pageTransition}
   >
     {children}
+  </motion.div>
+);
+
+export const MotionRedirect: FC<RedirectProps> = ({ children, ...props }) => (
+  <motion.div exit="undefined">
+    <Redirect {...props} />
   </motion.div>
 );

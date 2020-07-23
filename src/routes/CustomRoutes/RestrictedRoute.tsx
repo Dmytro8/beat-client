@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, ReactInstance } from "react";
 import { Route, Redirect } from "react-router-dom";
 import {
   MountTransition,
@@ -6,15 +6,14 @@ import {
 } from "../../components/common/MountTransition";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { HOME } from "../../constants/route.urls";
-import { motion } from "framer-motion";
 
 type Props = {
   exact?: boolean;
   path: string;
+  component: React.FunctionComponent;
 };
 
-export const RestrictedRouteTransition: FC<Props> = ({
-  children,
+export const RestrictedRoute: FC<Props> = ({
   exact = false,
   path,
   ...rest
@@ -25,9 +24,7 @@ export const RestrictedRouteTransition: FC<Props> = ({
       {authState.isAuthenticated ? (
         <MotionRedirect to={HOME} />
       ) : (
-        <Route exact={exact} path={path} {...rest}>
-          <MountTransition>{children}</MountTransition>
-        </Route>
+        <Route exact={exact} path={path} {...rest} />
       )}
     </>
   );

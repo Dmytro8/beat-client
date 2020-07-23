@@ -15,9 +15,14 @@ import { setProfile } from "../../contexts/ProfileContext/actions";
 
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [stateAuth, dispatchAuth] = useContext(AuthContext);
+  const [authState, authDispatch] = useContext(AuthContext);
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
   const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
+  useEffect(() => {
+    authDispatch(updateAuthentication(!!localStorage.getItem(ACCESS_TOKEN)));
+    authDispatch(updateToken(localStorage.getItem(ACCESS_TOKEN)));
+    return () => {};
+  }, []);
   // useEffect(() => {
   //   dispatchAuth(updateAuthentication(!!localStorage.getItem(ACCESS_TOKEN)));
   //   dispatchAuth(updateToken(localStorage.getItem(ACCESS_TOKEN)));
