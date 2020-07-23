@@ -18,7 +18,7 @@ import {
 import { PlayerActionTypes } from "./actions";
 
 let initialState = {
-  currentSong: null,
+  currentSong: {},
   songs: [],
   isRepeat: false,
   isRandom: false,

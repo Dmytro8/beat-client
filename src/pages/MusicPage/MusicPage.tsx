@@ -22,7 +22,7 @@ const MusicPage = () => {
       setIsSongsLoading(true);
       const response = await musicAPI.getAllSongs();
       if (response.status !== 500) {
-        dispatchPlayer(setPlaylist(response.slice(0, 3)));
+        dispatchPlayer(setPlaylist(response));
         setIsSongsLoading(false);
       } else {
         authDispatch(updateErrorStatus(true));

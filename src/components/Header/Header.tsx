@@ -22,7 +22,7 @@ import { NotLoggingModal } from "../common/Modals/NotLoggingModal";
 const Header = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
-  const [openModalSign, setOpenModalSing] = useState(false);
+  const [openModalSign, setOpenModalSign] = useState(false);
   // const logoutHandler = async () => {
   //   await authAPI.logout();
   //   await dispatch(updateAuthentication(false));
@@ -37,11 +37,11 @@ const Header = () => {
   });
 
   const handleOpenModalSign = () => {
-    setOpenModalSing(true);
+    setOpenModalSign(true);
   };
 
   const handleCloseModalSign = () => {
-    setOpenModalSing(false);
+    setOpenModalSign(false);
   };
 
   const basketController = () => {

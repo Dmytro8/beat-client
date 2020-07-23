@@ -27,7 +27,7 @@ export const MainRoutes = () => {
     <PlayerProvider>
       <MainLayout>
         <Suspense fallback={<AppSpinner />}>
-          <AnimatedRoutes exitBeforeEnter initial={false}>
+          <AnimatedRoutes exitBeforeEnter>
             <RouteTransition path={HOME} exact>
               <HomePage />
             </RouteTransition>
@@ -43,7 +43,11 @@ export const MainRoutes = () => {
             <RestrictedRouteTransition path={REGISTRATION} exact>
               <RegistrationPage />
             </RestrictedRouteTransition>
-            <Route path={OAUTH2_REDIRECT} component={OAuth2RedirectHandler} />
+            <Route
+              path={OAUTH2_REDIRECT}
+              exact
+              component={OAuth2RedirectHandler}
+            />
           </AnimatedRoutes>
         </Suspense>
       </MainLayout>

@@ -1,7 +1,12 @@
-import React from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { ACCESS_TOKEN } from "../../constants";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { HOME, LOGIN } from "../../constants/route.urls";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import {
+  updateAuthentication,
+  updateToken,
+} from "../../contexts/AuthContext/actions";
 
 const getUrlParameter = (name, props) => {
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -17,17 +22,17 @@ const getUrlParameter = (name, props) => {
 const OAuth2RedirectHandler = (props) => {
   const token = getUrlParameter("token", props);
   const error = getUrlParameter("error", props);
+  // let history = useHistory();
+  const [authState, authDispatch] = useContext(AuthContext);
+  useEffect(() => {
+    return () => {};
+  }, [authState]);
 
   if (token) {
     localStorage.setItem(ACCESS_TOKEN, token);
-    return (
-      <Redirect
-        to={{
-          pathname: HOME,
-          state: { from: props.location },
-        }}
-      />
-    );
+    authDispatch(updateAuthentication(true));
+    authDispatch(updateToken(token));
+    return <Redirect to={HOME} />;
   } else {
     return (
       <Redirect

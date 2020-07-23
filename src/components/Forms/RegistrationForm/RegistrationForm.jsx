@@ -42,9 +42,9 @@ const RegistrationForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      // const response = await authAPI.signup(data);
-      // await dispatch(updateAuthentication(!!response.data.accessToken));
-      // await dispatch(updateToken(response.data.accessToken));
+      const response = await authAPI.signup(data);
+      await dispatch(updateAuthentication(!!response.data.accessToken));
+      await dispatch(updateToken(response.data.accessToken));
     } catch (e) {}
   };
   const onUsernameBlur = async () => {

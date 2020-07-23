@@ -41,6 +41,7 @@ export const NotLoggingModal: FC<ModalSignPropsType> = ({
   handleCloseModalSign,
 }) => {
   const materialClasses = useStyles();
+
   return (
     <Modal
       open={open}

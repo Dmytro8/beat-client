@@ -17,6 +17,7 @@ import { Howl, Howler } from "howler";
 import { Spinner } from "../../common/FormControls";
 import { musicAPI } from "../../../api/musicAPI";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { NotLoggingModal } from "../../common/Modals/NotLoggingModal";
 
 import classes from "./Song.module.scss";
 import classnames from "classnames";
@@ -36,13 +37,20 @@ import {
 } from "../../../contexts/ProfileContext/actions";
 import { AUDIO_IMAGE_SERVER } from "../../../constants";
 import { LikeButon } from "../../common/PlaylistControls";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 
 const Song = ({ songId }) => {
+  const [authState, authDispatch] = useContext(AuthContext);
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
   const [songFetchingError, setSongFetchingError] = useState(false);
   const [isSongLoading, setIsSongLoading] = useState(false);
+  const [openModalSign, setOpenModalSign] = useState(false);
   const [song, setSong] = useState("");
+
+  const handleOpenSign = (state) => {
+    setOpenModalSign(state);
+  };
 
   useEffect(() => {
     return () => {};
@@ -174,27 +182,43 @@ const Song = ({ songId }) => {
             <AddIcon />
           </td>
           <td className={classes.priceCell}>
-            {stateProfile.basket.includes(songId) ? (
-              <Button
-                className={classes.cartButton}
-                onClick={() => removeFromBasket(songId)}
-              >
-                <span className={classes.basketRemove}>
-                  <RemoveShoppingCartIcon className={classes.shoppingCart} />
-                  <CloseIcon className={classes.removeIcon} />
-                </span>
-                <span className={classes.basketDone}>
-                  <ShoppingCartIcon />
-                  <DoneIcon className={classes.doneIcon} />
-                </span>
-              </Button>
+            {authState.isAuthenticated ? (
+              <Fragment>
+                {stateProfile.basket.includes(songId) ? (
+                  <Button
+                    className={classes.cartButton}
+                    onClick={() => removeFromBasket(songId)}
+                  >
+                    <span className={classes.basketRemove}>
+                      <RemoveShoppingCartIcon
+                        className={classes.shoppingCart}
+                      />
+                      <CloseIcon className={classes.removeIcon} />
+                    </span>
+                    <span className={classes.basketDone}>
+                      <ShoppingCartIcon />
+                      <DoneIcon className={classes.doneIcon} />
+                    </span>
+                  </Button>
+                ) : (
+                  <Button
+                    className={classes.cartButton}
+                    startIcon={
+                      <AddShoppingCartIcon className={classes.shoppingCart} />
+                    }
+                    onClick={() => addToBasket(songId)}
+                  >
+                    $27
+                  </Button>
+                )}
+              </Fragment>
             ) : (
               <Button
                 className={classes.cartButton}
                 startIcon={
                   <AddShoppingCartIcon className={classes.shoppingCart} />
                 }
-                onClick={() => addToBasket(songId)}
+                onClick={() => handleOpenSign(true)}
               >
                 $27
               </Button>
@@ -202,6 +226,10 @@ const Song = ({ songId }) => {
           </td>
         </tr>
       )}
+      <NotLoggingModal
+        open={openModalSign}
+        handleCloseModalSign={() => handleOpenSign(false)}
+      />
     </Fragment>
   );
 };
