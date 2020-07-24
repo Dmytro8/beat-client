@@ -1,9 +1,6 @@
-import React, { FC, useContext, ReactInstance } from "react";
-import { Route, Redirect } from "react-router-dom";
-import {
-  MountTransition,
-  MotionRedirect,
-} from "../../components/common/MountTransition";
+import React, { FC, useContext } from "react";
+import { Route } from "react-router-dom";
+import { MotionRedirect } from "../../components/common/MountTransition";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { HOME } from "../../constants/route.urls";
 

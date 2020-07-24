@@ -1,5 +1,5 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { FC } from "react";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu, { MenuProps } from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -9,13 +9,17 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import SendIcon from "@material-ui/icons/Send";
 import { IconButton } from "@material-ui/core";
+import Fade from "@material-ui/core/Fade";
 
-import { AccountCircle } from "../common/HeaderControls";
+import { AccountCircle } from "../../HeaderControls";
+import { Link } from "react-router-dom";
+import { ACCOUNT, ABOUT } from "../../../../constants/route.urls";
 
 const StyledMenu = withStyles({
   paper: {
     borderRadius: "unset",
-    // border: "1px solid #d3d4d5",
+    left: "unset !important",
+    right: "5vw",
   },
 })((props: MenuProps) => (
   <Menu
@@ -35,51 +39,55 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
-    "&:focus": {
-      backgroundColor: theme.palette.primary.main,
+    "&:hover": {
+      backgroundColor: "#0883fc",
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.common.white,
       },
     },
     paddingLeft: "60px",
     paddingRight: "16px",
-    // transform: ""
-    textAlign: "end",
   },
 }))(MenuItem);
 
-const AccountMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+type PropsType = {
+  anchorEl: any;
+  setAnchorEl: (anchor: any) => void;
+};
+const useStyles = makeStyles({
+  root: {
+    // backgroundColor: "black",
+  },
+  item: {
+    color: "black",
+    textAlign: "end",
+  },
+});
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
+export const AccountMenu = ({ anchorEl, setAnchorEl }: PropsType) => {
+  const classes = useStyles();
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   return (
-    <div>
-      <StyledMenu
-        id="customized-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
+    <StyledMenu
+      id="customized-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+      TransitionComponent={Fade}
+    >
+      <Link to={ACCOUNT} onClick={handleClose}>
         <StyledMenuItem>
-          <ListItemText>Account</ListItemText>
+          <ListItemText className={classes.item}>Account</ListItemText>
         </StyledMenuItem>
+      </Link>
+      <Link to={ABOUT} onClick={handleClose}>
         <StyledMenuItem>
-          <ListItemText>About</ListItemText>
+          <ListItemText className={classes.item}>About</ListItemText>
         </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemText>Log out</ListItemText>
-        </StyledMenuItem>
-      </StyledMenu>
-    </div>
+      </Link>
+    </StyledMenu>
   );
 };
-
-export default AccountMenu;

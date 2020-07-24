@@ -31,17 +31,7 @@ const OAuth2RedirectHandler = (props) => {
     authDispatch(updateToken(token));
     return <MotionRedirect to={HOME} />;
   } else {
-    return (
-      <Redirect
-        to={{
-          pathname: LOGIN,
-          state: {
-            from: props.location,
-            error: error,
-          },
-        }}
-      />
-    );
+    return <MotionRedirect to={props.location} />;
   }
 };
 

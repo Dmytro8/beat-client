@@ -15,7 +15,7 @@ import {
   AccountCircle,
 } from "../common/HeaderControls";
 import { IconButton } from "@material-ui/core";
-import { AccountMenu } from "../AccountMenu";
+import { AccountMenu } from "../common/Menu/AccountMenu";
 import { AuthContextType } from "../../contexts/AuthContext/types";
 import { NotLoggingModal } from "../common/Modals/NotLoggingModal";
 
@@ -23,6 +23,8 @@ const Header = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
   const [openModalSign, setOpenModalSign] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   // const logoutHandler = async () => {
   //   await authAPI.logout();
   //   await dispatch(updateAuthentication(false));
@@ -61,8 +63,9 @@ const Header = () => {
     }
   };
 
-  const handleClickAccount = () => {
+  const handleClickAccount = (event: React.MouseEvent<HTMLElement>) => {
     if (authState.isAuthenticated) {
+      setAnchorEl(event.currentTarget);
     } else handleOpenModalSign();
   };
 
@@ -97,7 +100,7 @@ const Header = () => {
             <IconButton aria-label="cart" onClick={handleClickAccount}>
               <AccountCircle />
             </IconButton>
-            {/* <AccountMenu /> */}
+            <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
           </div>
           {/* <div className={classes.noAuthenticatedControls}>
           <button>

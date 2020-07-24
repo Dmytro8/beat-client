@@ -1,6 +1,5 @@
 import React from "react";
 import { FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL } from "../../../constants";
-import { LOGIN } from "../../../constants/route.urls";
 import { NavLink } from "react-router-dom";
 import classes from "./RegistrationPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -17,7 +17,6 @@ const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [authState, authDispatch] = useContext(AuthContext);
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
-  const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
   useEffect(() => {
     authDispatch(updateAuthentication(!!localStorage.getItem(ACCESS_TOKEN)));
     authDispatch(updateToken(localStorage.getItem(ACCESS_TOKEN)));

@@ -1,12 +1,11 @@
 import React, { FC, useContext } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import {
   MountTransition,
   MotionRedirect,
 } from "../../components/common/MountTransition";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { HOME } from "../../constants/route.urls";
-import { motion } from "framer-motion";
 
 type Props = {
   exact?: boolean;
