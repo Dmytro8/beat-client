@@ -6,6 +6,8 @@ import {
   ERROR,
   REGISTRATION,
   OAUTH2_REDIRECT,
+  ABOUT,
+  ACCOUNT,
 } from "../constants/route.urls";
 import { AppSpinner } from "../components/common/FormControls";
 import { PlayerProvider } from "../contexts/PlayerContext/PlayerContext";
@@ -22,6 +24,8 @@ import { RestrictedRouteTransition } from "./CustomRoutes/RestrictedRouteTransit
 import { RestrictedRoute } from "./CustomRoutes/RestrictedRoute";
 import { OAuth2RedirectHandler } from "../components/OAuth2RedirectHandler";
 import { Route } from "react-router-dom";
+import { AboutPage } from "../pages/AboutPage";
+import { AccountPage } from "../pages/AccountPage";
 
 export const MainRoutes = () => {
   return (
@@ -37,6 +41,12 @@ export const MainRoutes = () => {
             </RouteTransition>
             <PrivateRouteTransition path={BASKET} exact>
               <BasketPage />
+            </PrivateRouteTransition>
+            <PrivateRouteTransition path={ABOUT} exact>
+              <AboutPage />
+            </PrivateRouteTransition>
+            <PrivateRouteTransition path={ACCOUNT} exact>
+              <AccountPage />
             </PrivateRouteTransition>
             <RouteTransition path={ERROR} exact>
               <ErrorPage />
