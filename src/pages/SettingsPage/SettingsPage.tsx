@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 
 import classes from "./SettingsPage.module.scss";
 import { ACCESS_TOKEN } from "../../constants";
@@ -7,8 +7,14 @@ import { HOME } from "../../constants/route.urls";
 
 import axios from "axios";
 import { ProgressBar } from "../../components/common/ProgressBar";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import {
+  updateAuthentication,
+  updateToken,
+} from "../../contexts/AuthContext/actions";
 
 export const SettingsPage = () => {
+  const [authState, authDispatch]: any = useContext(AuthContext);
   const [imageFile, setImageFile] = useState<string | File>("");
   const [songFile, setSongFile] = useState<string | File>("");
 
@@ -26,6 +32,8 @@ export const SettingsPage = () => {
   let history = useHistory();
   const logoutHandler = () => {
     localStorage.removeItem(ACCESS_TOKEN);
+    authDispatch(updateAuthentication(false));
+    authDispatch(updateToken(null));
     history.replace(HOME);
   };
   const formSubmit = async (e: any) => {

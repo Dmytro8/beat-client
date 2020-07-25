@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 
@@ -19,24 +19,11 @@ import { AccountMenu } from "../common/Menu/AccountMenu";
 import { AuthContextType } from "../../contexts/AuthContext/types";
 import { NotLoggingModal } from "../common/Modals/NotLoggingModal";
 
-const Header = () => {
+export const Header = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
   const [openModalSign, setOpenModalSign] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  // const logoutHandler = async () => {
-  //   await authAPI.logout();
-  //   await dispatch(updateAuthentication(false));
-  //   await dispatch(updateToken(null));
-  // };
-  // const rightControls = classnames({
-  //   rightControls: true,
-  //   authenticated: authState.isAuthenticated,
-  // });
-  let rightControls = classnames(classes.rightControls, {
-    [classes.authenticated]: !authState.isAuthenticated,
-  });
 
   const handleOpenModalSign = () => {
     setOpenModalSign(true);
@@ -102,15 +89,7 @@ const Header = () => {
             </IconButton>
             <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
           </div>
-          {/* <div className={classes.noAuthenticatedControls}>
-          <button>
-            <span>Sign in</span>
-          </button>
-        </div> */}
         </div>
-        {/* <StyledButton variant="contained" onClick={logoutHandler}>
-        Logout
-      </StyledButton> */}
       </header>
       <NotLoggingModal
         open={openModalSign}
@@ -119,5 +98,3 @@ const Header = () => {
     </>
   );
 };
-
-export default Header;
