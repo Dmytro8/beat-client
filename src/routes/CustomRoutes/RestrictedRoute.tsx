@@ -1,8 +1,8 @@
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import { Route } from "react-router-dom";
 import { MotionRedirect } from "../../components/common/MountTransition";
-import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { HOME } from "../../constants/route.urls";
+import { ACCESS_TOKEN } from "../../constants";
 
 type Props = {
   exact?: boolean;
@@ -15,10 +15,10 @@ export const RestrictedRoute: FC<Props> = ({
   path,
   ...rest
 }) => {
-  const [authState, authDispatch]: any = useContext(AuthContext);
+  const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
   return (
     <>
-      {authState.isAuthenticated ? (
+      {isAuthenticated ? (
         <MotionRedirect to={HOME} />
       ) : (
         <Route exact={exact} path={path} {...rest} />
