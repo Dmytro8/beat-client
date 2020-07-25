@@ -6,7 +6,7 @@ export const ERROR = "/error";
 // Private routes
 export const BASKET = "/basket";
 export const ABOUT = "/about";
-export const ACCOUNT = "/account";
+export const SETTINGS = "/settings";
 
 // Restricted routes (only without authentication)
 export const REGISTRATION = "/signup";

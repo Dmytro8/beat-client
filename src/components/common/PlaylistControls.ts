@@ -47,7 +47,7 @@ export const PlaylistButton = withStyles({
   },
 })(Button);
 
-export const LikeButon = withStyles({
+export const LikeButton = withStyles({
   root: {
     "& .MuiButton-startIcon": {
       marginLeft: "unset",

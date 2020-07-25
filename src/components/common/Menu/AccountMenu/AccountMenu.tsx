@@ -13,7 +13,7 @@ import Fade from "@material-ui/core/Fade";
 
 import { AccountCircle } from "../../HeaderControls";
 import { Link } from "react-router-dom";
-import { ACCOUNT, ABOUT } from "../../../../constants/route.urls";
+import { ABOUT, SETTINGS } from "../../../../constants/route.urls";
 
 const StyledMenu = withStyles({
   paper: {
@@ -78,7 +78,7 @@ export const AccountMenu = ({ anchorEl, setAnchorEl }: PropsType) => {
       onClose={handleClose}
       TransitionComponent={Fade}
     >
-      <Link to={ACCOUNT} onClick={handleClose}>
+      <Link to={SETTINGS} onClick={handleClose}>
         <StyledMenuItem>
           <ListItemText className={classes.item}>Account</ListItemText>
         </StyledMenuItem>
