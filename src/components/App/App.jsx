@@ -41,13 +41,6 @@ const App = () => {
     <Router>
       <MainRoutes />
     </Router>
-    // <Router>
-    //   {isAuthenticated ? (
-    //     <Fragment>{isAuthorized ? <ProfileRoutes /> : <AppSpinner />}</Fragment>
-    //   ) : (
-    //     <AuthRoutes />
-    //   )}
-    // </Router>
   );
 };
 

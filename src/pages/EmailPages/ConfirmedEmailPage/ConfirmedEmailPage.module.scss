@@ -1,0 +1,47 @@
+@import "../../../styles/_vars.scss";
+.confirmedEmailPage {
+  height: 100%;
+  .container {
+    max-width: 500px;
+    min-width: 300px;
+    min-height: 500px;
+    height: inherit;
+    margin: 0 auto;
+    text-align: center;
+    .icon {
+      padding-top: 100px;
+      .doneIcon {
+        font-size: 4rem;
+        color: map-get($map: $webPaletteColors, $key: "success");
+      }
+    }
+    .greeting {
+      h2 {
+        margin: 10px 0;
+      }
+      p {
+        margin-top: 10px;
+        line-height: 20px;
+        font-size: 15px;
+      }
+      button {
+        margin-top: 40px;
+        background-color: transparent;
+        cursor: pointer;
+        color: white;
+        width: 150px;
+        height: 50px;
+        font-size: 12px;
+        color: map-get($map: $webPaletteColors, $key: "success");
+        border: 1px solid map-get($map: $webPaletteColors, $key: "success");
+        &:hover,
+        &:focus {
+          box-shadow: inset 0 -51px 0 0 map-get($map: $webPaletteColors, $key:
+                "success");
+          color: white;
+          border: 1px solid white;
+        }
+      }
+    }
+  }
+}

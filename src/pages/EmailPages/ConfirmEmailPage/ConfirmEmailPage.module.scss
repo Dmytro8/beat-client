@@ -1,0 +1,38 @@
+@import "../../../styles/_vars.scss";
+
+.confirmEmailPage {
+  height: 100%;
+  .container {
+    max-width: 500px;
+    min-width: 300px;
+    min-height: 500px;
+    height: inherit;
+    margin: 0 auto;
+    text-align: center;
+    .icon {
+      padding-top: 100px;
+      .mailIcon {
+        font-size: 8rem;
+        transform: translateX(25px);
+      }
+      .doneIcon {
+        font-size: 4rem;
+        color: map-get($map: $webPaletteColors, $key: "success");
+        transform: translateX(-25px);
+        background: white;
+        border-radius: 50%;
+      }
+    }
+    .greetingText {
+      h2 {
+        color: map-get($map: $webPaletteColors, $key: "active");
+        // font-size: 20px;
+      }
+      p {
+        margin-top: 10px;
+        line-height: 20px;
+        font-size: 15px;
+      }
+    }
+  }
+}

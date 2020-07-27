@@ -8,6 +8,8 @@ import {
   OAUTH2_REDIRECT,
   ABOUT,
   SETTINGS,
+  CONFIRM_EMAIL,
+  CONFIRMED_EMAIL,
 } from "../constants/route.urls";
 import { AppSpinner } from "../components/common/FormControls";
 import { PlayerProvider } from "../contexts/PlayerContext/PlayerContext";
@@ -26,6 +28,8 @@ import { OAuth2RedirectHandler } from "../components/OAuth2RedirectHandler";
 import { Route } from "react-router-dom";
 import { AboutPage } from "../pages/AboutPage";
 import { SettingsPage } from "../pages/SettingsPage";
+import { ConfirmEmailPage } from "../pages/EmailPages/ConfirmEmailPage";
+import { ConfirmedEmailPage } from "../pages/EmailPages/ConfirmedEmailPage";
 
 export const MainRoutes = () => {
   return (
@@ -53,6 +57,13 @@ export const MainRoutes = () => {
             </RouteTransition>
             <RestrictedRouteTransition path={REGISTRATION} exact>
               <RegistrationPage />
+            </RestrictedRouteTransition>
+            <RestrictedRouteTransition path={CONFIRM_EMAIL} exact>
+              <ConfirmEmailPage />
+            </RestrictedRouteTransition>
+            {/* you have to create another route to confirmed email */}
+            <RestrictedRouteTransition path={CONFIRMED_EMAIL} exact>
+              <ConfirmedEmailPage />
             </RestrictedRouteTransition>
             <RestrictedRoute
               path={OAUTH2_REDIRECT}

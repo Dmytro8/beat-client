@@ -16,8 +16,11 @@ import {
   updateToken,
 } from "../../../contexts/AuthContext/actions";
 import { authAPI } from "../../../api/authApi";
+import { CONFIRM_EMAIL } from "../../../constants/route.urls";
+import { useHistory } from "react-router-dom";
 
 const RegistrationForm = () => {
+  const history = useHistory();
   const [state, dispatch] = useContext(AuthContext);
   const { handleSubmit, control, errors } = useForm({
     validationSchema: SignupSchema,
@@ -42,9 +45,11 @@ const RegistrationForm = () => {
 
   const onSubmit = async (data) => {
     try {
+      // maybe receiving token in sign up query is not important, it will be important after confirmed email
       const response = await authAPI.signup(data);
-      await dispatch(updateAuthentication(!!response.data.accessToken));
-      await dispatch(updateToken(response.data.accessToken));
+      //await dispatch(updateAuthentication(!!response.data.accessToken));
+      //await dispatch(updateToken(response.data.accessToken));
+      history.replace(CONFIRM_EMAIL);
     } catch (e) {}
   };
   const onUsernameBlur = async () => {

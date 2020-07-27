@@ -28,12 +28,6 @@ const RegistrationPage = () => {
             </a>
           </div>
         </div>
-        {/* <div className={classes.login}>
-          <p>
-            Already a member?
-            <NavLink to={LOGIN}>Sign in now</NavLink>
-          </p>
-        </div> */}
       </div>
       <div className={classes.signUpImage}>
         <img src={singUpImage} alt="neon trend" />

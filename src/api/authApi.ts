@@ -36,7 +36,7 @@ export const authAPI = {
       .catch((error) => {
         return error;
       });
-    localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
+    // localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
     return response;
   },
   async login(usernameOrEmail: string = "", password: string = "") {
