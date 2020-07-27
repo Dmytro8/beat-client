@@ -7,6 +7,7 @@ import {
   AuthProviderPropsType,
   AuthStateType,
   UPDATE_ERROR_STATUS,
+  UPDATE_MODAL_SIGN_STATUS,
 } from "./types";
 
 let initialState = {
@@ -14,6 +15,7 @@ let initialState = {
   isAuthenticated: false,
   isAuthorizing: false,
   isError: false,
+  isModalSignOpen: false,
 };
 
 export const AuthContext = createContext({});
@@ -34,6 +36,9 @@ const authReducer = (
     }
     case UPDATE_ERROR_STATUS: {
       return { ...state, isError: action.isError };
+    }
+    case UPDATE_MODAL_SIGN_STATUS: {
+      return { ...state, isModalSignOpen: action.isModalSignOpen };
     }
     default: {
       throw new Error(`Unhandled action type`);

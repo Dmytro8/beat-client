@@ -18,19 +18,21 @@ import { IconButton } from "@material-ui/core";
 import { AccountMenu } from "../common/Menu/AccountMenu";
 import { AuthContextType } from "../../contexts/AuthContext/types";
 import { NotLoggingModal } from "../common/Modals/NotLoggingModal";
+import { updateModalSignStatus } from "../../contexts/AuthContext/actions";
 
 export const Header = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
-  const [openModalSign, setOpenModalSign] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleOpenModalSign = () => {
-    setOpenModalSign(true);
+    // setOpenModalSign(true);
+    authDispatch(updateModalSignStatus(true));
   };
 
   const handleCloseModalSign = () => {
-    setOpenModalSign(false);
+    // setOpenModalSign(false);
+    authDispatch(updateModalSignStatus(false));
   };
 
   const basketController = () => {
@@ -92,7 +94,7 @@ export const Header = () => {
         </div>
       </header>
       <NotLoggingModal
-        open={openModalSign}
+        open={authState.isModalSignOpen}
         handleCloseModalSign={handleCloseModalSign}
       />
     </>

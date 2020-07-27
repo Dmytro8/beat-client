@@ -3,6 +3,7 @@ import {
   UPDATE_TOKEN,
   UPDATE_AUTHORIZING,
   UPDATE_ERROR_STATUS,
+  UPDATE_MODAL_SIGN_STATUS,
 } from "./types";
 
 type UpdateAuthenticationActionType = {
@@ -55,8 +56,22 @@ export const updateErrorStatus = (
   };
 };
 
+type UpdateModalSignStatus = {
+  type: typeof UPDATE_MODAL_SIGN_STATUS;
+  isModalSignOpen: boolean;
+};
+export const updateModalSignStatus = (
+  isModalSignOpen: boolean
+): UpdateModalSignStatus => {
+  return {
+    type: UPDATE_MODAL_SIGN_STATUS,
+    isModalSignOpen,
+  };
+};
+
 export type AuthActionTypes =
   | UpdateTokenActionType
   | UpdateAuthenticationActionType
   | UpdateAuthorizingActionType
-  | UpdateErrorStatusActionType;
+  | UpdateErrorStatusActionType
+  | UpdateModalSignStatus;

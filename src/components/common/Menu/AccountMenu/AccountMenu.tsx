@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useContext, useEffect } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu, { MenuProps } from "@material-ui/core/Menu";
@@ -14,6 +14,7 @@ import Fade from "@material-ui/core/Fade";
 import { AccountCircle } from "../../HeaderControls";
 import { Link } from "react-router-dom";
 import { ABOUT, SETTINGS } from "../../../../constants/route.urls";
+import { ProfileContext } from "../../../../contexts/ProfileContext/ProfileContext";
 
 const StyledMenu = withStyles({
   paper: {
@@ -66,9 +67,14 @@ const useStyles = makeStyles({
 
 export const AccountMenu = ({ anchorEl, setAnchorEl }: PropsType) => {
   const classes = useStyles();
+  const [profileState, profileDispatch]: any = useContext(ProfileContext);
   const handleClose = () => {
     setAnchorEl(null);
   };
+  useEffect(() => {
+    console.log(profileState);
+    return () => {};
+  }, [profileState]);
   return (
     <StyledMenu
       id="customized-menu"
@@ -78,11 +84,20 @@ export const AccountMenu = ({ anchorEl, setAnchorEl }: PropsType) => {
       onClose={handleClose}
       TransitionComponent={Fade}
     >
-      <Link to={SETTINGS} onClick={handleClose}>
-        <StyledMenuItem>
-          <ListItemText className={classes.item}>Account</ListItemText>
-        </StyledMenuItem>
-      </Link>
+      {profileState.profile.accountRole?.role === "ROLE_ADMIN" ? (
+        <Link to={SETTINGS} onClick={handleClose}>
+          <StyledMenuItem>
+            <ListItemText className={classes.item}>Admin</ListItemText>
+          </StyledMenuItem>
+        </Link>
+      ) : (
+        <Link to={SETTINGS} onClick={handleClose}>
+          <StyledMenuItem>
+            <ListItemText className={classes.item}>Account</ListItemText>
+          </StyledMenuItem>
+        </Link>
+      )}
+
       <Link to={ABOUT} onClick={handleClose}>
         <StyledMenuItem>
           <ListItemText className={classes.item}>About</ListItemText>

@@ -18,29 +18,25 @@ const App = () => {
   const [authState, authDispatch] = useContext(AuthContext);
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
   useEffect(() => {
-    authDispatch(updateAuthentication(!!localStorage.getItem(ACCESS_TOKEN)));
+    let isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
+    authDispatch(updateAuthentication(isAuthenticated));
     authDispatch(updateToken(localStorage.getItem(ACCESS_TOKEN)));
-    return () => {};
-  }, []);
-  // useEffect(() => {
-  //   dispatchAuth(updateAuthentication(!!localStorage.getItem(ACCESS_TOKEN)));
-  //   dispatchAuth(updateToken(localStorage.getItem(ACCESS_TOKEN)));
-  //   if (isAuthenticated) {
-  //     const fetchData = async () => {
-  //       const user = await authAPI.getCurrentUser(
-  //         localStorage.getItem(ACCESS_TOKEN)
-  //       );
-  //       dispatchProfile(setProfile(user));
-  //       setIsAuthorized(true);
-  //       dispatchAuth(updateAuthorizing(false));
-  //       // loginSocketEmit(userId);
-  //     };
-  //     fetchData();
-  //   }
-  //   return () => {
-  //     setIsAuthorized(false);
-  //   };
-  // }, [isAuthenticated, dispatchProfile, dispatchAuth]);
+    if (isAuthenticated) {
+      const fetchData = async () => {
+        const user = await authAPI.getCurrentUser(
+          localStorage.getItem(ACCESS_TOKEN)
+        );
+        dispatchProfile(setProfile(user));
+        setIsAuthorized(true);
+        authDispatch(updateAuthorizing(false));
+        // loginSocketEmit(userId);
+      };
+      fetchData();
+    }
+    return () => {
+      setIsAuthorized(false);
+    };
+  }, [dispatchProfile, authDispatch]);
   return (
     <Router>
       <MainRoutes />

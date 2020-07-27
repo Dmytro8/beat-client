@@ -1,6 +1,6 @@
 import React from "react";
 import { ACCESS_TOKEN } from "../../constants";
-import { HOME } from "../../constants/route.urls";
+import { HOME, SETTINGS } from "../../constants/route.urls";
 import { MotionRedirect } from "../common/MountTransition";
 
 const getUrlParameter = (name, props) => {
@@ -20,10 +20,8 @@ const OAuth2RedirectHandler = (props) => {
 
   if (token) {
     localStorage.setItem(ACCESS_TOKEN, token);
-    return <MotionRedirect to={HOME} />;
-  } else {
-    return <MotionRedirect to={props.location} />;
   }
+  return <MotionRedirect to={HOME} />;
 };
 
 export default OAuth2RedirectHandler;

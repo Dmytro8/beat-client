@@ -22,12 +22,16 @@ import {
   updateAuthentication,
   updateToken,
   updateAuthorizing,
+  updateModalSignStatus,
 } from "../../../contexts/AuthContext/actions";
+import { useHistory } from "react-router";
+import { HOME } from "../../../constants/route.urls";
 
 const LoginForm = () => {
+  const history = useHistory();
   const [isRequestError, setIsRequestError] = useState(false);
   const [errorField, setErrorField] = useState(null);
-  const [state, dispatch] = useContext(AuthContext);
+  const [authState, authDispatch] = useContext(AuthContext);
   const { handleSubmit, control, errors } = useForm({
     validationSchema: LoginSchema,
   });
@@ -47,23 +51,27 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     const { email, password } = data;
     try {
-      dispatch(updateAuthorizing(true));
+      authDispatch(updateAuthorizing(true));
       const response = await authAPI.login(email, password);
       if (response === 401) {
-        dispatch(updateAuthorizing(false));
+        authDispatch(updateAuthorizing(false));
         setIsRequestError(true);
         setErrorField("Email or password is incorrect");
       } else if (response === 500) {
-        dispatch(updateAuthorizing(false));
+        authDispatch(updateAuthorizing(false));
         setIsRequestError(true);
         setErrorField("Something went wrong.");
       } else {
         setIsRequestError(false);
-        setTimeout(async () => {
-          await dispatch(updateAuthentication(!!response.data.accessToken));
-          await dispatch(updateToken(response.data.accessToken));
-        }, 5000);
-        dispatch(updateAuthorizing(false));
+        authDispatch(updateAuthentication(!!response.data.accessToken));
+        authDispatch(updateToken(response.data.accessToken));
+        // setTimeout(async () => {
+        //   await dispatch(updateAuthentication(!!response.data.accessToken));
+        //   await dispatch(updateToken(response.data.accessToken));
+        // }, 5000);
+        authDispatch(updateAuthorizing(false));
+        authDispatch(updateModalSignStatus(false));
+        history.replace(HOME);
       }
     } catch (e) {}
   };
@@ -185,10 +193,10 @@ const LoginForm = () => {
       ) : null}
       <StyledButton
         type="submit"
-        disabled={state.isAuthorizing}
+        disabled={authState.isAuthorizing}
         variant="contained"
       >
-        {state.isAuthorizing && !isRequestError ? <ButtonSpinner /> : "Login"}
+        {authState.isAuthorizing ? <ButtonSpinner /> : "Login"}
       </StyledButton>
     </form>
   );
