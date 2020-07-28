@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { AnimatePresence } from "framer-motion";
-import { Route, Switch, useLocation, Redirect } from "react-router-dom";
+import { Switch, useLocation, Redirect } from "react-router-dom";
 import { HOME } from "../../constants/route.urls";
 
 type RoutesProps = {

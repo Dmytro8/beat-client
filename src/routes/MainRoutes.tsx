@@ -34,55 +34,48 @@ export const MainRoutes = () => {
   return (
     <PlayerProvider>
       <MainLayout>
-        <Suspense fallback={<AppSpinner />}>
-          <AnimatedRoutes exitBeforeEnter>
-            <TransitionRoute path={HOME} exact component={HomePage} />
-            <TransitionRoute path={MUSIC} exact component={MusicPage} />
-            <TransitionRoute path={ERROR} exact component={ErrorPage} />
-            <PrivateRoute
-              path={BASKET}
-              exact
-              component={BasketPage}
-              isTransition
-            />
-            <PrivateRoute
-              path={ABOUT}
-              exact
-              component={AboutPage}
-              isTransition
-            />
-            <PrivateRoute
-              path={ACCOUNT}
-              exact
-              component={AccountPage}
-              isTransition
-            />
-            <RestrictedRoute
-              path={REGISTRATION}
-              exact
-              component={RegistrationPage}
-              isTransition
-            />
-            <RestrictedRoute
-              path={OAUTH2_REDIRECT}
-              exact
-              component={OAuth2RedirectHandler}
-              isTransition={false}
-            />
-            <ConfirmRoute
-              path={CONFIRM_EMAIL}
-              exact
-              component={ConfirmEmailPage}
-              isConfirmed={false}
-            />
-            <ConfirmRoute
-              path={CONFIRMED_EMAIL}
-              exact
-              component={ConfirmedEmailPage}
-              isConfirmed
-            />
-          </AnimatedRoutes>
-        </Suspense>
+        <AnimatedRoutes exitBeforeEnter>
+          <TransitionRoute path={HOME} exact component={HomePage} />
+          <TransitionRoute path={MUSIC} exact component={MusicPage} />
+          <TransitionRoute path={ERROR} exact component={ErrorPage} />
+          <PrivateRoute
+            path={BASKET}
+            exact
+            component={BasketPage}
+            isTransition
+          />
+          <PrivateRoute path={ABOUT} exact component={AboutPage} isTransition />
+          <PrivateRoute
+            path={ACCOUNT}
+            exact
+            component={AccountPage}
+            isTransition
+          />
+          <RestrictedRoute
+            path={REGISTRATION}
+            exact
+            component={RegistrationPage}
+            isTransition
+          />
+          <RestrictedRoute
+            path={OAUTH2_REDIRECT}
+            exact
+            component={OAuth2RedirectHandler}
+            isTransition={false}
+          />
+          <ConfirmRoute
+            path={CONFIRM_EMAIL}
+            exact
+            component={ConfirmEmailPage}
+            isConfirmed={false}
+          />
+          <ConfirmRoute
+            path={CONFIRMED_EMAIL}
+            exact
+            component={ConfirmedEmailPage}
+            isConfirmed
+          />
+        </AnimatedRoutes>
       </MainLayout>
     </PlayerProvider>
   );
