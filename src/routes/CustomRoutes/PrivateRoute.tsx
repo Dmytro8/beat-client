@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC } from "react";
 import { Route } from "react-router-dom";
 import {
   MountTransition,
@@ -15,15 +15,16 @@ type Props = {
   isTransition: boolean;
 };
 
-export const RestrictedRoute: FC<Props> = ({
+export const PrivateRoute: FC<Props> = ({
   exact = false,
-  path,
+  path = HOME,
   component: Component,
   isTransition = false,
   ...rest
 }) => {
   const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
-  if (isAuthenticated) {
+
+  if (!isAuthenticated) {
     return <MotionRedirect to={HOME} />;
   } else if (isTransition) {
     return (

@@ -1,31 +1,38 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, useContext, useEffect } from "react";
 import { Route } from "react-router-dom";
 import {
   MountTransition,
   MotionRedirect,
 } from "../../components/common/MountTransition";
 import { HOME } from "../../constants/route.urls";
-import { ACCESS_TOKEN } from "../../constants";
+import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 import { TransitionRoute } from "./TransitionRoute";
 
 type Props = {
   exact?: boolean;
   path: string;
   component: any;
-  isTransition: boolean;
+  isConfirmed: boolean;
 };
 
-export const RestrictedRoute: FC<Props> = ({
+export const ConfirmRoute: FC<Props> = ({
   exact = false,
   path,
   component: Component,
-  isTransition = false,
+  isConfirmed = false,
   ...rest
 }) => {
-  const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
-  if (isAuthenticated) {
+  const [profileState, profileDispatch]: any = useContext(ProfileContext);
+  useEffect(() => {
+    return () => {};
+  }, [profileState]);
+
+  if (
+    profileState.profile.enabled ||
+    (profileState.profile.enabled === 0 && isConfirmed)
+  ) {
     return <MotionRedirect to={HOME} />;
-  } else if (isTransition) {
+  } else if (profileState.profile.enabled === 0) {
     return (
       <TransitionRoute
         path={path}
@@ -34,14 +41,5 @@ export const RestrictedRoute: FC<Props> = ({
         component={Component}
       />
     );
-  } else {
-    return (
-      <Route
-        exact={exact}
-        path={path}
-        {...rest}
-        render={(routeProps) => <Component {...routeProps} />}
-      />
-    );
-  }
+  } else return null;
 };

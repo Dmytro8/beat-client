@@ -7,9 +7,9 @@ import {
   REGISTRATION,
   OAUTH2_REDIRECT,
   ABOUT,
-  SETTINGS,
   CONFIRM_EMAIL,
   CONFIRMED_EMAIL,
+  ACCOUNT,
 } from "../constants/route.urls";
 import { AppSpinner } from "../components/common/FormControls";
 import { PlayerProvider } from "../contexts/PlayerContext/PlayerContext";
@@ -19,17 +19,16 @@ import { MusicPage } from "../pages/MusicPage";
 import { BasketPage } from "../pages/BasketPage";
 import { ErrorPage } from "../pages/ErrorPage";
 import { AnimatedRoutes } from "./common/AnimatedRoutes";
-import { RouteTransition } from "./CustomRoutes/RouteTransition";
+import { TransitionRoute } from "./CustomRoutes/TransitionRoute";
 import { RegistrationPage } from "../pages/AuthPages/RegistrationPage";
-import { PrivateRouteTransition } from "./CustomRoutes/PrivateRouteTransition";
-import { RestrictedRouteTransition } from "./CustomRoutes/RestrictedRouteTransition";
+import { PrivateRoute } from "./CustomRoutes/PrivateRoute";
 import { RestrictedRoute } from "./CustomRoutes/RestrictedRoute";
 import { OAuth2RedirectHandler } from "../components/OAuth2RedirectHandler";
-import { Route } from "react-router-dom";
 import { AboutPage } from "../pages/AboutPage";
-import { SettingsPage } from "../pages/SettingsPage";
+import { AccountPage } from "../pages/AccountPage";
 import { ConfirmEmailPage } from "../pages/EmailPages/ConfirmEmailPage";
 import { ConfirmedEmailPage } from "../pages/EmailPages/ConfirmedEmailPage";
+import { ConfirmRoute } from "./CustomRoutes/ConfirmRoute";
 
 export const MainRoutes = () => {
   return (
@@ -37,38 +36,50 @@ export const MainRoutes = () => {
       <MainLayout>
         <Suspense fallback={<AppSpinner />}>
           <AnimatedRoutes exitBeforeEnter>
-            <RouteTransition path={HOME} exact>
-              <HomePage />
-            </RouteTransition>
-            <RouteTransition path={MUSIC} exact>
-              <MusicPage />
-            </RouteTransition>
-            <PrivateRouteTransition path={BASKET} exact>
-              <BasketPage />
-            </PrivateRouteTransition>
-            <PrivateRouteTransition path={ABOUT} exact>
-              <AboutPage />
-            </PrivateRouteTransition>
-            <PrivateRouteTransition path={SETTINGS} exact>
-              <SettingsPage />
-            </PrivateRouteTransition>
-            <RouteTransition path={ERROR} exact>
-              <ErrorPage />
-            </RouteTransition>
-            <RestrictedRouteTransition path={REGISTRATION} exact>
-              <RegistrationPage />
-            </RestrictedRouteTransition>
-            <RestrictedRouteTransition path={CONFIRM_EMAIL} exact>
-              <ConfirmEmailPage />
-            </RestrictedRouteTransition>
-            {/* you have to create another route to confirmed email */}
-            <RestrictedRouteTransition path={CONFIRMED_EMAIL} exact>
-              <ConfirmedEmailPage />
-            </RestrictedRouteTransition>
+            <TransitionRoute path={HOME} exact component={HomePage} />
+            <TransitionRoute path={MUSIC} exact component={MusicPage} />
+            <TransitionRoute path={ERROR} exact component={ErrorPage} />
+            <PrivateRoute
+              path={BASKET}
+              exact
+              component={BasketPage}
+              isTransition
+            />
+            <PrivateRoute
+              path={ABOUT}
+              exact
+              component={AboutPage}
+              isTransition
+            />
+            <PrivateRoute
+              path={ACCOUNT}
+              exact
+              component={AccountPage}
+              isTransition
+            />
+            <RestrictedRoute
+              path={REGISTRATION}
+              exact
+              component={RegistrationPage}
+              isTransition
+            />
             <RestrictedRoute
               path={OAUTH2_REDIRECT}
               exact
               component={OAuth2RedirectHandler}
+              isTransition={false}
+            />
+            <ConfirmRoute
+              path={CONFIRM_EMAIL}
+              exact
+              component={ConfirmEmailPage}
+              isConfirmed={false}
+            />
+            <ConfirmRoute
+              path={CONFIRMED_EMAIL}
+              exact
+              component={ConfirmedEmailPage}
+              isConfirmed
             />
           </AnimatedRoutes>
         </Suspense>

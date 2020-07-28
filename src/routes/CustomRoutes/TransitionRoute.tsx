@@ -6,15 +6,24 @@ import { HOME } from "../../constants/route.urls";
 type Props = {
   exact?: boolean;
   path: string;
+  component: any;
 };
 
-export const RouteTransition: FC<Props> = ({
+export const TransitionRoute: FC<Props> = ({
   children,
   exact = false,
   path = HOME,
+  component: Component,
   ...rest
 }) => (
-  <Route exact={exact} path={path} {...rest}>
-    <MountTransition>{children}</MountTransition>
-  </Route>
+  <Route
+    exact={exact}
+    path={path}
+    {...rest}
+    render={(routeProps) => (
+      <MountTransition>
+        <Component {...routeProps} />
+      </MountTransition>
+    )}
+  />
 );
