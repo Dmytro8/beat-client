@@ -9,7 +9,11 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Grid from "@material-ui/core/Grid";
 
-import { StyledTextField, StyledButton } from "../../common/FormControls";
+import {
+  StyledTextField,
+  StyledButton,
+  ButtonSpinner,
+} from "../../common/FormControls";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import {
   updateAuthentication,
@@ -19,9 +23,13 @@ import { authAPI } from "../../../api/authApi";
 import { CONFIRM_EMAIL } from "../../../constants/route.urls";
 import { useHistory } from "react-router-dom";
 
+import { useQuery } from "react-query";
+
 const RegistrationForm = () => {
   const history = useHistory();
   const [state, dispatch] = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const { handleSubmit, control, errors } = useForm({
     validationSchema: SignupSchema,
   });
@@ -46,16 +54,17 @@ const RegistrationForm = () => {
   const onSubmit = async (data) => {
     try {
       // maybe receiving token in sign up query is not important, it will be important after confirmed email
+      setIsLoading(true);
       const response = await authAPI.signup(data);
+      setIsLoading(false);
       //await dispatch(updateAuthentication(!!response.data.accessToken));
       //await dispatch(updateToken(response.data.accessToken));
-      history.replace(CONFIRM_EMAIL);
+      if (response.status === 400) {
+        setError(response.data.message);
+      } else {
+        history.replace(CONFIRM_EMAIL);
+      }
     } catch (e) {}
-  };
-  const onUsernameBlur = async () => {
-    try {
-      // const response = await authAPI.checkUsername(username);
-    } catch (error) {}
   };
 
   return (
@@ -73,7 +82,6 @@ const RegistrationForm = () => {
               style={{ width: "100%" }}
               name="username"
               label="Username"
-              onBlur={onUsernameBlur}
               control={control}
               value={username}
               onChange={([event]) => {
@@ -89,7 +97,6 @@ const RegistrationForm = () => {
               style={{ width: "100%" }}
               name="username"
               label="Username"
-              onBlur={onUsernameBlur}
               control={control}
               value={username}
               onChange={([event]) => {
@@ -190,8 +197,9 @@ const RegistrationForm = () => {
           )}
         </Grid>
       </Grid>
+      <p style={{ color: "#ed4337" }}>{error}</p>
       <StyledButton variant="contained" type="submit">
-        Sign Up
+        {isLoading ? <ButtonSpinner /> : "Sign Up"}
       </StyledButton>
     </form>
   );

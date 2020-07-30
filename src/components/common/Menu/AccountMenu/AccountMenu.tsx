@@ -13,7 +13,7 @@ import Fade from "@material-ui/core/Fade";
 
 import { AccountCircle } from "../../HeaderControls";
 import { Link } from "react-router-dom";
-import { ABOUT, SETTINGS } from "../../../../constants/route.urls";
+import { ABOUT, ACCOUNT } from "../../../../constants/route.urls";
 import { ProfileContext } from "../../../../contexts/ProfileContext/ProfileContext";
 
 const StyledMenu = withStyles({
@@ -72,7 +72,6 @@ export const AccountMenu = ({ anchorEl, setAnchorEl }: PropsType) => {
     setAnchorEl(null);
   };
   useEffect(() => {
-    console.log(profileState);
     return () => {};
   }, [profileState]);
   return (
@@ -84,20 +83,15 @@ export const AccountMenu = ({ anchorEl, setAnchorEl }: PropsType) => {
       onClose={handleClose}
       TransitionComponent={Fade}
     >
-      {profileState.profile.accountRole?.role === "ROLE_ADMIN" ? (
-        <Link to={SETTINGS} onClick={handleClose}>
-          <StyledMenuItem>
-            <ListItemText className={classes.item}>Admin</ListItemText>
-          </StyledMenuItem>
-        </Link>
-      ) : (
-        <Link to={SETTINGS} onClick={handleClose}>
-          <StyledMenuItem>
-            <ListItemText className={classes.item}>Account</ListItemText>
-          </StyledMenuItem>
-        </Link>
-      )}
-
+      <Link to={`${ACCOUNT}`} onClick={handleClose}>
+        <StyledMenuItem>
+          <ListItemText className={classes.item}>
+            {profileState.profile.accountRole?.role === "ROLE_ADMIN"
+              ? "Admin"
+              : "Account"}
+          </ListItemText>
+        </StyledMenuItem>
+      </Link>
       <Link to={ABOUT} onClick={handleClose}>
         <StyledMenuItem>
           <ListItemText className={classes.item}>About</ListItemText>

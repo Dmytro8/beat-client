@@ -1,19 +1,20 @@
-import React, { useRef, useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useRef } from "react";
 
-import classes from "./SettingsPage.module.scss";
-import { ACCESS_TOKEN } from "../../constants";
+import classes from "./UploadPage.module.scss";
+
+import { ACCESS_TOKEN } from "../../../../constants";
 import { useHistory } from "react-router-dom";
-import { HOME } from "../../constants/route.urls";
+import { HOME } from "../../../../constants/route.urls";
 
 import axios from "axios";
-import { ProgressBar } from "../../components/common/ProgressBar";
-import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { ProgressBar } from "../../../../components/common/ProgressBar";
+import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import {
   updateAuthentication,
   updateToken,
-} from "../../contexts/AuthContext/actions";
+} from "../../../../contexts/AuthContext/actions";
 
-export const SettingsPage = () => {
+export const UploadPage = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
   const [imageFile, setImageFile] = useState<string | File>("");
   const [songFile, setSongFile] = useState<string | File>("");
@@ -85,10 +86,9 @@ export const SettingsPage = () => {
       );
     } else return null;
   };
-
   return (
     <div className={classes.settings}>
-      <h1>Settings page</h1>
+      <h1>Upload subpage</h1>
       <section className={classes.logout}>
         <button onClick={logoutHandler} className={classes.logout__button}>
           Log out

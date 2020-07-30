@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
 
 import classes from "./ConfirmedEmailPage.module.scss";
 
@@ -7,9 +7,33 @@ import classes from "./ConfirmedEmailPage.module.scss";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
 import Button from "@material-ui/core/Button";
-import { HOME } from "../../../constants/route.urls";
+import { HOME, ERROR } from "../../../constants/route.urls";
+import axios from "axios";
+import qs from "qs";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
+import { useHistory } from "react-router";
 
-export const ConfirmedEmailPage = () => {
+import { updateErrorStatus } from "../../../contexts/AuthContext/actions";
+import { authAPI } from "../../../api/authApi";
+
+export const ConfirmedEmailPage = (props: any) => {
+  const [authState, authDispatch]: any = useContext(AuthContext);
+  const history = useHistory();
+  useEffect(() => {
+    let activationCode = qs.parse(props.location.search, {
+      ignoreQueryPrefix: true,
+    }).activationCode;
+    if (activationCode) {
+      authAPI.activateEmail(String(activationCode)).then((response) => {
+        if (response.status !== 200) {
+          authDispatch(updateErrorStatus(true));
+          history.replace(ERROR);
+        }
+      });
+    }
+    return () => {};
+  }, []);
+
   return (
     <div className={classes.confirmedEmailPage}>
       <div className={classes.container}>

@@ -4,7 +4,7 @@ import {
   MountTransition,
   MotionRedirect,
 } from "../../components/common/MountTransition";
-import { HOME } from "../../constants/route.urls";
+import { HOME, ACCOUNT } from "../../constants/route.urls";
 import { ACCESS_TOKEN } from "../../constants";
 import { TransitionRoute } from "./TransitionRoute";
 import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
@@ -16,7 +16,7 @@ type Props = {
   isTransition: boolean;
 };
 
-export const PrivateRoute: FC<Props> = ({
+export const AdminRoute: FC<Props> = ({
   exact = false,
   path = HOME,
   component: Component,
@@ -25,9 +25,11 @@ export const PrivateRoute: FC<Props> = ({
 }) => {
   const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
-
-  if (!isAuthenticated) {
-    return <MotionRedirect to={HOME} />;
+  if (
+    !isAuthenticated ||
+    profileState.profile.accountRole?.role !== "ROLE_ADMIN"
+  ) {
+    return <MotionRedirect to={`${ACCOUNT}`} />;
   } else if (isTransition) {
     return (
       <TransitionRoute

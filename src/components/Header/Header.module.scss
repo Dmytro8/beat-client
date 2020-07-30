@@ -11,13 +11,16 @@
   .activeLink {
     color: map-get($map: $webPaletteColors, $key: "accent");
   }
-  nav {
+  section {
     display: grid;
     grid-auto-flow: column;
     justify-content: center;
     gap: 40px;
     font-size: 20px;
     align-content: center;
+    .menuButton {
+      display: none;
+    }
   }
   .rightControls {
     position: absolute;
@@ -117,5 +120,25 @@
     //     display: none;
     //   }
     // }
+  }
+}
+
+@media (max-width: 700px) {
+  .header {
+    section {
+      // display: grid;
+      // grid-auto-flow: column;
+
+      justify-content: start;
+      .menuButton {
+        display: block;
+        .menuIcon {
+          font-size: 40px;
+        }
+      }
+      .link {
+        display: none;
+      }
+    }
   }
 }

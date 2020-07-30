@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import {
   HOME,
   MUSIC,
@@ -11,7 +11,6 @@ import {
   CONFIRMED_EMAIL,
   ACCOUNT,
 } from "../constants/route.urls";
-import { AppSpinner } from "../components/common/FormControls";
 import { PlayerProvider } from "../contexts/PlayerContext/PlayerContext";
 import { MainLayout } from "../layouts/MainLayout";
 import { HomePage } from "../pages/HomePage";
@@ -25,10 +24,10 @@ import { PrivateRoute } from "./CustomRoutes/PrivateRoute";
 import { RestrictedRoute } from "./CustomRoutes/RestrictedRoute";
 import { OAuth2RedirectHandler } from "../components/OAuth2RedirectHandler";
 import { AboutPage } from "../pages/AboutPage";
-import { AccountPage } from "../pages/AccountPage";
 import { ConfirmEmailPage } from "../pages/EmailPages/ConfirmEmailPage";
 import { ConfirmedEmailPage } from "../pages/EmailPages/ConfirmedEmailPage";
 import { ConfirmRoute } from "./CustomRoutes/ConfirmRoute";
+import { AccountRoutes } from "./AccountRoutes";
 
 export const MainRoutes = () => {
   return (
@@ -46,10 +45,10 @@ export const MainRoutes = () => {
           />
           <PrivateRoute path={ABOUT} exact component={AboutPage} isTransition />
           <PrivateRoute
-            path={ACCOUNT}
+            path={`${ACCOUNT}/:subpage?`}
             exact
-            component={AccountPage}
-            isTransition
+            component={AccountRoutes}
+            isTransition={false}
           />
           <RestrictedRoute
             path={REGISTRATION}

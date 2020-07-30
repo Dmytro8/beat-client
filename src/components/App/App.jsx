@@ -14,7 +14,6 @@ import { AppSpinner } from "../common/FormControls";
 import { setProfile } from "../../contexts/ProfileContext/actions";
 
 const App = () => {
-  const [isAuthorized, setIsAuthorized] = useState(false);
   const [authState, authDispatch] = useContext(AuthContext);
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
   useEffect(() => {
@@ -23,20 +22,18 @@ const App = () => {
     authDispatch(updateToken(localStorage.getItem(ACCESS_TOKEN)));
     if (isAuthenticated) {
       const fetchData = async () => {
+        authDispatch(updateAuthorizing(true));
         const user = await authAPI.getCurrentUser(
           localStorage.getItem(ACCESS_TOKEN)
         );
         dispatchProfile(setProfile(user));
-        setIsAuthorized(true);
         authDispatch(updateAuthorizing(false));
         // loginSocketEmit(userId);
       };
       fetchData();
     }
-    return () => {
-      setIsAuthorized(false);
-    };
-  }, [dispatchProfile, authDispatch]);
+    return () => {};
+  }, [localStorage.getItem(ACCESS_TOKEN)]);
   return (
     <Router>
       <MainRoutes />

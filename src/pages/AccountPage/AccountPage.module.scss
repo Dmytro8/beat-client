@@ -1,0 +1,87 @@
+@import "../../styles/_vars.scss";
+
+$navHoverSpeed: 0.3s;
+$linkHeight: 50px;
+
+.account {
+  display: grid;
+  height: 90%;
+  // min-height: 600px;
+  grid-template-columns: minmax(200px, 300px) minmax(400px, 800px);
+  gap: 20px;
+  justify-self: center;
+  color: rgb(56, 56, 56);
+  nav {
+    background-color: rgb(55, 55, 55);
+    border-radius: 10px;
+    overflow: hidden;
+    max-height: 100%;
+    overflow-y: auto;
+    li {
+      list-style: none;
+      height: $linkHeight;
+      background-color: $accentColor;
+      margin: 10px 0;
+      display: grid;
+      align-items: center;
+
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      &:before {
+        pointer-events: none;
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-bottom: 50px solid rgba(255, 255, 255, 0.1);
+        transform: translateX(-100%);
+        transition: all $navHoverSpeed ease-in-out;
+      }
+      &:hover,
+      &:focus {
+        a {
+          padding-left: 30px;
+        }
+        &:before {
+          pointer-events: none;
+          transform: translateX(-70%);
+        }
+      }
+      a {
+        transition: all $navHoverSpeed ease-in-out;
+        color: white;
+        padding-left: 20px;
+        line-height: $linkHeight;
+      }
+    }
+
+    .spinnerWrapper {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      svg {
+        color: white;
+      }
+    }
+  }
+  section {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .account {
+    grid-template-columns: minmax(280px, 400px);
+    justify-content: center;
+    section {
+      display: none;
+    }
+  }
+}

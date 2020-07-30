@@ -34,7 +34,7 @@ export const authAPI = {
         ...user,
       })
       .catch((error) => {
-        return error;
+        return error.response;
       });
     // localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
     return response;
@@ -52,6 +52,12 @@ export const authAPI = {
       .catch((error) => {
         return error.response.status;
       });
+  },
+  async activateEmail(activatonCode: string) {
+    return await instance
+      .get(`auth/activate?activationCode=${activatonCode}`)
+      .then((response) => response)
+      .catch((error) => error.response);
   },
   async logout(accessToken: string) {
     // const response = await instance.post(`/auth/logout`, {
