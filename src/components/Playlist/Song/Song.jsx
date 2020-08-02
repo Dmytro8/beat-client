@@ -171,18 +171,18 @@ const Song = ({ songId, toggleDrawer }) => {
             onClick={handlePlayActionSmallDevices}
           >
             <div className={classes.songImage}>
-              {song.imageType === null ? (
+              {/* {song.imageType === null ? (
                 <div className={classes.musicNoteIcon}>
                   <MusicNoteIcon />
                 </div>
-              ) : (
-                <LazyLoadImage
-                  alt={song.name}
-                  effect="blur"
-                  src={`${AUDIO_IMAGE_SERVER}/1000x1000/${song.uuid}`}
-                  height={"100%"}
-                />
-              )}
+              ) : ( */}
+              <LazyLoadImage
+                alt={song.name}
+                effect="blur"
+                src={`${AUDIO_IMAGE_SERVER}/200x200/${song.uuid}`}
+                height={"100%"}
+              />
+              {/* )} */}
               {/* ///// */}
               {/* Here can be the problem  */}
               {/* ///// */}

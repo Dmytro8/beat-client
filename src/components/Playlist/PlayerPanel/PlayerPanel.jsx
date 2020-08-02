@@ -108,7 +108,7 @@ const PlayerPanel = () => {
   };
 
   const playerBgStyle = {
-    backgroundImage: `url(${AUDIO_IMAGE_SERVER}/1000X1000/${statePlayer.currentSong.uuid})`,
+    backgroundImage: `url(${AUDIO_IMAGE_SERVER}/1000x1000/${statePlayer.currentSong.uuid})`,
     backgroundPosition: `center`,
     backgroundRepeat: `no-repeat`,
     backgroundSize: `cover`,
