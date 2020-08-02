@@ -12,6 +12,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import { Howl, Howler } from "howler";
 import { Spinner } from "../../common/FormControls";
@@ -38,8 +39,10 @@ import {
 import { AUDIO_IMAGE_SERVER } from "../../../constants";
 import { LikeButon } from "../../common/PlaylistControls";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
+import { IconButton } from "@material-ui/core";
+import { useViewport } from "../../../hooks/useViewport";
 
-const Song = ({ songId }) => {
+const Song = ({ songId, toggleDrawer }) => {
   const [authState, authDispatch] = useContext(AuthContext);
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
@@ -47,6 +50,7 @@ const Song = ({ songId }) => {
   const [isSongLoading, setIsSongLoading] = useState(false);
   const [openModalSign, setOpenModalSign] = useState(false);
   const [song, setSong] = useState("");
+  const { width, height } = useViewport();
 
   const handleOpenSign = (state) => {
     setOpenModalSign(state);
@@ -54,28 +58,31 @@ const Song = ({ songId }) => {
 
   useEffect(() => {
     return () => {};
-  }, [statePlayer.isRepeat]);
+  }, [statePlayer.isRepeat, width]);
+
+  const getSong = (songId) => {
+    return statePlayer.songs.filter((song) => song.id === songId)[0];
+  };
 
   useEffect(() => {
-    setSong(statePlayer.songs[songId - 1]);
+    const thisSong = getSong(songId);
+    setSong(thisSong);
     let progress;
-    statePlayer.songs[songId - 1].howl.on("play", function () {
-      dispatchPlayer(setCurrentSong(statePlayer.songs[songId - 1]));
+    thisSong.howl.on("play", function () {
+      dispatchPlayer(setCurrentSong(thisSong));
       dispatchPlayer(togglePlaying(true));
       dispatchPlayer(togglePaused(false));
       progress = setInterval(() => {
-        dispatchPlayer(
-          setSeekPosition(statePlayer.songs[songId - 1].howl.seek())
-        );
+        dispatchPlayer(setSeekPosition(thisSong.howl.seek()));
       }, 300);
     });
-    statePlayer.songs[songId - 1].howl.on("stop", function () {
+    thisSong.howl.on("stop", function () {
       clearInterval(progress);
     });
-    statePlayer.songs[songId - 1].howl.on("pause", function () {
+    thisSong.howl.on("pause", function () {
       clearInterval(progress);
     });
-    statePlayer.songs[songId - 1].howl.on("end", function () {
+    thisSong.howl.on("end", function () {
       clearInterval(progress);
     });
     // onload: () => {
@@ -95,6 +102,18 @@ const Song = ({ songId }) => {
       // dispatchPlayer(togglePlaying(false));
     };
   }, []);
+
+  const handlePlayActionLargeDevices = () => {
+    if (width >= 1024) {
+      togglePlay();
+    }
+  };
+
+  const handlePlayActionSmallDevices = () => {
+    if (width <= 1024) {
+      togglePlay();
+    }
+  };
 
   const togglePlay = () => {
     if (
@@ -147,7 +166,10 @@ const Song = ({ songId }) => {
               : null
           }`}
         >
-          <td className={classes.songImageCell}>
+          <td
+            className={classes.songImageCell}
+            onClick={handlePlayActionSmallDevices}
+          >
             <div className={classes.songImage}>
               {song.imageType === null ? (
                 <div className={classes.musicNoteIcon}>
@@ -157,12 +179,17 @@ const Song = ({ songId }) => {
                 <LazyLoadImage
                   alt={song.name}
                   effect="blur"
-                  src={`${AUDIO_IMAGE_SERVER}/${song.uuid}.${song.imageType}`}
+                  src={`${AUDIO_IMAGE_SERVER}/1000x1000/${song.uuid}`}
                   height={"100%"}
                 />
               )}
-
-              <div className={classes.hoverPlay} onClick={togglePlay}>
+              {/* ///// */}
+              {/* Here can be the problem  */}
+              {/* ///// */}
+              <div
+                className={classes.hoverPlay}
+                onClick={handlePlayActionLargeDevices}
+              >
                 {statePlayer.currentSong.id === song.id &&
                 statePlayer.isPlaying &&
                 !statePlayer.isPaused ? (
@@ -173,11 +200,16 @@ const Song = ({ songId }) => {
               </div>
             </div>
           </td>
-          <td>{song.name}</td>
+          <td
+            className={classes.songName}
+            onClick={handlePlayActionSmallDevices}
+          >
+            {song.name}
+          </td>
           <td className={classes.artistCell}>
             <a href={`#${song.artist}`}>{song.artist}</a>
           </td>
-          <td>{song.length}</td>
+          <td className={classes.timeCell}>{song.length}</td>
           <td className={classes.likeSongCell}>
             <AddIcon />
           </td>
@@ -223,6 +255,11 @@ const Song = ({ songId }) => {
                 $27
               </Button>
             )}
+          </td>
+          <td className={classes.moreVertIcon}>
+            <IconButton onClick={toggleDrawer(true, song)}>
+              <MoreVertIcon />
+            </IconButton>
           </td>
         </tr>
       )}

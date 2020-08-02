@@ -61,7 +61,7 @@ const BasketPage = () => {
                   <LazyLoadImage
                     alt={song.name}
                     effect="blur"
-                    src={`${AUDIO_IMAGE_SERVER}/${song.uuid}.${song.imageType}`}
+                    src={`${AUDIO_IMAGE_SERVER}/200x200/${song.uuid}`}
                     height={"100%"}
                   />
                 </div>

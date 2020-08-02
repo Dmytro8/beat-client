@@ -10,7 +10,7 @@ $fontMainColor: #fff;
 $amountBGLighten: 5%;
 $amountBGDarken: 50%;
 $amounFontLighten: 10%;
-$amounFontDarken: 60%;
+$amounFontDarken: 70%;
 
 $radius: 3px;
 
@@ -37,4 +37,23 @@ $headerHeight: 100px;
 }
 %lightenBackground {
   background-color: lighten($color: $mainBGColor, $amount: $amountBGLighten);
+}
+
+%mozillaScrollBar {
+  scrollbar-width: thin;
+  scrollbar-color: #dbdbdb #444;
+}
+
+%chromeSafariScrollBar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #444;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 6px;
+    border: 3px solid #dbdbdb;
+  }
 }

@@ -37,3 +37,14 @@
     margin-left: 10px;
   }
 }
+
+@media (max-width: 600px) {
+  .controls {
+    svg:nth-child(1) {
+      display: none;
+    }
+    svg:nth-child(5) {
+      display: none;
+    }
+  }
+}

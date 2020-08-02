@@ -9,9 +9,9 @@ export const PrettoSlider = withStyles({
   thumb: {
     height: 10,
     width: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#0883fc",
     marginTop: "-3px",
-    marginLeft: "-6px",
+    marginLeft: "-4px !important",
     "&:focus, &:hover, &$active": {
       boxShadow: "inherit",
     },

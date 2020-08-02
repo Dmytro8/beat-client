@@ -1,22 +1,32 @@
 @import "../../styles/_vars.scss";
+// .playlistContainer::-webkit-scrollbar {
+//   width: 6px;
+// }
+// .playlistContainer::-webkit-scrollbar-track {
+//   background: #444;
+// }
+// .playlistContainer::-webkit-scrollbar-thumb {
+//   background-color: #444;
+//   border-radius: 6px;
+//   border: 3px solid #dbdbdb;
+// }
 .playlistContainer {
+  @extend %mozillaScrollBar;
+  @extend %chromeSafariScrollBar;
   height: 60vh;
   display: grid;
   justify-content: end;
   overflow: auto;
   overflow-x: hidden;
-  // Start Table styles
   table {
     display: grid;
     border-collapse: collapse;
     min-width: 100%;
     color: white;
-    // grid-template-columns: 100px 150px 150px 100px 100px;
     grid-template-columns:
       minmax(100px, 1fr) minmax(150px, 3fr) minmax(150px, 3fr)
       minmax(50px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
   }
-
   thead,
   tbody,
   tr {
@@ -35,6 +45,7 @@
     text-align: left;
     font-weight: normal;
     position: sticky;
+    background-color: map-get($map: $webPaletteColors, $key: "background");
     top: 0;
     z-index: 2;
     font-size: 15px;
@@ -55,5 +66,61 @@
   }
   // End Table styles
   .playlistTable {
+  }
+}
+
+@media (max-width: 768px) {
+  .playlistContainer {
+    justify-content: stretch;
+  }
+  table {
+    grid-template-columns:
+      minmax(50px, 70px) minmax(150px, 3fr)
+      minmax(100px, 1fr) minmax(100px, 1fr) !important;
+    thead {
+      display: none !important;
+    }
+    td {
+      padding: 10px 10px 10px 5px !important;
+    }
+  }
+  .playlistTable {
+    &__artist {
+      display: none;
+    }
+    &__time {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .playlistContainer {
+    justify-content: stretch;
+  }
+  table {
+    grid-template-columns:
+      minmax(50px, 70px) minmax(150px, 3fr)
+      minmax(50px, 1fr) !important;
+    thead {
+      display: none !important;
+    }
+    td {
+      padding: 10px 10px 10px 5px !important;
+    }
+  }
+  .playlistTable {
+    &__artist {
+      display: none;
+    }
+    &__time {
+      display: none;
+    }
+    &__addToFavourite {
+      display: none;
+    }
+    &__price {
+      display: none;
+    }
   }
 }

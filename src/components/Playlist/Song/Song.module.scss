@@ -107,6 +107,9 @@
       }
     }
   }
+  .moreVertIcon {
+    display: none;
+  }
   td {
     @extend %darkenFont;
     border-bottom: 1px solid
@@ -149,5 +152,46 @@
 .songRowActive {
   td {
     @extend %lightenBackground;
+  }
+  .songName {
+    color: map-get($map: $webPaletteColors, $key: "accent") !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .songRow {
+    .artistCell {
+      display: none;
+    }
+    .timeCell {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .songRow {
+    .artistCell {
+      display: none;
+    }
+    .timeCell {
+      display: none;
+    }
+    .likeSongCell {
+      display: none;
+    }
+    .priceCell {
+      display: none;
+    }
+    .moreVertIcon {
+      display: block;
+      display: grid;
+      justify-content: end;
+      width: 100%;
+      align-content: center;
+      svg {
+        color: darken($color: $fontMainColor, $amount: $amounFontDarken);
+      }
+    }
   }
 }

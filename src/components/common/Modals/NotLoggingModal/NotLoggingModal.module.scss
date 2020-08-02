@@ -137,6 +137,7 @@
 @media (max-width: 768px) {
   .modal {
     height: 450px;
+    max-width: 500px;
     .options {
       grid-template-columns: 1fr;
       .separator {

@@ -73,3 +73,10 @@ $card-description: 100px;
     }
   }
 }
+
+@media (max-width: 768px) {
+  .card {
+    width: inherit;
+    height: 200px;
+  }
+}

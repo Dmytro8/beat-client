@@ -12,7 +12,7 @@ const ImgAmbilight = () => {
         <LazyLoadImage
           alt={statePlayer.currentSong.name}
           effect="blur"
-          src={`${AUDIO_IMAGE_SERVER}/${statePlayer.currentSong.uuid}.${statePlayer.currentSong.imageType}`}
+          src={`${AUDIO_IMAGE_SERVER}/1000x1000/${statePlayer.currentSong.uuid}`}
           height={"100%"}
           visibleByDefault={true}
         />
@@ -22,7 +22,7 @@ const ImgAmbilight = () => {
           <LazyLoadImage
             alt={statePlayer.currentSong.name}
             effect="blur"
-            src={`${AUDIO_IMAGE_SERVER}/${statePlayer.currentSong.uuid}.${statePlayer.currentSong.imageType}`}
+            src={`${AUDIO_IMAGE_SERVER}/1000x1000/${statePlayer.currentSong.uuid}`}
             height={"100%"}
             visibleByDefault={true}
           />

@@ -2,7 +2,7 @@
 .audioPlayer {
   color: white;
   align-self: end;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -14,7 +14,15 @@
     position: relative;
     width: inherit;
     height: inherit;
-    overflow: hidden;
+    // overflow: hidden;
+    &:before,
+    &:after {
+      content: ".";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+    }
   }
   .audioPlayerBg {
     width: inherit;
@@ -52,6 +60,9 @@
     justify-self: start;
     .title {
       font-size: 15px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .artist {
       font-size: 14px;
@@ -62,7 +73,7 @@
     }
   }
 
-  .volumeCart {
+  .rightContols {
     justify-self: end;
     display: grid;
     grid-auto-flow: column;
@@ -75,6 +86,46 @@
       grid-gap: 4px;
       gap: 10px;
       width: 130px;
+    }
+  }
+  .activeRepeatIcon,
+  .shuffleIcon {
+    display: none;
+    color: map-get($map: $webPaletteColors, $key: "accent");
+    // color: $accentColor;
+  }
+  .formatListNumberedIcon,
+  .repeatIcon {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .rightContols {
+    // justify-items: end;
+    gap: 7px !important;
+    .volume {
+      grid-template-columns: 30px !important;
+      justify-items: end;
+      width: 100% !important;
+      // .volumeWrapper {
+      //   position: absolute;
+      //   background-color: white;
+      //   height: 30px;
+      //   width: 5px;
+      //   border-radius: 2px;
+      // }
+      &__range {
+        background-color: white;
+        position: absolute;
+        padding: 0 8px !important;
+        border-radius: 8px;
+        transform: translateY(-100px) translateX(10px);
+      }
+    }
+    .formatListNumberedIcon,
+    .repeatIcon {
+      display: block !important;
     }
   }
 }

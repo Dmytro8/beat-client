@@ -15,7 +15,7 @@ const ProfilePage = () => {
     const getAllSongs = async () => {
       setIsSongsLoading(true);
       const response = await musicAPI.getAllSongs();
-      dispatchPlayer(setPlaylist(response.slice(0, 3)));
+      dispatchPlayer(setPlaylist(response));
       setIsSongsLoading(false);
     };
     getAllSongs();

@@ -82,6 +82,7 @@ $headerNavBarHeight: 100px;
     animation-timing-function: ease-in-out;
     filter: drop-shadow(0 0 0.75rem #f0237f);
     img {
+      pointer-events: none;
       width: 60%;
     }
   }

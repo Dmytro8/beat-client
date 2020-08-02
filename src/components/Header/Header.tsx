@@ -1,9 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
-
-import { authAPI } from "../../api/authApi";
-import classnames from "classnames";
 
 import classes from "./Header.module.scss";
 import { NavLink } from "react-router-dom";
@@ -19,7 +16,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 
 import { AccountMenu } from "../common/Menu/AccountMenu";
-import { AuthContextType } from "../../contexts/AuthContext/types";
 import { NotLoggingModal } from "../common/Modals/NotLoggingModal";
 import { updateModalSignStatus } from "../../contexts/AuthContext/actions";
 import { SideDrawer } from "./SideDrawer";
