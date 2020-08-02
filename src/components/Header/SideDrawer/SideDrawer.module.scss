@@ -1,0 +1,107 @@
+@import "../../../styles/_vars.scss";
+@import "../../../styles/_mixins.scss";
+@import url("https://fonts.googleapis.com/css2?family=Maven+Pro:wght@700&display=swap");
+
+$headerNavBarHeight: 100px;
+
+.sideNavBar {
+  height: 100vh;
+  background-color: black;
+  border-bottom: 1px solid white;
+  color: white;
+  h1 {
+    font-family: "Maven Pro", sans-serif;
+  }
+  &__background {
+    filter: blur(4px) brightness(50%) grayscale(50%);
+    height: 100%;
+  }
+  &__header {
+    @include absolute($top: 0, $left: 0);
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    font-size: 1.5rem;
+    height: $headerNavBarHeight;
+    width: 100%;
+    align-content: center;
+    justify-content: center;
+    gap: 20px;
+    h1 {
+      color: white;
+    }
+    svg {
+      font-size: 2rem;
+    }
+  }
+  &__content {
+    @include absolute($top: $headerNavBarHeight, $left: 0);
+    ul {
+      margin: 50px 0 0 50px;
+      li {
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        margin: 10px 0;
+        list-style: none;
+        font-size: 1.5rem;
+        svg {
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+  &__footer {
+    @include absolute($bottom: 0, $left: 0);
+  }
+  &__close {
+    @include absolute($bottom: 100px, $right: 30px);
+    width: 50px;
+    height: 50px;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    svg {
+      color: white;
+    }
+  }
+  &__shape {
+    @include absolute($bottom: 20px, $left: 30px);
+    width: 150px;
+    height: 120px;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    border-radius: 67% 37% 18% 100% / 35% 90% 29% 65%;
+    background-color: rgba(#f0237f, 0.5);
+    animation-name: shapeAnimation;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    filter: drop-shadow(0 0 0.75rem #f0237f);
+    img {
+      pointer-events: none;
+      width: 60%;
+    }
+  }
+}
+
+@keyframes shapeAnimation {
+  0% {
+    border-radius: 67% 37% 18% 100% / 35% 90% 29% 65%;
+  }
+  25% {
+    border-radius: 67% 37% 52% 100% / 87% 46% 44% 65%;
+  }
+  50% {
+    border-radius: 77% 35% 100% 86% / 89% 91% 94% 99%;
+  }
+  75% {
+    border-radius: 77% 83% 100% 43% / 87% 46% 84% 99%;
+  }
+  100% {
+    border-radius: 67% 37% 18% 100% / 35% 90% 29% 65%;
+  }
+}

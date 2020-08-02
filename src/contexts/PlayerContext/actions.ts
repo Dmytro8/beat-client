@@ -19,6 +19,10 @@ export type SongType = {
   name: string;
   type: string;
   uuid: string;
+  howl: {
+    play(): any;
+    pause(): any;
+  };
 };
 
 type SetPlaylistActionType = {
@@ -142,6 +146,7 @@ export type PlayerActionTypes =
   | ToggleRepeatActionType
   | TogglePlayingActionType
   | TogglePausedActionType
+  | SetVolumeActionType
   | SetHowlActionType
   | SetSeekPositionActioType
   | SetRandomIndexActionType;

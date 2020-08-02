@@ -1,0 +1,131 @@
+@import "../../../styles/_vars.scss";
+.audioPlayer {
+  color: white;
+  align-self: end;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  .audioPlayerWrapper {
+    padding: 0 25px 10px 25px;
+  }
+  .audioPlayerRelative {
+    position: relative;
+    width: inherit;
+    height: inherit;
+    // overflow: hidden;
+    &:before,
+    &:after {
+      content: ".";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+    }
+  }
+  .audioPlayerBg {
+    width: inherit;
+    height: inherit;
+    filter: blur(12px);
+    opacity: 0.8;
+    position: absolute;
+  }
+  .audioPlayerContent {
+    position: absolute;
+    width: inherit;
+  }
+  .playerProgress {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    .progressTime {
+      color: #fff;
+      font-size: 12px;
+    }
+  }
+
+  .audioPlayerBottom {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+  }
+  .songTitle {
+    display: grid;
+    grid-auto-flow: row;
+    justify-self: start;
+    .title {
+      font-size: 15px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .artist {
+      font-size: 14px;
+      @extend %darkenFont;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .rightContols {
+    justify-self: end;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 18px;
+    .volume {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      grid-gap: 4px;
+      gap: 10px;
+      width: 130px;
+    }
+  }
+  .activeRepeatIcon,
+  .shuffleIcon {
+    display: none;
+    color: map-get($map: $webPaletteColors, $key: "accent");
+    // color: $accentColor;
+  }
+  .formatListNumberedIcon,
+  .repeatIcon {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .rightContols {
+    // justify-items: end;
+    gap: 7px !important;
+    .volume {
+      grid-template-columns: 30px !important;
+      justify-items: end;
+      width: 100% !important;
+      // .volumeWrapper {
+      //   position: absolute;
+      //   background-color: white;
+      //   height: 30px;
+      //   width: 5px;
+      //   border-radius: 2px;
+      // }
+      &__range {
+        background-color: white;
+        position: absolute;
+        padding: 0 8px !important;
+        border-radius: 8px;
+        transform: translateY(-100px) translateX(10px);
+      }
+    }
+    .formatListNumberedIcon,
+    .repeatIcon {
+      display: block !important;
+    }
+  }
+}

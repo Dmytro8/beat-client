@@ -1,9 +1,144 @@
-.buttons {
+@import "../../styles/_vars.scss";
+// @use "sass:map";
+
+.header {
   display: grid;
-  grid-auto-flow: column;
-  justify-content: start;
-  gap: 30px;
-  a {
-    text-decoration: none;
+  position: relative;
+  .link {
+    display: flex;
+    color: #fff;
+  }
+  .activeLink {
+    color: map-get($map: $webPaletteColors, $key: "accent");
+  }
+  section {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: 40px;
+    font-size: 20px;
+    align-content: center;
+    .menuButton {
+      display: none;
+    }
+  }
+  .rightControls {
+    position: absolute;
+    right: 0;
+    display: grid;
+    grid-auto-flow: column;
+    height: $headerHeight;
+    align-content: center;
+    margin-right: 6px;
+    // .authenticatedControls {
+    //   display: none;
+    // }
+    // .noAuthenticatedControls {
+    //   display: grid;
+    //   grid-auto-flow: column;
+    //   height: $headerHeight;
+    //   align-content: center;
+    //   margin-right: 6px;
+    //   button {
+    //     height: fit-content;
+    //     background-color: transparent;
+    //     cursor: pointer;
+    //     color: white;
+    //     padding: 10px 20px;
+    //     font-size: 15px;
+    //     transform: skew(-20deg);
+    //     overflow: hidden;
+    //     z-index: 1;
+    //     span {
+    //       display: block;
+    //       z-index: 2;
+    //       transform: skew(20deg);
+    //     }
+    //     &:focus {
+    //       outline: none;
+    //     }
+    //     &:before,
+    //     &:after {
+    //       z-index: -1;
+    //       box-sizing: border-box;
+    //       transition: all 0.4s ease;
+    //     }
+    //     &:first-child {
+    //       &:before {
+    //         content: "";
+    //         position: absolute;
+    //         top: 0;
+    //         right: -100px;
+    //         bottom: 0;
+    //         left: 0;
+    //         border-bottom: 60px solid rgba($color: $accentColor, $alpha: 0.1);
+    //         transform: translateX(-100%);
+    //       }
+
+    //       &:hover {
+    //         color: white;
+
+    //         &:before {
+    //           transform: translateX(0);
+    //         }
+    //       }
+    //     }
+    //     &:last-child {
+    //       &:before {
+    //         content: "";
+    //         position: absolute;
+    //         top: 0;
+    //         right: -100px;
+    //         bottom: 0;
+    //         left: 0;
+    //         border-bottom: 60px solid rgba($color: $accentColor, $alpha: 0.1);
+    //         transform: translateX(-100%);
+    //       }
+
+    //       &:hover {
+    //         color: white;
+
+    //         &:before {
+    //           transform: translateX(0);
+    //         }
+    //       }
+    //     }
+    //     &:last-child {
+    //       border-left: 1px solid $accentColor;
+    //     }
+    //   }
+    // }
+    // &.authenticated {
+    //   .authenticatedControls {
+    //     display: grid;
+    //     grid-auto-flow: column;
+    //     align-items: center;
+    //     height: $headerHeight;
+    //     gap: 20px;
+    //   }
+    //   .noAuthenticatedControls {
+    //     display: none;
+    //   }
+    // }
+  }
+}
+
+@media (max-width: 700px) {
+  .header {
+    section {
+      // display: grid;
+      // grid-auto-flow: column;
+
+      justify-content: start;
+      .menuButton {
+        display: block;
+        .menuIcon {
+          font-size: 40px;
+        }
+      }
+      .link {
+        display: none;
+      }
+    }
   }
 }

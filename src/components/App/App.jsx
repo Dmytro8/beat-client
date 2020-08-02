@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment, useContext } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { AuthRoutes } from "../../routes/AuthRoutes";
-import { ProfileRoutes } from "../../routes/ProfileRoutes";
+import { MainRoutes } from "../../routes/MainRoutes";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { ACCESS_TOKEN } from "../../constants";
 import { authAPI } from "../../api/authApi";
@@ -15,36 +14,29 @@ import { AppSpinner } from "../common/FormControls";
 import { setProfile } from "../../contexts/ProfileContext/actions";
 
 const App = () => {
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [stateAuth, dispatchAuth] = useContext(AuthContext);
+  const [authState, authDispatch] = useContext(AuthContext);
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
-  const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
   useEffect(() => {
-    dispatchAuth(updateAuthentication(!!localStorage.getItem(ACCESS_TOKEN)));
-    dispatchAuth(updateToken(localStorage.getItem(ACCESS_TOKEN)));
+    let isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
+    authDispatch(updateAuthentication(isAuthenticated));
+    authDispatch(updateToken(localStorage.getItem(ACCESS_TOKEN)));
     if (isAuthenticated) {
       const fetchData = async () => {
+        authDispatch(updateAuthorizing(true));
         const user = await authAPI.getCurrentUser(
           localStorage.getItem(ACCESS_TOKEN)
         );
         dispatchProfile(setProfile(user));
-        setIsAuthorized(true);
-        dispatchAuth(updateAuthorizing(false));
+        authDispatch(updateAuthorizing(false));
         // loginSocketEmit(userId);
       };
       fetchData();
     }
-    return () => {
-      setIsAuthorized(false);
-    };
-  }, [isAuthenticated, dispatchProfile, dispatchAuth]);
+    return () => {};
+  }, [localStorage.getItem(ACCESS_TOKEN)]);
   return (
     <Router>
-      {isAuthenticated ? (
-        <Fragment>{isAuthorized ? <ProfileRoutes /> : <AppSpinner />}</Fragment>
-      ) : (
-        <AuthRoutes />
-      )}
+      <MainRoutes />
     </Router>
   );
 };

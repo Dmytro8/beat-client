@@ -1,0 +1,82 @@
+// @import "../../styles/_vars.scss";
+@import "../../styles/_vars.scss";
+$card-border: 5px;
+$card-description: 100px;
+.card {
+  width: inherit;
+  height: 300px;
+  overflow: hidden;
+  display: grid;
+  background-color: white;
+  color: map-get($map: $webPaletteColors, $key: "background");
+  border-radius: 10px;
+  transition: 0.4s all ease;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 1s ease;
+  &:hover {
+    .play {
+      display: block;
+    }
+    .cardDescription {
+      transform: translateY(0);
+    }
+    // transform: scale(1.05);
+  }
+  .image {
+    width: inherit;
+    height: inherit;
+    span {
+      width: inherit;
+      height: inherit;
+      display: block !important;
+      img {
+        border-radius: 10px;
+        object-fit: cover;
+        width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
+  .play {
+    // display: none;
+  }
+  .cardDescription {
+    position: absolute;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.5);
+    display: grid;
+    align-self: end;
+    transform: translateY(50px);
+    border-radius: 0 0 5px 5px;
+    color: white;
+    width: 100%;
+    height: $card-description;
+    grid-auto-flow: column;
+    transition: all 0.3s ease;
+    .title {
+      justify-self: start;
+      align-self: end;
+      margin-left: 30px;
+      margin-bottom: 15px;
+    }
+    .play {
+      justify-self: end;
+      align-self: end;
+      margin-right: 30px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      svg {
+        font-size: 60px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: inherit;
+    height: 200px;
+  }
+}

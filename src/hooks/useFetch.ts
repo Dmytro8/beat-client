@@ -1,3 +1,4 @@
+import { MethodType } from "./../types/axios.d";
 import { useState, useCallback } from "react";
 import { ACCESS_TOKEN } from "../constants";
 
@@ -6,7 +7,12 @@ export const useFetch = () => {
   const [error, setError] = useState(null);
 
   const request = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
+    async (
+      url: string,
+      method: MethodType = "GET",
+      body = {},
+      headers = {}
+    ) => {
       setLoading(true);
       try {
         if (body) {
@@ -36,10 +42,3 @@ export const useFetch = () => {
 
   return { loading, request, error, clearError };
 };
-
-// axios({
-//   method: "POST",
-//   url: "you http api here",
-//   headers: { autorizacion: localStorage.token },
-//   data: { user: "name" },
-// });

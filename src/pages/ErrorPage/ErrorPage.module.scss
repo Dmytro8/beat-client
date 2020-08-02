@@ -1,0 +1,44 @@
+@import "../../styles/_vars.scss";
+
+.error {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 20px;
+  grid-auto-flow: column;
+  height: 100%;
+  .moodBadIcon {
+    display: grid;
+    align-content: center;
+    svg {
+      font-size: 110px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  &__description {
+    display: grid;
+    gap: 20px;
+    header {
+      display: grid;
+      grid-auto-flow: column;
+      align-items: end;
+      gap: 20px;
+      h1 {
+        font-size: 40px;
+        line-height: 40px;
+      }
+      h2 {
+        font-size: 30px;
+        line-height: 30px;
+        color: map-get($map: $webPaletteColors, $key: "error");
+      }
+    }
+    .refresh {
+      display: grid;
+      gap: 10px;
+      p {
+        font-size: 21px;
+      }
+    }
+  }
+}

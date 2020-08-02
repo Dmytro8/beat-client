@@ -1,36 +1,134 @@
-import React, { useContext } from "react";
-import { StyledButton } from "../common/FormControls";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
-import { authAPI } from "../../api/authApi";
-import {
-  updateAuthentication,
-  updateToken,
-} from "../../contexts/AuthContext/actions";
+import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 
 import classes from "./Header.module.scss";
-import { Link } from "react-router-dom";
-import { MAIN, PROPRAMMERS } from "../../constants/route.urls";
+import { NavLink } from "react-router-dom";
+import { HOME, MUSIC, BASKET } from "../../constants/route.urls";
 
-const Header = () => {
-  const [state, dispatch] = useContext(AuthContext);
-  const logoutHandler = async () => {
-    await authAPI.logout();
-    await dispatch(updateAuthentication(false));
-    await dispatch(updateToken(null));
+import {
+  StyledBadge,
+  ShoppingBasket,
+  AccountCircle,
+} from "../common/HeaderControls";
+import { IconButton } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+
+import { AccountMenu } from "../common/Menu/AccountMenu";
+import { NotLoggingModal } from "../common/Modals/NotLoggingModal";
+import { updateModalSignStatus } from "../../contexts/AuthContext/actions";
+import { SideDrawer } from "./SideDrawer";
+
+export const Header = () => {
+  const [authState, authDispatch]: any = useContext(AuthContext);
+  const [profileState, profileDispatch]: any = useContext(ProfileContext);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+
+  const handleOpenModalSign = () => {
+    // setOpenModalSign(true);
+    authDispatch(updateModalSignStatus(true));
   };
+
+  const handleCloseModalSign = () => {
+    // setOpenModalSign(false);
+    authDispatch(updateModalSignStatus(false));
+  };
+
+  const toggleDrawer = (open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+    setIsNavbarOpen(open);
+  };
+
+  const basketController = () => {
+    if (authState.isAuthenticated) {
+      return (
+        <NavLink
+          exact
+          to={BASKET}
+          className={classes.link}
+          activeClassName={classes.activeLink}
+        >
+          <ShoppingBasket />
+        </NavLink>
+      );
+    } else {
+      return <ShoppingBasket onClick={handleOpenModalSign} />;
+    }
+  };
+
+  const handleClickAccount = (event: React.MouseEvent<HTMLElement>) => {
+    if (authState.isAuthenticated) {
+      setAnchorEl(event.currentTarget);
+    } else handleOpenModalSign();
+  };
+
   return (
-    <div className={classes.buttons}>
-      <StyledButton variant="contained" onClick={logoutHandler}>
-        Logout
-      </StyledButton>
-      <Link to={MAIN}>
-        <StyledButton variant="contained">Main profile page</StyledButton>
-      </Link>
-      <Link to={PROPRAMMERS}>
-        <StyledButton variant="contained">Don't click me!</StyledButton>
-      </Link>
-    </div>
+    <>
+      <header className={classes.header}>
+        <section>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+          >
+            <MenuIcon className={classes.menuIcon} />
+          </IconButton>
+          <NavLink
+            exact
+            to={HOME}
+            className={classes.link}
+            activeClassName={classes.activeLink}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            exact
+            to={MUSIC}
+            className={classes.link}
+            activeClassName={classes.activeLink}
+          >
+            Music
+          </NavLink>
+          <SwipeableDrawer
+            anchor={"top"}
+            open={isNavbarOpen}
+            onClose={toggleDrawer(false)}
+            onOpen={toggleDrawer(true)}
+          >
+            <SideDrawer toggleDrawer={toggleDrawer} />
+          </SwipeableDrawer>
+        </section>
+        <div className={classes.rightControls}>
+          <div className={classes.authenticatedControls}>
+            <IconButton aria-label="cart">
+              <StyledBadge badgeContent={profileState.basket.length}>
+                {basketController()}
+              </StyledBadge>
+            </IconButton>
+            <IconButton aria-label="cart" onClick={handleClickAccount}>
+              <AccountCircle />
+            </IconButton>
+            <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+          </div>
+        </div>
+      </header>
+      <NotLoggingModal
+        open={authState.isModalSignOpen}
+        handleCloseModalSign={handleCloseModalSign}
+      />
+    </>
   );
 };
-
-export default Header;

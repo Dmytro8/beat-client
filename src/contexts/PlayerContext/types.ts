@@ -8,3 +8,32 @@ export const TOGGLE_RANDOM = "TOGGLE_RANDOM";
 export const TOGGLE_REPEAT = "TOGGLE_OPTIONS";
 export const TOGGLE_PLAYING = "TOGGLE_PLAYING";
 export const TOGGLE_PAUSED = "TOGGLE_PAUSED";
+
+export type PlayerProviderPropsType = { children: React.ReactNode };
+
+export type SongType = {
+  id: number;
+  name: string;
+  artist: string;
+  uuid: number;
+  length: string;
+  imageType: string;
+};
+
+export type PlayerStateType = {
+  currentSong: any;
+  songs: any;
+  isRepeat: boolean;
+  isRandom: boolean;
+  isPlaying: boolean;
+  isPaused: boolean;
+  volume: number;
+  isMuted: boolean;
+  randomIndex: number;
+  seekPosition: number;
+};
+
+export type PlayerContextType = {
+  state: PlayerStateType;
+  dispatch: ({ type }: { type: string }) => void;
+};

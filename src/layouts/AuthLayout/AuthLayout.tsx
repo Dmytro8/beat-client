@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 
 import classes from "./AuthLayout.module.scss";
 import { NavLink } from "react-router-dom";
-import { LOGIN, REGISTRATION } from "../../constants/route.urls";
+import { REGISTRATION } from "../../constants/route.urls";
 import authBg from "../../static/images/authBg.jpg";
 import HeadsetIcon from "@material-ui/icons/Headset";
 

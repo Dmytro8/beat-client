@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 
+import classes from "./LoginForm.module.scss";
+
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
@@ -9,7 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import { LoginSchema } from "../FormValidation";
-import classes from "./LoginForm.module.scss";
 import { authAPI } from "../../../api/authApi";
 import {
   StyledTextField,
@@ -21,12 +22,16 @@ import {
   updateAuthentication,
   updateToken,
   updateAuthorizing,
+  updateModalSignStatus,
 } from "../../../contexts/AuthContext/actions";
+import { useHistory } from "react-router";
+import { HOME } from "../../../constants/route.urls";
 
 const LoginForm = () => {
+  const history = useHistory();
   const [isRequestError, setIsRequestError] = useState(false);
   const [errorField, setErrorField] = useState(null);
-  const [state, dispatch] = useContext(AuthContext);
+  const [authState, authDispatch] = useContext(AuthContext);
   const { handleSubmit, control, errors } = useForm({
     validationSchema: LoginSchema,
   });
@@ -46,23 +51,27 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     const { email, password } = data;
     try {
-      dispatch(updateAuthorizing(true));
+      authDispatch(updateAuthorizing(true));
       const response = await authAPI.login(email, password);
       if (response === 401) {
-        dispatch(updateAuthorizing(false));
+        authDispatch(updateAuthorizing(false));
         setIsRequestError(true);
         setErrorField("Email or password is incorrect");
       } else if (response === 500) {
-        dispatch(updateAuthorizing(false));
+        authDispatch(updateAuthorizing(false));
         setIsRequestError(true);
         setErrorField("Something went wrong.");
       } else {
         setIsRequestError(false);
-        setTimeout(async () => {
-          await dispatch(updateAuthentication(!!response.data.accessToken));
-          await dispatch(updateToken(response.data.accessToken));
-        }, 5000);
-        dispatch(updateAuthorizing(false));
+        authDispatch(updateAuthentication(!!response.data.accessToken));
+        authDispatch(updateToken(response.data.accessToken));
+        // setTimeout(async () => {
+        //   await dispatch(updateAuthentication(!!response.data.accessToken));
+        //   await dispatch(updateToken(response.data.accessToken));
+        // }, 5000);
+        authDispatch(updateAuthorizing(false));
+        authDispatch(updateModalSignStatus(false));
+        history.replace(HOME);
       }
     } catch (e) {}
   };
@@ -78,11 +87,11 @@ const LoginForm = () => {
             item
             style={{ width: "10%", display: "grid", alignSelf: "center" }}
           >
-            <EmailIcon style={{ color: "#f44336" }} />
+            <EmailIcon className={classes.icon__error} />
           </Grid>
         ) : (
           <Grid item style={{ width: "10%" }}>
-            <EmailIcon style={{ color: "#f26a6a" }} />
+            <EmailIcon className={classes.icon} />
           </Grid>
         )}
 
@@ -118,15 +127,11 @@ const LoginForm = () => {
             item
             style={{ width: "10%", display: "grid", alignSelf: "center" }}
           >
-            <LockIcon
-              style={{
-                color: "#f44336",
-              }}
-            />
+            <LockIcon className={classes.icon__error} />
           </Grid>
         ) : (
           <Grid item style={{ width: "10%" }}>
-            <LockIcon style={{ color: "#f26a6a" }} />
+            <LockIcon className={classes.icon} />
           </Grid>
         )}
 
@@ -172,6 +177,7 @@ const LoginForm = () => {
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
+                      className={classes.visibilityIcon}
                     >
                       {values.showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
@@ -187,10 +193,10 @@ const LoginForm = () => {
       ) : null}
       <StyledButton
         type="submit"
-        disabled={state.isAuthorizing}
+        disabled={authState.isAuthorizing}
         variant="contained"
       >
-        {state.isAuthorizing && !isRequestError ? <ButtonSpinner /> : "Login"}
+        {authState.isAuthorizing ? <ButtonSpinner /> : "Login"}
       </StyledButton>
     </form>
   );

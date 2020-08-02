@@ -1,14 +1,59 @@
 $googleColor: #db4437;
 $facebookColor: #3b5998;
 
-$playlistBgColor: #252525;
-$playlistFontColor: #717175;
-$playlistAddColor: #0883fc;
-$playlistAddColorClick: #006fe8;
-
 //Web color palette
 $mainBGColor: #252525;
-$activeColor: #25b55c;
-$accentColor: #6174a2;
+// $mainBGColor: #2c2c3c;
+$activeColor: darkorange;
+$accentColor: #0883fc;
 $fontMainColor: #fff;
-$fontGreyColor: #717175;
+$amountBGLighten: 5%;
+$amountBGDarken: 50%;
+$amounFontLighten: 10%;
+$amounFontDarken: 70%;
+
+$radius: 3px;
+
+$webPaletteColors: (
+  "active": darkorange,
+  "accent": #0883fc,
+  // "success": #44bba4,
+    "success": #2bbf93,
+  "background": #252525,
+  "fonts": #fff,
+  "error": #ed4337,
+);
+
+$headerHeight: 100px;
+
+%darkenFont {
+  color: darken($color: $fontMainColor, $amount: $amounFontDarken);
+}
+%lightenFont {
+  color: lighten($color: $fontMainColor, $amount: $amounFontLighten);
+}
+%darkenBackground {
+  background-color: darken($color: $mainBGColor, $amount: $amountBGDarken);
+}
+%lightenBackground {
+  background-color: lighten($color: $mainBGColor, $amount: $amountBGLighten);
+}
+
+%mozillaScrollBar {
+  scrollbar-width: thin;
+  scrollbar-color: #dbdbdb #444;
+}
+
+%chromeSafariScrollBar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #444;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 6px;
+    border: 3px solid #dbdbdb;
+  }
+}

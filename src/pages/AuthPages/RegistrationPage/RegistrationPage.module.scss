@@ -1,33 +1,58 @@
 @import "../../../styles/_vars.scss";
-.socialSignup {
+.registration {
   display: grid;
-  justify-items: center;
-  gap: 10px;
-  margin: 20px 0 40px 0;
-  .socialIcons {
-    display: grid;
-    grid-auto-flow: column;
-    gap: 12px;
-    svg {
-      color: white;
-      padding: 10px;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  gap: 5%;
+  .singUpFormContainer {
+    width: 80%;
+    max-width: 500px;
+    place-self: center;
+    .socialSignup {
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      margin: 20px 0 40px 0;
+      .socialIcons {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 12px;
+        svg {
+          color: white;
+          padding: 10px;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+        }
+        .facebookIcon {
+          background-color: $facebookColor;
+        }
+        .googleIcon {
+          background-color: $googleColor;
+        }
+      }
     }
-    .facebookIcon {
-      background-color: $facebookColor;
-    }
-    .googleIcon {
-      background-color: $googleColor;
+    .login {
+      display: grid;
+      justify-content: center;
+      a {
+        margin-left: 5px;
+        color: inherit;
+      }
     }
   }
-}
-.login {
-  display: grid;
-  justify-content: center;
-  a {
-    margin-left: 5px;
-    color: inherit;
+  .signUpImage {
+    place-self: center;
+    width: 100%;
+    max-width: 600px;
+    min-width: 400px;
+    height: 500px;
+    overflow: hidden;
+    filter: drop-shadow(0 0 0.75rem crimson);
+    border-radius: 17% 25% 12% 25% / 20% 34% 16% 37%;
+    img {
+      transform: translateY(-65px);
+      width: 100%;
+    }
   }
 }

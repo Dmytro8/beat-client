@@ -1,7 +1,7 @@
 import React from "react";
 import { ACCESS_TOKEN } from "../../constants";
-import { Redirect } from "react-router-dom";
-import { MAIN, LOGIN } from "../../constants/route.urls";
+import { HOME, SETTINGS } from "../../constants/route.urls";
+import { MotionRedirect } from "../common/MountTransition";
 
 const getUrlParameter = (name, props) => {
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -20,27 +20,8 @@ const OAuth2RedirectHandler = (props) => {
 
   if (token) {
     localStorage.setItem(ACCESS_TOKEN, token);
-    return (
-      <Redirect
-        to={{
-          pathname: MAIN,
-          state: { from: props.location },
-        }}
-      />
-    );
-  } else {
-    return (
-      <Redirect
-        to={{
-          pathname: LOGIN,
-          state: {
-            from: props.location,
-            error: error,
-          },
-        }}
-      />
-    );
   }
+  return <MotionRedirect to={HOME} />;
 };
 
 export default OAuth2RedirectHandler;
