@@ -140,6 +140,7 @@ const PlayerPanel = () => {
                   dispatchPlayer(setSeekPosition(newValue));
                 }}
                 onMouseUp={handleProgressChange}
+                onTouchStart={handleProgressChange}
               />
               <span className={classes.progressTime}>
                 {formatTime(
