@@ -49,14 +49,18 @@ const PlayerPanel = () => {
   const [position, setPosition] = useState(0);
   const [isVolumeControlOpen, setIsVolumeControlOpen] = useState(false);
   const { width, height } = useViewport();
+  const [onHandleSeek, setOnHandleSeek] = useState(false);
+  const [bgUrl, setBgUrl] = useState("");
 
   useEffect(() => {
+    setBgUrl(`${AUDIO_IMAGE_SERVER}/200x200/${statePlayer.currentSong.uuid}`);
     if (width > 600) {
       setIsVolumeControlOpen(false);
     }
     setPosition(statePlayer.seekPosition);
     return () => {};
-  }, [statePlayer.seekPosition, width]);
+  }, [statePlayer.seekPosition, width, statePlayer.currentSong]);
+
   const handleVolumeChange = (event, newValue) => {
     dispatchPlayer(setVolume(newValue));
     let volume = (newValue / 100).toFixed(1);
@@ -107,14 +111,6 @@ const PlayerPanel = () => {
     } else return <VolumeUpIcon onClick={toggleVolumeControl} />;
   };
 
-  const playerBgStyle = {
-    backgroundImage: `url(${AUDIO_IMAGE_SERVER}/1000x1000/${statePlayer.currentSong.uuid})`,
-    backgroundPosition: `center`,
-    backgroundRepeat: `no-repeat`,
-    backgroundSize: `cover`,
-    backgroundСolor: `rgba(255,255,255,0.72)`,
-  };
-
   return (
     <motion.div
       variants={playerMotionVariants}
@@ -124,7 +120,13 @@ const PlayerPanel = () => {
       className={classes.audioPlayer}
     >
       <div className={classes.audioPlayerRelative}>
-        <div className={classes.audioPlayerBg} style={playerBgStyle}></div>
+        <div className={classes.audioPlayerBg}>
+          <img
+            className={classes.audioPlayerBg__img}
+            src={bgUrl}
+            alt={statePlayer.currentSong.name}
+          />
+        </div>
         <div className={classes.audioPlayerContent}>
           <div className={classes.audioPlayerWrapper}>
             <div className={classes.playerProgress}>
@@ -140,7 +142,7 @@ const PlayerPanel = () => {
                   dispatchPlayer(setSeekPosition(newValue));
                 }}
                 onMouseUp={handleProgressChange}
-                onTouchStart={handleProgressChange}
+                onTouchEnd={handleProgressChange}
               />
               <span className={classes.progressTime}>
                 {formatTime(

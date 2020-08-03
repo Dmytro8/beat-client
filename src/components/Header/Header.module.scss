@@ -4,6 +4,7 @@
 .header {
   display: grid;
   position: relative;
+  border-bottom: 0.1px solid rgba(255, 255, 255, 0.05);
   .link {
     display: flex;
     color: #fff;

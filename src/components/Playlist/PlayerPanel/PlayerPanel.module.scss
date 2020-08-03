@@ -30,6 +30,11 @@
     filter: blur(12px);
     opacity: 0.8;
     position: absolute;
+    display: grid;
+    &__img {
+      object-fit: cover;
+      justify-self: stretch;
+    }
   }
   .audioPlayerContent {
     position: absolute;
