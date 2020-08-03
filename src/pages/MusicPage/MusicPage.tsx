@@ -48,9 +48,8 @@ const MusicPage = () => {
         <div className={classes.playlistWrapper}>
           <Fragment>
             <div className={classes.songImageWrapper}>
-              {(Object.keys(statePlayer.currentSong).length === 0 &&
-                statePlayer.currentSong.constructor === Object) ||
-              statePlayer.currentSong.imageType === null ? (
+              {Object.keys(statePlayer.currentSong).length === 0 &&
+              statePlayer.currentSong.constructor === Object ? (
                 <Fragment>
                   <div className={classes.musicNoteIcon}>
                     <MusicNote />
