@@ -59,7 +59,6 @@ export const UploadPage = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         setUploadProgress(0);
       })
       .catch((error) => {

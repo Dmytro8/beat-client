@@ -63,8 +63,6 @@ const SmallDeviceRoutes: FC<RouteType> = ({ routeProps }) => {
 };
 
 export const AccountRoutes = (props: any) => {
-  console.log(props);
-
   return (
     <Media
       queries={{

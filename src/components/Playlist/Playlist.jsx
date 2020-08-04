@@ -35,7 +35,6 @@ const Playlist = () => {
   const [isSongDrawerOpen, setIsSongDrawerOpen] = useState(false);
   const [drawerSong, setDrawerSong] = useState({});
   useEffect(() => {
-    console.log(statePlayer);
     const items = statePlayer.songs.map((song) => {
       dispatchPlayer(
         setHowl(
