@@ -25,8 +25,10 @@ import ShuffleIcon from "@material-ui/icons/Shuffle";
 const PlayerControls = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [isSongEnded, setIsSongEnded] = useState(false);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
   useEffect(() => {
+    setCurrentSongIndex(statePlayer.songs.indexOf(statePlayer.currentSong));
     if (statePlayer.isRepeat) {
       statePlayer.currentSong.howl.loop(true);
     } else {
@@ -50,7 +52,7 @@ const PlayerControls = () => {
   }, [
     statePlayer.isRepeat,
     dispatchPlayer,
-    statePlayer.currentSong.howl,
+    statePlayer.currentSong,
     statePlayer.isRandom,
     isSongEnded,
   ]);
@@ -107,44 +109,37 @@ const PlayerControls = () => {
 
   const generateRandomIndex = () => {
     let num = Math.floor(Math.random() * statePlayer.songs.length);
-    return num === statePlayer.currentSong.id - 1 ? generateRandomIndex() : num;
+    return num === currentSongIndex ? generateRandomIndex() : num;
   };
 
-  const setSongToPlay = (songId) => {
-    statePlayer.songs[statePlayer.currentSong.id - 1].howl.stop();
+  const setSongToPlay = (songIndex) => {
+    statePlayer.songs[currentSongIndex].howl.stop();
     dispatchPlayer(togglePaused(false));
     dispatchPlayer(setSeekPosition(0));
     if (statePlayer.isRandom) {
       prepareSongToPlay(statePlayer.randomIndex);
     } else {
-      prepareSongToPlay(songId);
+      prepareSongToPlay(songIndex);
     }
   };
 
-  const prepareSongToPlay = (songId) => {
-    statePlayer.songs[songId].howl.volume(
+  const prepareSongToPlay = (songIndex) => {
+    statePlayer.songs[songIndex].howl.volume(
       (statePlayer.volume / 100).toFixed(1)
     );
-    statePlayer.songs[songId].howl.play();
+    statePlayer.songs[songIndex].howl.play();
   };
 
   const skipToNextSong = () => {
-    if (
-      statePlayer.currentSong.id >= 1 &&
-      statePlayer.currentSong.id < statePlayer.songs.length
-    ) {
-      setSongToPlay(statePlayer.currentSong.id);
+    if (currentSongIndex < statePlayer.songs.length - 1) {
+      setSongToPlay(currentSongIndex + 1);
     } else {
-      setSongToPlay(statePlayer.currentSong.id - statePlayer.songs.length);
+      setSongToPlay(0);
     }
   };
   const skipToPreviousSong = () => {
-    if (
-      (statePlayer.currentSong.id > 1 &&
-        statePlayer.currentSong.id < statePlayer.songs.length) ||
-      statePlayer.currentSong.id === statePlayer.songs.length
-    ) {
-      setSongToPlay(statePlayer.currentSong.id - 2);
+    if (currentSongIndex > 0) {
+      setSongToPlay(currentSongIndex - 1);
     } else {
       setSongToPlay(statePlayer.songs.length - 1);
     }
