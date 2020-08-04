@@ -59,6 +59,11 @@
     svg:nth-child(1) {
       display: none;
     }
+    .playIcon {
+      svg {
+        display: block;
+      }
+    }
     svg:nth-child(5) {
       display: none;
     }
