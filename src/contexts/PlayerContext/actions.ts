@@ -9,6 +9,7 @@ import {
   SET_VOLUME,
   SET_SEEK_POSITION,
   SET_RANDOM_INDEX,
+  TOOGLE_LOADING,
 } from "./types";
 
 export type SongType = {
@@ -139,6 +140,17 @@ export const togglePaused = (boolean: boolean): TogglePausedActionType => {
   };
 };
 
+type ToggleLoadingActionType = {
+  type: typeof TOOGLE_LOADING;
+  data: boolean;
+};
+export const toggleLoading = (boolean: boolean): ToggleLoadingActionType => {
+  return {
+    type: TOOGLE_LOADING,
+    data: boolean,
+  };
+};
+
 export type PlayerActionTypes =
   | SetPlaylistActionType
   | SetCurrentSongActionType
@@ -146,6 +158,7 @@ export type PlayerActionTypes =
   | ToggleRepeatActionType
   | TogglePlayingActionType
   | TogglePausedActionType
+  | ToggleLoadingActionType
   | SetVolumeActionType
   | SetHowlActionType
   | SetSeekPositionActioType

@@ -8,6 +8,7 @@ import {
   toggleRandom,
   setSeekPosition,
   setRandomIndex,
+  toggleLoading,
 } from "../../../contexts/PlayerContext/actions";
 
 import KeyboardEventHandler from "react-keyboard-event-handler";
@@ -21,6 +22,7 @@ import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import ShuffleIcon from "@material-ui/icons/Shuffle";
+import { Spinner } from "../../common/FormControls";
 
 const PlayerControls = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
@@ -51,9 +53,9 @@ const PlayerControls = () => {
     return () => {};
   }, [
     statePlayer.isRepeat,
-    dispatchPlayer,
     statePlayer.currentSong,
     statePlayer.isRandom,
+    statePlayer.isLoading,
     isSongEnded,
   ]);
 
@@ -131,6 +133,7 @@ const PlayerControls = () => {
   };
 
   const skipToNextSong = () => {
+    dispatchPlayer(toggleLoading(true));
     if (currentSongIndex < statePlayer.songs.length - 1) {
       setSongToPlay(currentSongIndex + 1);
     } else {
@@ -138,6 +141,7 @@ const PlayerControls = () => {
     }
   };
   const skipToPreviousSong = () => {
+    dispatchPlayer(toggleLoading(true));
     if (currentSongIndex > 0) {
       setSongToPlay(currentSongIndex - 1);
     } else {
@@ -156,11 +160,19 @@ const PlayerControls = () => {
         <RepeatIcon onClick={() => dispatchPlayer(toggleRepeat(true))} />
       )}
       <SkipPreviousIcon onClick={skipToPreviousSong} />
-      {statePlayer.isPaused ? (
-        <PlayCircleFilledIcon onClick={playCurrentSong} />
-      ) : (
-        <PauseCircleFilledIcon onClick={pauseCurrentSong} />
-      )}
+      <div className={classes.playIcon}>
+        {statePlayer.isLoading ? (
+          <div className={classes.spinner}>
+            <Spinner />
+          </div>
+        ) : null}
+        {statePlayer.isPaused ? (
+          <PlayCircleFilledIcon onClick={playCurrentSong} />
+        ) : (
+          <PauseCircleFilledIcon onClick={pauseCurrentSong} />
+        )}
+      </div>
+
       <KeyboardEventHandler
         handleKeys={["space"]}
         onKeyEvent={(key, e) => togglePlay()}

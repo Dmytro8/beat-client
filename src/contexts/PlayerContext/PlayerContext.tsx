@@ -14,6 +14,7 @@ import {
   PlayerProviderPropsType,
   PlayerStateType,
   SongType,
+  TOOGLE_LOADING,
 } from "./types";
 import { PlayerActionTypes } from "./actions";
 
@@ -24,6 +25,7 @@ let initialState = {
   isRandom: false,
   isPlaying: false,
   isPaused: false,
+  isLoading: false,
   volume: 50,
   isMuted: false,
   randomIndex: 0,
@@ -96,6 +98,11 @@ const playerReducer = (
       return {
         ...state,
         isPaused: action.data,
+      };
+    case TOOGLE_LOADING:
+      return {
+        ...state,
+        isLoading: action.data,
       };
     default:
       return state;

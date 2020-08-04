@@ -1,5 +1,14 @@
 @import "../../../styles/_vars.scss";
 // $songActiveAmount: 5%;
+%iconPosition {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-content: center;
+}
 
 .songRow {
   &:nth-last-child(1) {
@@ -74,14 +83,19 @@
         // width: 100%;
         height: 100%;
       }
+      .songSpinner {
+        @extend %iconPosition;
+        display: grid;
+        svg {
+          font-size: 30px;
+          color: map-get($map: $webPaletteColors, $key: "accent");
+        }
+        &:hover {
+          cursor: pointer;
+        }
+      }
       .hoverPlay {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        display: none;
-        justify-content: center;
-        align-content: center;
+        @extend %iconPosition;
         svg {
           font-size: 30px;
           color: map-get($map: $webPaletteColors, $key: "accent");

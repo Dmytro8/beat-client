@@ -8,6 +8,7 @@ export const TOGGLE_RANDOM = "TOGGLE_RANDOM";
 export const TOGGLE_REPEAT = "TOGGLE_OPTIONS";
 export const TOGGLE_PLAYING = "TOGGLE_PLAYING";
 export const TOGGLE_PAUSED = "TOGGLE_PAUSED";
+export const TOOGLE_LOADING = "TOGGLE_LOADING";
 
 export type PlayerProviderPropsType = { children: React.ReactNode };
 
@@ -27,6 +28,7 @@ export type PlayerStateType = {
   isRandom: boolean;
   isPlaying: boolean;
   isPaused: boolean;
+  isLoading: boolean;
   volume: number;
   isMuted: boolean;
   randomIndex: number;

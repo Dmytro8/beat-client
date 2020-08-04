@@ -31,6 +31,7 @@ import {
   setHowl,
   togglePaused,
   setSeekPosition,
+  toggleLoading,
 } from "../../../contexts/PlayerContext/actions";
 import {
   addSongToBasket,
@@ -39,7 +40,7 @@ import {
 import { AUDIO_IMAGE_SERVER } from "../../../constants";
 import { LikeButon } from "../../common/PlaylistControls";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
-import { IconButton } from "@material-ui/core";
+import { IconButton, duration } from "@material-ui/core";
 import { useViewport } from "../../../hooks/useViewport";
 
 const Song = ({ songId, toggleDrawer }) => {
@@ -50,6 +51,7 @@ const Song = ({ songId, toggleDrawer }) => {
   const [isSongLoading, setIsSongLoading] = useState(false);
   const [openModalSign, setOpenModalSign] = useState(false);
   const [song, setSong] = useState("");
+  const [songDuration, setSongDuration] = useState(0);
   const { width, height } = useViewport();
 
   const handleOpenSign = (state) => {
@@ -58,15 +60,41 @@ const Song = ({ songId, toggleDrawer }) => {
 
   useEffect(() => {
     return () => {};
-  }, [statePlayer.isRepeat, width]);
+  }, [statePlayer.isRepeat, width, songDuration]);
 
   const getSong = (songId) => {
     return statePlayer.songs.filter((song) => song.id === songId)[0];
   };
 
+  // const getDuration = (id) => {
+  //   let mp3file = `https://beatstart.herokuapp.com/audio/stream/${id}`;
+  //   // Create an instance of AudioContext
+  //   let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  //   let duration = 0;
+  //   // Open an Http Request
+  //   var request = new XMLHttpRequest();
+  //   request.open("GET", mp3file, true);
+  //   request.responseType = "arraybuffer";
+  //   request.onload = function () {
+  //     audioContext.decodeAudioData(request.response, function (buffer) {
+  //       // Obtain the duration in seconds of the audio file (with milliseconds as well, a float value)
+  //       duration = buffer.duration;
+  //       console.log("The duration of the song is of: " + duration + " seconds");
+  //       // Alternatively, just display the integer value with
+  //       // parseInt(duration)
+  //       // 12 seconds
+  //     });
+  //   };
+
+  //   // Start Request
+  //   request.send();
+  //   return duration;
+  // };
+
   useEffect(() => {
     const thisSong = getSong(songId);
     setSong(thisSong);
+    thisSong.howl.load();
     let progress;
     thisSong.howl.on("play", function () {
       dispatchPlayer(setCurrentSong(thisSong));
@@ -85,22 +113,13 @@ const Song = ({ songId, toggleDrawer }) => {
     thisSong.howl.on("end", function () {
       clearInterval(progress);
     });
-    // onload: () => {
-    //   setIsSongLoading(false);
-    // },
-    // onloaderror: () => {
-    //   // setSongFetchingError(true);
-    // },
-    // onplay: (songId) => {
-    //   dispatchPlayer(setCurrentSong(song.id));
-    //   dispatchPlayer(togglePlaying(true));
-    // },
-    // onpause: (songId) => {},
-    // setSong(songHowl);
-    // Fires when the sound finishes playing.
-    return () => {
-      // dispatchPlayer(togglePlaying(false));
-    };
+    thisSong.howl.on("load", function () {
+      // console.log(`${thisSong} had loaded`);
+      dispatchPlayer(toggleLoading(false));
+      setIsSongLoading(false);
+      setSongDuration(thisSong.howl.duration());
+    });
+    return () => {};
   }, []);
 
   const handlePlayActionLargeDevices = () => {
@@ -136,9 +155,9 @@ const Song = ({ songId, toggleDrawer }) => {
       dispatchPlayer(togglePaused(false));
       dispatchPlayer(setSeekPosition(0));
       song.howl.volume((statePlayer.volume / 100).toFixed(1));
-      song.howl.play();
-
       setIsSongLoading(true);
+      dispatchPlayer(toggleLoading(true));
+      song.howl.play();
     }
   };
 
@@ -171,31 +190,29 @@ const Song = ({ songId, toggleDrawer }) => {
             onClick={handlePlayActionSmallDevices}
           >
             <div className={classes.songImage}>
-              {/* {song.imageType === null ? (
-                <div className={classes.musicNoteIcon}>
-                  <MusicNoteIcon />
-                </div>
-              ) : ( */}
               <LazyLoadImage
                 alt={song.name}
                 effect="blur"
                 src={`${AUDIO_IMAGE_SERVER}/200x200/${song.uuid}`}
                 height={"100%"}
               />
-              {/* )} */}
-              {/* ///// */}
-              {/* Here can be the problem  */}
-              {/* ///// */}
+              <div className={classes.songSpinner}>
+                {isSongLoading ? <Spinner /> : null}
+              </div>
               <div
                 className={classes.hoverPlay}
                 onClick={handlePlayActionLargeDevices}
               >
-                {statePlayer.currentSong.id === song.id &&
-                statePlayer.isPlaying &&
-                !statePlayer.isPaused ? (
-                  <PauseIcon />
-                ) : (
-                  <PlayArrowIcon />
+                {isSongLoading ? null : (
+                  <>
+                    {statePlayer.currentSong.id === song.id &&
+                    statePlayer.isPlaying &&
+                    !statePlayer.isPaused ? (
+                      <PauseIcon />
+                    ) : (
+                      <PlayArrowIcon />
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -209,7 +226,7 @@ const Song = ({ songId, toggleDrawer }) => {
           <td className={classes.artistCell}>
             <a href={`#${song.artist}`}>{song.artist}</a>
           </td>
-          <td className={classes.timeCell}>{song.length}</td>
+          <td className={classes.timeCell}>{songDuration}</td>
           <td className={classes.likeSongCell}>
             <AddIcon />
           </td>
