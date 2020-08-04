@@ -133,7 +133,7 @@ const PlayerControls = () => {
   };
 
   const skipToNextSong = () => {
-    dispatchPlayer(toggleLoading(true));
+    // dispatchPlayer(toggleLoading(true));
     if (currentSongIndex < statePlayer.songs.length - 1) {
       setSongToPlay(currentSongIndex + 1);
     } else {
@@ -141,7 +141,7 @@ const PlayerControls = () => {
     }
   };
   const skipToPreviousSong = () => {
-    dispatchPlayer(toggleLoading(true));
+    // dispatchPlayer(toggleLoading(true));
     if (currentSongIndex > 0) {
       setSongToPlay(currentSongIndex - 1);
     } else {

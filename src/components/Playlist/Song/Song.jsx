@@ -100,6 +100,8 @@ const Song = ({ songId, toggleDrawer }) => {
       dispatchPlayer(setCurrentSong(thisSong));
       dispatchPlayer(togglePlaying(true));
       dispatchPlayer(togglePaused(false));
+      setIsSongLoading(false);
+      dispatchPlayer(toggleLoading(false));
       progress = setInterval(() => {
         dispatchPlayer(setSeekPosition(thisSong.howl.seek()));
       }, 300);
@@ -114,11 +116,13 @@ const Song = ({ songId, toggleDrawer }) => {
       clearInterval(progress);
     });
     thisSong.howl.on("load", function () {
-      // console.log(`${thisSong} had loaded`);
-      dispatchPlayer(toggleLoading(false));
-      setIsSongLoading(false);
       setSongDuration(thisSong.howl.duration());
     });
+    thisSong.howl.once("load", function () {
+      dispatchPlayer(toggleLoading(true));
+      setIsSongLoading(true);
+    });
+
     return () => {};
   }, []);
 
@@ -135,29 +139,32 @@ const Song = ({ songId, toggleDrawer }) => {
   };
 
   const togglePlay = () => {
-    if (
-      statePlayer.currentSong.id === songId &&
-      statePlayer.isPlaying &&
-      !statePlayer.isPaused
-    ) {
-      dispatchPlayer(togglePaused(true));
-      song.howl.pause();
-    } else if (
-      statePlayer.currentSong.id === songId &&
-      statePlayer.isPlaying &&
-      statePlayer.isPaused
-    ) {
-      dispatchPlayer(togglePaused(false));
-      song.howl.volume((statePlayer.volume / 100).toFixed(1));
-      song.howl.play();
-    } else {
-      Howler.stop();
-      dispatchPlayer(togglePaused(false));
-      dispatchPlayer(setSeekPosition(0));
-      song.howl.volume((statePlayer.volume / 100).toFixed(1));
-      setIsSongLoading(true);
-      dispatchPlayer(toggleLoading(true));
-      song.howl.play();
+    dispatchPlayer(toggleLoading(false));
+    if (!isSongLoading) {
+      if (
+        statePlayer.currentSong.id === songId &&
+        statePlayer.isPlaying &&
+        !statePlayer.isPaused
+      ) {
+        dispatchPlayer(togglePaused(true));
+        song.howl.pause();
+      } else if (
+        statePlayer.currentSong.id === songId &&
+        statePlayer.isPlaying &&
+        statePlayer.isPaused
+      ) {
+        dispatchPlayer(togglePaused(false));
+        song.howl.volume((statePlayer.volume / 100).toFixed(1));
+        song.howl.play();
+      } else {
+        Howler.stop();
+        dispatchPlayer(togglePaused(false));
+        dispatchPlayer(setSeekPosition(0));
+        song.howl.volume((statePlayer.volume / 100).toFixed(1));
+        song.howl.play();
+        setIsSongLoading(true);
+        dispatchPlayer(toggleLoading(true));
+      }
     }
   };
 

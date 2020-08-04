@@ -71,7 +71,8 @@
     }
     .artist {
       font-size: 14px;
-      @extend %darkenFont;
+      text-decoration: underline;
+      // @extend %darkenFont;
       &:hover {
         text-decoration: underline;
       }
