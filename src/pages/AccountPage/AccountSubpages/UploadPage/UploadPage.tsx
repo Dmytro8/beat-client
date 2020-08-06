@@ -14,10 +14,13 @@ import {
   updateToken,
 } from "../../../../contexts/AuthContext/actions";
 
+import { formatTime } from "../../../../components/Playlist/PlayerPanel/PlayerPanel";
+
 export const UploadPage = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
   const [imageFile, setImageFile] = useState<string | File>("");
   const [songFile, setSongFile] = useState<string | File>("");
+  const [songDuration, setSongDuration] = useState("");
 
   const [imageFileName, setImageFileName] = useState("");
   const [songFileName, setSongFileName] = useState<null | string>(null);
@@ -85,6 +88,35 @@ export const UploadPage = () => {
       );
     } else return null;
   };
+  const setDurationFromFile = (file: any) => {
+    // Create instance of FileReader
+    let reader = new FileReader();
+
+    // When the file has been succesfully read
+    reader.onload = function (event) {
+      // Create an instance of AudioContext
+
+      let audioContext = new (window.AudioContext ||
+        // @ts-ignore
+        window.webkitAudioContext)();
+
+      // Asynchronously decode audio file data contained in an ArrayBuffer.
+      // @ts-ignore
+      audioContext.decodeAudioData(event.target.result, function (buffer) {
+        // Obtain the duration in seconds of the audio file (with milliseconds as well, a float value)
+        let duration = buffer.duration;
+        setSongDuration(formatTime(duration));
+      });
+    };
+
+    // In case that the file couldn't be read
+    reader.onerror = function (event) {
+      console.error("An error ocurred reading the file: ", event);
+    };
+
+    // Read file as an ArrayBuffer, important !
+    reader.readAsArrayBuffer(file);
+  };
   return (
     <div className={classes.settings}>
       <h1>Upload subpage</h1>
@@ -143,6 +175,7 @@ export const UploadPage = () => {
             ref={songInputRef}
             accept=".mp3"
             onChange={(e) => {
+              setDurationFromFile(e.target.files![0]);
               setSongFile(e.target.files![0]);
               setSongFileName(e.target.files![0].name);
             }}

@@ -43,12 +43,15 @@ import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { IconButton, duration } from "@material-ui/core";
 import { useViewport } from "../../../hooks/useViewport";
 
+import noSongImage from "../../../static/images/microphone.jpg";
+
 const Song = ({ songId, toggleDrawer }) => {
   const [authState, authDispatch] = useContext(AuthContext);
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [stateProfile, dispatchProfile] = useContext(ProfileContext);
   const [songFetchingError, setSongFetchingError] = useState(false);
   const [isSongLoading, setIsSongLoading] = useState(false);
+  const [isImageExist, setIsImageExist] = useState(true);
   const [openModalSign, setOpenModalSign] = useState(false);
   const [song, setSong] = useState("");
   const [songDuration, setSongDuration] = useState(0);
@@ -93,6 +96,12 @@ const Song = ({ songId, toggleDrawer }) => {
 
   useEffect(() => {
     const thisSong = getSong(songId);
+    // console.log(thisSong);
+    musicAPI
+      .checkIsSongImgExist(`/200x200/${thisSong.uuid}`)
+      .then((response) => {
+        if (response === 500) setIsImageExist(false);
+      });
     setSong(thisSong);
     thisSong.howl.load();
     let progress;
@@ -197,12 +206,17 @@ const Song = ({ songId, toggleDrawer }) => {
             onClick={handlePlayActionSmallDevices}
           >
             <div className={classes.songImage}>
-              <LazyLoadImage
-                alt={song.name}
-                effect="blur"
-                src={`${AUDIO_IMAGE_SERVER}/200x200/${song.uuid}`}
-                height={"100%"}
-              />
+              {isImageExist ? (
+                <LazyLoadImage
+                  alt={song.name}
+                  effect="blur"
+                  src={`${AUDIO_IMAGE_SERVER}/200x200/${song.uuid}`}
+                  height={"100%"}
+                />
+              ) : (
+                <img src={noSongImage} alt={"no album image"} />
+              )}
+
               <div className={classes.songSpinner}>
                 {isSongLoading ? <Spinner /> : null}
               </div>

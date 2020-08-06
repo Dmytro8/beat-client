@@ -44,6 +44,13 @@ const playerMotionVariants = {
   },
 };
 
+export const formatTime = (sec) => {
+  let roundedSec = Math.floor(sec);
+  let minutes = Math.floor(roundedSec / 60) || 0;
+  let seconds = roundedSec - minutes * 60 || 0;
+  return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+};
+
 const PlayerPanel = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [position, setPosition] = useState(0);
@@ -98,11 +105,6 @@ const PlayerPanel = () => {
     statePlayer.currentSong.howl.seek(statePlayer.seekPosition);
   };
 
-  const formatTime = (secs) => {
-    let minutes = Math.floor(secs / 60) || 0;
-    let seconds = secs - minutes * 60 || 0;
-    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  };
   const setVolumeIcon = () => {
     if (statePlayer.volume === 0) {
       return <VolumeOffIcon onClick={toggleVolumeControl} />;
@@ -145,9 +147,7 @@ const PlayerPanel = () => {
                 onTouchEnd={handleProgressChange}
               />
               <span className={classes.progressTime}>
-                {formatTime(
-                  Math.round(statePlayer.currentSong.howl.duration())
-                )}
+                {formatTime(statePlayer.currentSong.howl.duration())}
               </span>
             </div>
             <div className={classes.audioPlayerBottom}>

@@ -27,6 +27,13 @@ const request = async (
 
 export const musicAPI = {
   async getAllSongs() {
-    return await request("get", `/audio/getAllSongs`);
+    return await request("get", `/audio/getAllSongs`)
+      .then((response) => response)
+      .catch((error) => error.response);
+  },
+  async checkIsSongImgExist(imgUrl: string) {
+    return await request("get", `/audio/getAudioImage${imgUrl}`)
+      .then((response) => response)
+      .catch((error) => error.response);
   },
 };

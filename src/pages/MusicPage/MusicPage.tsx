@@ -11,6 +11,8 @@ import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { updateErrorStatus } from "../../contexts/AuthContext/actions";
 import { ERROR } from "../../constants/route.urls";
 import { useHistory } from "react-router-dom";
+import { AUDIO_IMAGE_SERVER } from "../../constants";
+import noSongImage from "../../static/images/microphone.jpg";
 
 const MusicPage = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
@@ -50,13 +52,11 @@ const MusicPage = () => {
             <div className={classes.songImageWrapper}>
               {Object.keys(statePlayer.currentSong).length === 0 &&
               statePlayer.currentSong.constructor === Object ? (
-                <Fragment>
-                  <div className={classes.musicNoteIcon}>
-                    <MusicNote />
-                  </div>
-                </Fragment>
+                <ImgAmbilight src={noSongImage} isLocal={true} />
               ) : (
-                <ImgAmbilight />
+                <ImgAmbilight
+                  src={`${AUDIO_IMAGE_SERVER}/1000x1000/${statePlayer.currentSong.uuid}`}
+                />
               )}
             </div>
             <Playlist />
