@@ -19,6 +19,9 @@ const DropSection = styled.fieldset`
     props.isDragOver ? "#2bbf9388" : "unset"};
   filter: ${(props: DropSectionType) =>
     props.isDragOver ? "drop-shadow(0px 0px 10px #2bbf9388)" : "unset"};
+  legend {
+    margin-left: 13px;
+  }
 `;
 
 const DropBoard = styled.div`
@@ -62,7 +65,6 @@ type DropzoneProps = {
   setDurationFromFile?: (e: any) => void;
   setTargetFile: (e: any) => void;
   setImageSrc?: (e: any) => void;
-  setIsDurationFetching?: (e: any) => void;
   imageSrc?: string | null;
 };
 
@@ -76,7 +78,6 @@ export const Dropzone: FC<DropzoneProps> = ({
   setImageSrc,
   imageSrc,
   generalError,
-  setIsDurationFetching,
   required = false,
 }) => {
   let maxImageSize = 2e6;
@@ -88,12 +89,6 @@ export const Dropzone: FC<DropzoneProps> = ({
 
   const [targetFileType, setTargetFileType] = useState("");
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log(!!imageSrc);
-
-    return () => {};
-  }, []);
 
   const dragOver = (isDragOver: boolean, event: any) => {
     isDragOver ? setTargetDropId(event.target.id) : setTargetDropId("");

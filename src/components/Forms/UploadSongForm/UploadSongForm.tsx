@@ -37,6 +37,17 @@ export const CroppedImageContainer = styled.div`
   }
 `;
 
+type MessagePropsType = {
+  messageType: string;
+};
+
+const Message = styled.p`
+  color: ${(props: MessagePropsType) => {
+    if (props.messageType === "success") return "#2bbf93";
+    else return "#ed4337";
+  }};
+`;
+
 type SubmitButtonProps = {
   isDurationFetching: boolean;
 };
@@ -85,6 +96,11 @@ export const ValidationTextField = withStyles({
   },
 })(TextField);
 
+type MessageType = {
+  type: string;
+  message: string;
+};
+
 export const UploadSongForm = () => {
   const [imageFile, setImageFile] = useState<null | File>(null);
   const [imageSrc, setImageSrc] = useState(null);
@@ -97,7 +113,10 @@ export const UploadSongForm = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [errorCode, setErrorCode] = useState(null);
   const [generalError, setGeneralError] = useState<string | null>(null);
-  const [isDurationFetching, setIsDurationFetching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [uploadingMessage, setUploadingMessage] = useState<null | MessageType>(
+    null
+  );
 
   const imageInputRef = useRef(null);
   const songInputRef = useRef(null);
@@ -138,28 +157,32 @@ export const UploadSongForm = () => {
           }
         )
       );
+      setIsLoading(true);
+      let response = await axios
+        .post(`https://beatstart.herokuapp.com/audio/uploadAudio`, formData, {
+          onUploadProgress: (progressEvent) => {
+            setUploadProgress(
+              Math.round((progressEvent.loaded / progressEvent.total) * 100)
+            );
+          },
+        })
+        .then((response) => response)
+        .catch((error) => error.response);
+      setIsLoading(false);
 
-      // await axios
-      //   .post(`https://beatstart.herokuapp.com/audio/uploadAudio`, formData, {
-      //     onUploadProgress: (progressEvent) => {
-      //       setUploadProgress(
-      //         Math.round((progressEvent.loaded / progressEvent.total) * 100)
-      //       );
-      //       // console.log(
-      //       //   "Uploaded progress: " +
-      //       //     Math.round((progressEvent.loaded / progressEvent.total) * 100) +
-      //       //     "%"
-      //       // );
-      //     },
-      //   })
-      //   .then((res) => {
-      //     setUploadProgress(0);
-      //   })
-      //   .catch((error) => {
-      //     if (error.response) {
-      //       setErrorCode(error.response.status);
-      //     }
-      //   });
+      if (response.status !== 200) {
+        setErrorCode(response.status);
+        setUploadingMessage({
+          type: "error",
+          message: response.data.message,
+        });
+      } else if (response.status === 200) {
+        setUploadProgress(0);
+        setUploadingMessage({
+          type: "success",
+          message: response.data.message,
+        });
+      }
     }
   };
 
@@ -168,17 +191,6 @@ export const UploadSongForm = () => {
     if (uploadProgress > 0 && uploadProgress < 100) {
       return <ProgressBar progressValue={uploadProgress} />;
     }
-  };
-  const renderMessage = () => {
-    if (errorCode !== 200 && uploadProgress === 100) {
-      return <p className={classes.errorMessage}>Failed upload process</p>;
-    } else if (errorCode === 200 && uploadProgress === 100) {
-      return (
-        <p className={classes.successMessage}>
-          Your song was successfully uploaded
-        </p>
-      );
-    } else return null;
   };
 
   async function getDurationFromFile(file: File) {
@@ -203,10 +215,10 @@ export const UploadSongForm = () => {
   }
 
   const setDurationFromFile = async (file: any) => {
-    setIsDurationFetching(true);
+    setIsLoading(true);
     let duration = await getDurationFromFile(file);
     setSongDuration(duration);
-    setIsDurationFetching(false);
+    setIsLoading(false);
   };
 
   return (
@@ -272,7 +284,6 @@ export const UploadSongForm = () => {
         setDurationFromFile={setDurationFromFile}
         setTargetFile={setSongFileTemplate}
         generalError={generalError}
-        setIsDurationFetching={setIsDurationFetching}
         required={false}
       />
       <Dropzone
@@ -283,20 +294,22 @@ export const UploadSongForm = () => {
         setDurationFromFile={setDurationFromFile}
         setTargetFile={setSongFile}
         generalError={generalError}
-        setIsDurationFetching={setIsDurationFetching}
         required
       />
       <SubmitButton
         type="submit"
-        // className={classes.uploadSong__submitButton}
-        isDurationFetching={isDurationFetching}
+        isDurationFetching={isLoading}
         onClick={checkEmptyFiles}
-        disabled={isDurationFetching ? true : false}
+        disabled={isLoading ? true : false}
       >
         Submit
       </SubmitButton>
       {renderProgress()}
-      {renderMessage()}
+      {uploadingMessage ? (
+        <Message messageType={uploadingMessage.type}>
+          {uploadingMessage.message}
+        </Message>
+      ) : null}
     </form>
   );
 };
