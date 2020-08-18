@@ -3,23 +3,32 @@ import { RouteProps } from "react-router-dom";
 import { AccountLayout } from "../layouts/AccountLayout";
 import { PrivateRoute } from "./CustomRoutes/PrivateRoute";
 import { AnimatedRoutes } from "./common/AnimatedRoutes";
-import { ACCOUNT, GENERAL, UPLOAD_SONG } from "../constants/route.urls";
+import {
+  ACCOUNT,
+  GENERAL,
+  UPLOAD_SONG,
+  SONGS,
+  FAVOURITE_SONGS,
+} from "../constants/route.urls";
 import { GeneralPage } from "../pages/AccountPage/AccountSubpages/GeneralPage";
 import { UploadPage } from "../pages/AccountPage/AccountSubpages/UploadPage";
 import { Switch } from "react-router-dom";
 import { MotionRedirect } from "../components/common/MountTransition";
 import { AdminRoute } from "./CustomRoutes/AdminRoute";
+import { UserRoute } from "./CustomRoutes/UserRoute";
 // @ts-ignore
 import Media from "react-media";
 import { AccountPage } from "../pages/AccountPage";
+import { SongsPage } from "../pages/AccountPage/AccountSubpages/SongsPage";
+import { FavouritePage } from "../pages/AccountPage/AccountSubpages/FavouritePage";
 
 type RouteType = {
   routeProps: RouteProps;
 };
 
-const LargeDeviceRoutes: FC<RouteType> = ({ routeProps }) => {
+const LargeDeviceRoutes: FC<RouteType> = () => {
   return (
-    <Switch location={routeProps.location}>
+    <>
       <PrivateRoute
         path={`${ACCOUNT}`}
         exact
@@ -32,13 +41,12 @@ const LargeDeviceRoutes: FC<RouteType> = ({ routeProps }) => {
         component={UploadPage}
         isTransition
       />
-      <MotionRedirect to={`${ACCOUNT}`} />
-    </Switch>
+    </>
   );
 };
-const SmallDeviceRoutes: FC<RouteType> = ({ routeProps }) => {
+const SmallDeviceRoutes: FC<RouteType> = () => {
   return (
-    <Switch location={routeProps.location}>
+    <>
       <PrivateRoute
         path={`${ACCOUNT}`}
         exact
@@ -51,12 +59,32 @@ const SmallDeviceRoutes: FC<RouteType> = ({ routeProps }) => {
         component={GeneralPage}
         isTransition
       />
+    </>
+  );
+};
+
+const Routes: FC<RouteType> = (routeProps: any) => {
+  return (
+    <Switch location={routeProps.location}>
+      <UserRoute
+        path={`${ACCOUNT}${FAVOURITE_SONGS}`}
+        exact
+        component={FavouritePage}
+        isTransition
+      />
       <AdminRoute
         path={`${ACCOUNT}${UPLOAD_SONG}`}
         exact
         component={UploadPage}
         isTransition
       />
+      <AdminRoute
+        path={`${ACCOUNT}${SONGS}`}
+        exact
+        component={SongsPage}
+        isTransition
+      />
+      {routeProps.children}
       <MotionRedirect to={`${ACCOUNT}`} />
     </Switch>
   );
@@ -72,10 +100,16 @@ export const AccountRoutes = (props: any) => {
     >
       {(matches: any) => (
         <Fragment>
-          {matches.small && <SmallDeviceRoutes routeProps={props} />}
+          {matches.small && (
+            <Routes routeProps={props}>
+              <SmallDeviceRoutes routeProps={props} />
+            </Routes>
+          )}
           {matches.large && (
             <AccountLayout>
-              <LargeDeviceRoutes routeProps={props} />
+              <Routes routeProps={props}>
+                <LargeDeviceRoutes routeProps={props} />
+              </Routes>
             </AccountLayout>
           )}
         </Fragment>

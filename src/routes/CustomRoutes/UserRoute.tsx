@@ -13,7 +13,7 @@ type Props = {
   isTransition: boolean;
 };
 
-export const AdminRoute: FC<Props> = ({
+export const UserRoute: FC<Props> = ({
   exact = false,
   path = HOME,
   component: Component,
@@ -22,10 +22,11 @@ export const AdminRoute: FC<Props> = ({
 }) => {
   const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
-  // console.log(profileState.profile.accountRole?.role !== "ROLE_ADMIN");
+  console.log(profileState.profile.accountRole?.role !== "ROLE_USER");
+
   if (
     !isAuthenticated ||
-    profileState.profile.accountRole?.role !== "ROLE_ADMIN"
+    profileState.profile.accountRole?.role !== "ROLE_USER"
   ) {
     return <MotionRedirect to={`${ACCOUNT}`} />;
   } else if (isTransition) {
