@@ -36,4 +36,12 @@ export const musicAPI = {
       .then((response) => response)
       .catch((error) => error.response);
   },
+  async deleteSong() {
+    return await request("get", "/audio/delete")
+      .then((response) => response)
+      .catch((error) => error.response);
+  },
+  // method with song like functionality
+  // audio Id -> user -> audio Id - PUT
+  // audio Id -> user -> audio Id - DELETE
 };

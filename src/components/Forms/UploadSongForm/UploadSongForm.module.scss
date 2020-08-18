@@ -1,0 +1,30 @@
+@import "../../../styles/_vars.scss";
+.uploadSong {
+  &__textField {
+    margin: 5px 0;
+    width: 100%;
+    background-color: transparent;
+  }
+  &__submitButton {
+    background-color: map-get($map: $webPaletteColors, $key: "success");
+    width: 100%;
+    margin: 10px 0;
+  }
+  &__iconWrapper {
+    svg {
+      position: absolute;
+      color: darkorange;
+      background: white;
+      border-radius: 50%;
+      top: 10px;
+      cursor: pointer;
+      right: 10px;
+    }
+  }
+}
+.errorMessage {
+  color: map-get($map: $webPaletteColors, $key: "error");
+}
+.successMessage {
+  color: map-get($map: $webPaletteColors, $key: "success");
+}

@@ -247,7 +247,7 @@ const Song = ({ songId, toggleDrawer }) => {
           <td className={classes.artistCell}>
             <a href={`#${song.artist}`}>{song.artist}</a>
           </td>
-          <td className={classes.timeCell}>{songDuration}</td>
+          <td className={classes.timeCell}>{song.length ?? 0}</td>
           <td className={classes.likeSongCell}>
             <AddIcon />
           </td>

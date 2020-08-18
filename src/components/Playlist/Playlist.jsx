@@ -25,7 +25,6 @@ const playlistMotionVariants = {
   exit: {
     x: -100,
     opacity: 0,
-    transition: { type: "spring", delay: 0.2 },
   },
 };
 
@@ -43,6 +42,16 @@ const Playlist = () => {
             html5: true,
             buffer: true,
             preload: true,
+            // xhr: {
+            //   headers: {
+            //     // Authorization: "Bearer:" + 0,
+            //     "Accept-Ranges": "bytes",
+            //     Range: "bytes 0-200000",
+            //     // "Content-Range": "bytes=0-100/9777108",
+            //     // Range: "bytes 0-100",
+            //   },
+            //   withCredentials: true,
+            // },
           }),
           song.id
         )

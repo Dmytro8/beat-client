@@ -1,0 +1,21 @@
+@import "../../../../styles/_vars.scss";
+
+.general {
+  button {
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .logout {
+    &__button {
+      background-color: map-get($map: $webPaletteColors, $key: "error");
+      box-shadow: 0 0 1px 1px map-get($map: $webPaletteColors, $key: "error");
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        box-shadow: 0 0 10px 1px map-get($map: $webPaletteColors, $key: "error");
+      }
+    }
+  }
+}

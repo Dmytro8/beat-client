@@ -65,10 +65,6 @@ const LoginForm = () => {
         setIsRequestError(false);
         authDispatch(updateAuthentication(!!response.data.accessToken));
         authDispatch(updateToken(response.data.accessToken));
-        // setTimeout(async () => {
-        //   await dispatch(updateAuthentication(!!response.data.accessToken));
-        //   await dispatch(updateToken(response.data.accessToken));
-        // }, 5000);
         authDispatch(updateAuthorizing(false));
         authDispatch(updateModalSignStatus(false));
         history.replace(HOME);

@@ -8,7 +8,7 @@ const getUrlParameter = (name, props) => {
   let regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
 
   let results = regex.exec(props.location.search);
-
+  console.log(results);
   return results === null
     ? ""
     : decodeURIComponent(results[1].replace(/\+/g, " "));
@@ -17,7 +17,6 @@ const getUrlParameter = (name, props) => {
 const OAuth2RedirectHandler = (props) => {
   const token = getUrlParameter("token", props);
   const error = getUrlParameter("error", props);
-
   if (token) {
     localStorage.setItem(ACCESS_TOKEN, token);
   }

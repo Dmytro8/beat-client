@@ -48,3 +48,8 @@ export const SignupSchema = yup.object().shape({
       "password must match at least one lowercase, one uppercase and one numeric character"
     ),
 });
+
+export const UploadSongSchema = yup.object().shape({
+  title: yup.string().required("Song title is a required field"),
+  artist: yup.string().required("Song artist is a required field"),
+});
