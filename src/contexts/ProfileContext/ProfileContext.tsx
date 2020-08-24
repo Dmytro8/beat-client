@@ -5,10 +5,13 @@ import {
   ADD_SONG_TO_FAVOURITE,
   REMOVE_SONG_FROM_FAVOURITE,
   REMOVE_SONG_FROM_BASKET,
-  ProfileProviderPropsType,
+  SET_FAVOURITE_SONGS,
+} from "./actions";
+import {
   ProfileStateType,
+  ProfileActionTypes,
+  ProfileProviderPropsType,
 } from "./types";
-import { ProfileActionTypes } from "./actions";
 
 let initialState = {
   profile: {
@@ -29,9 +32,25 @@ const profileReducer = (
     case SET_PROFILE: {
       return { ...state, profile: action.profile };
     }
+    case SET_FAVOURITE_SONGS: {
+      return {
+        ...state,
+        favouriteSongs: action.songs,
+      };
+    }
     case ADD_SONG_TO_FAVOURITE: {
       return {
         ...state,
+        // favouriteSongs:
+        //   state.favouriteSongs.indexOf(action.songId) !== -1
+        //     ? [...state.favouriteSongs, action.songId]
+        //     : state.favouriteSongs,
+        // // if(state.favouriteSongs.indexOf(action.songId) !== 0){
+        // //   return
+        // // }
+        // // state.favouriteSongs.filter(
+        // //   (songId) => songId !== action.songId
+        // // ),
         favouriteSongs: [...state.favouriteSongs, action.songId],
       };
     }

@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 
-import { SongType } from "../../contexts/PlayerContext/actions";
 import { AUDIO_IMAGE_SERVER } from "../../constants";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 
 import classes from "./SongCard.module.scss";
+import { SongType } from "../../contexts/PlayerContext/types";
 
 interface SongCardInputProps {
   song: SongType;
@@ -15,7 +15,6 @@ const SongCard: FC<SongCardInputProps> = ({ song }) => {
   const playSong = (song: SongType) => {
     song.howl.play();
   };
-  // const pauseSong =
 
   return (
     <div className={classes.card}>

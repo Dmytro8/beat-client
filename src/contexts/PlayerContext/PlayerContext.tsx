@@ -1,22 +1,23 @@
 import React, { useReducer, createContext, FC } from "react";
-
+import {
+  PlayerStateType,
+  PlayerActionTypes,
+  SongType,
+  PlayerProviderPropsType,
+} from "./types";
 import {
   SET_PLAYLIST,
+  SET_HOWL,
+  SET_RANDOM_INDEX,
+  SET_VOLUME,
+  SET_SEEK_POSITION,
   SET_CURRENT_SONG,
   TOGGLE_RANDOM,
   TOGGLE_REPEAT,
   TOGGLE_PLAYING,
-  SET_HOWL,
   TOGGLE_PAUSED,
-  SET_VOLUME,
-  SET_SEEK_POSITION,
-  SET_RANDOM_INDEX,
-  PlayerProviderPropsType,
-  PlayerStateType,
-  SongType,
   TOOGLE_LOADING,
-} from "./types";
-import { PlayerActionTypes } from "./actions";
+} from "./actions";
 
 let initialState = {
   currentSong: {},

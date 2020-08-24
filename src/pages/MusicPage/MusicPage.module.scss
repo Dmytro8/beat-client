@@ -1,7 +1,8 @@
 .playlistWrapper {
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 2fr minmax(650px, 3fr);
+  grid-template-columns: 2fr minmax(450px, 3fr);
+  // grid-template-columns: minmax(200px, 400px) minmax(450px, 3fr);
   grid-gap: 60px;
   gap: 60px;
   padding-top: 30px;

@@ -17,6 +17,7 @@ const request = async (
       method: method,
       url: `${API_BASE_URL_GLOBAL}${urlEndPoint}`,
       data: data,
+      headers: customHeaders,
     });
     return response.data;
   } catch (error) {
@@ -41,7 +42,42 @@ export const musicAPI = {
       .then((response) => response)
       .catch((error) => error.response);
   },
-  // method with song like functionality
-  // audio Id -> user -> audio Id - PUT
-  // audio Id -> user -> audio Id - DELETE
+
+  // get method to receive favourite songs
+  async getFavourites(accessToken: string) {
+    return await request(
+      "get",
+      "/like/getFavourites",
+      {},
+      { Authorization: "Bearer " + accessToken }
+    )
+      .then((response) => response)
+      .catch((error) => error.response);
+  },
+
+  // put method to set like
+  async setLike(accountId: number, songId: number, accessToken: string) {
+    let payload = {
+      account: { idaccount: String(accountId) },
+      audio: { id: String(songId) },
+    };
+    return await request("put", "/like/setLike", payload, {
+      Authorization: "Bearer " + accessToken,
+    })
+      .then((response) => response)
+      .catch((error) => error.response);
+  },
+
+  // delete method to delete like
+  async unlike(accountId: number, songId: number, accessToken: string) {
+    let payload = {
+      account: { idaccount: String(accountId) },
+      audio: { id: String(songId) },
+    };
+    return await request("delete", "/like/unlike", payload, {
+      Authorization: "Bearer " + accessToken,
+    })
+      .then((response) => response)
+      .catch((error) => error.response);
+  },
 };

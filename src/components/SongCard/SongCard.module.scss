@@ -43,11 +43,10 @@ $card-description: 100px;
   }
   .cardDescription {
     position: absolute;
-    backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.5);
     display: grid;
     align-self: end;
-    transform: translateY(50px);
+    transform: translateY(65px);
     border-radius: 0 0 5px 5px;
     color: white;
     width: 100%;

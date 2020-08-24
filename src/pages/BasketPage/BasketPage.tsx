@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 import { PlayerContext } from "../../contexts/PlayerContext/PlayerContext";
-import { SongType } from "../../contexts/PlayerContext/actions";
 
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
@@ -12,6 +11,7 @@ import { SongCard } from "../../components/SongCard";
 import { AUDIO_IMAGE_SERVER } from "../../constants";
 import { blueGrey } from "@material-ui/core/colors";
 import { removeSongFromBasket } from "../../contexts/ProfileContext/actions";
+import { SongType } from "../../contexts/PlayerContext/types";
 
 const BasketPage = () => {
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
@@ -36,13 +36,9 @@ const BasketPage = () => {
         </div>
       );
     } else
-      return (
-        <div className={classes.items}>
-          {basketItems.map((song: SongType) => {
-            return <SongCard song={song} />;
-          })}
-        </div>
-      );
+      return basketItems.map((song: SongType) => {
+        return <SongCard song={song} />;
+      });
   };
   const renderSummaryItems = () => {
     if (basketItems.length === 0) {

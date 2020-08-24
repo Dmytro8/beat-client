@@ -1,0 +1,106 @@
+import React from "react";
+
+import classes from "./MusicBar.module.scss";
+
+export const MusicBar = () => {
+  return (
+    <div className={classes.musicBarContainer}>
+      <svg className={classes.musicBar}>
+        <g>
+          <title>Music bar</title>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(0,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(25,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(50,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(75,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(100,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(125,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(150,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(175,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(200,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(225,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(250,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(275,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+          <rect
+            className={classes.musicBar__rect}
+            transform="translate(300,0)"
+            y="15"
+            rx="9"
+            ry="9"
+          ></rect>
+        </g>
+      </svg>
+    </div>
+  );
+};

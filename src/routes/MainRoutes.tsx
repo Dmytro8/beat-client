@@ -31,51 +31,46 @@ import { AccountRoutes } from "./AccountRoutes";
 
 export const MainRoutes = () => {
   return (
-    <PlayerProvider>
-      <MainLayout>
-        <AnimatedRoutes exitBeforeEnter>
-          <TransitionRoute path={HOME} exact component={HomePage} />
-          <TransitionRoute path={MUSIC} exact component={MusicPage} />
-          <TransitionRoute path={ERROR} exact component={ErrorPage} />
-          <PrivateRoute
-            path={BASKET}
-            exact
-            component={BasketPage}
-            isTransition
-          />
-          <PrivateRoute path={ABOUT} exact component={AboutPage} isTransition />
-          <PrivateRoute
-            path={`${ACCOUNT}/:subpage?`}
-            exact
-            component={AccountRoutes}
-            isTransition={false}
-          />
-          <RestrictedRoute
-            path={REGISTRATION}
-            exact
-            component={RegistrationPage}
-            isTransition
-          />
-          <RestrictedRoute
-            path={OAUTH2_REDIRECT}
-            exact
-            component={OAuth2RedirectHandler}
-            isTransition={false}
-          />
-          <ConfirmRoute
-            path={CONFIRM_EMAIL}
-            exact
-            component={ConfirmEmailPage}
-            isConfirmed={false}
-          />
-          <ConfirmRoute
-            path={CONFIRMED_EMAIL}
-            exact
-            component={ConfirmedEmailPage}
-            isConfirmed
-          />
-        </AnimatedRoutes>
-      </MainLayout>
-    </PlayerProvider>
+    // <PlayerProvider>
+    <MainLayout>
+      <AnimatedRoutes exitBeforeEnter>
+        <TransitionRoute path={HOME} exact component={HomePage} />
+        <TransitionRoute path={MUSIC} exact component={MusicPage} />
+        <TransitionRoute path={ERROR} exact component={ErrorPage} />
+        <PrivateRoute path={BASKET} exact component={BasketPage} isTransition />
+        <PrivateRoute path={ABOUT} exact component={AboutPage} isTransition />
+        <PrivateRoute
+          path={`${ACCOUNT}/:subpage?`}
+          exact
+          component={AccountRoutes}
+          isTransition={false}
+        />
+        <RestrictedRoute
+          path={REGISTRATION}
+          exact
+          component={RegistrationPage}
+          isTransition
+        />
+        <RestrictedRoute
+          path={OAUTH2_REDIRECT}
+          exact
+          component={OAuth2RedirectHandler}
+          isTransition={false}
+        />
+        <ConfirmRoute
+          path={CONFIRM_EMAIL}
+          exact
+          component={ConfirmEmailPage}
+          isConfirmed={false}
+        />
+        <ConfirmRoute
+          path={CONFIRMED_EMAIL}
+          exact
+          component={ConfirmedEmailPage}
+          isConfirmed
+        />
+      </AnimatedRoutes>
+    </MainLayout>
+    // </PlayerProvider>
   );
 };

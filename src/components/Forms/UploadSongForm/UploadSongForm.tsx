@@ -150,6 +150,7 @@ export const UploadSongForm = () => {
               name: title,
               artist: artist,
               length: songDuration,
+              price: 0,
             }),
           ],
           {

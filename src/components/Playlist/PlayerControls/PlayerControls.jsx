@@ -22,7 +22,7 @@ import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import ShuffleIcon from "@material-ui/icons/Shuffle";
-import { Spinner } from "../../common/FormControls";
+import { Spinner } from "../../common/Spinner";
 
 const PlayerControls = () => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);

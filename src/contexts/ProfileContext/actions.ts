@@ -1,20 +1,21 @@
 import {
-  SET_PROFILE,
-  ADD_SONG_TO_FAVOURITE,
-  REMOVE_SONG_FROM_FAVOURITE,
-  ADD_SONG_TO_BASKET,
-  REMOVE_SONG_FROM_BASKET,
+  ProfileType,
+  SetProfileActionType,
+  AddSongToFavouriteActionType,
+  RemoveSongFromFavouriteActionType,
+  AddSongToBasketActionType,
+  RemoveSongFromBasketActionType,
+  SetFavouriteSongsActionType,
 } from "./types";
+export const SET_PROFILE = "SET_PROFILE";
 
-type ProfileType = {
-  email: string;
-  username: string;
-};
+export const SET_FAVOURITE_SONGS = "SET_FAVOURITE_SONGS";
+export const ADD_SONG_TO_FAVOURITE = "ADD_SONG_TO_FAVOURITE";
+export const REMOVE_SONG_FROM_FAVOURITE = "REMOVE_SONG_FROM_FAVOURITE";
 
-type SetProfileActionType = {
-  type: typeof SET_PROFILE;
-  profile: ProfileType;
-};
+export const ADD_SONG_TO_BASKET = "ADD_SONG_TO_BASKET";
+export const REMOVE_SONG_FROM_BASKET = "REMOVE_SONG_FROM_BASKET";
+
 export const setProfile = (profile: ProfileType): SetProfileActionType => {
   return {
     type: SET_PROFILE,
@@ -22,10 +23,15 @@ export const setProfile = (profile: ProfileType): SetProfileActionType => {
   };
 };
 
-type AddSongToFavouriteActionType = {
-  type: typeof ADD_SONG_TO_FAVOURITE;
-  songId: number;
+export const setFavouriteSongs = (
+  songs: Array<any>
+): SetFavouriteSongsActionType => {
+  return {
+    type: SET_FAVOURITE_SONGS,
+    songs,
+  };
 };
+
 export const addSongToFavourite = (
   songId: number
 ): AddSongToFavouriteActionType => {
@@ -35,10 +41,6 @@ export const addSongToFavourite = (
   };
 };
 
-type RemoveSongFromFavouriteActionType = {
-  type: typeof REMOVE_SONG_FROM_FAVOURITE;
-  songId: number;
-};
 export const removeSongFromFavourite = (
   songId: number
 ): RemoveSongFromFavouriteActionType => {
@@ -48,10 +50,6 @@ export const removeSongFromFavourite = (
   };
 };
 
-type AddSongToBasketActionType = {
-  type: typeof ADD_SONG_TO_BASKET;
-  songId: number;
-};
 export const addSongToBasket = (songId: number): AddSongToBasketActionType => {
   return {
     type: ADD_SONG_TO_BASKET,
@@ -59,10 +57,6 @@ export const addSongToBasket = (songId: number): AddSongToBasketActionType => {
   };
 };
 
-type RemoveSongFromBasketActionType = {
-  type: typeof REMOVE_SONG_FROM_BASKET;
-  songId: number;
-};
 export const removeSongFromBasket = (
   songId: number
 ): RemoveSongFromBasketActionType => {
@@ -71,10 +65,3 @@ export const removeSongFromBasket = (
     songId,
   };
 };
-
-export type ProfileActionTypes =
-  | SetProfileActionType
-  | AddSongToFavouriteActionType
-  | RemoveSongFromFavouriteActionType
-  | AddSongToBasketActionType
-  | RemoveSongFromBasketActionType;

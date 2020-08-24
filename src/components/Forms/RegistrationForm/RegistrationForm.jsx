@@ -9,11 +9,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Grid from "@material-ui/core/Grid";
 
-import {
-  StyledTextField,
-  StyledButton,
-  ButtonSpinner,
-} from "../../common/FormControls";
+import { StyledTextField, StyledButton } from "../../common/FormControls";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import {
   updateAuthentication,
@@ -24,6 +20,7 @@ import { CONFIRM_EMAIL } from "../../../constants/route.urls";
 import { useHistory } from "react-router-dom";
 
 import { useQuery } from "react-query";
+import { ButtonSpinner } from "../../common/Spinner";
 
 const RegistrationForm = () => {
   const history = useHistory();

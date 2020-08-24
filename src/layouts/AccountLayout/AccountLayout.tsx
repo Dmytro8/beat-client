@@ -2,7 +2,6 @@ import React, { FC, useContext, useState, useEffect } from "react";
 import { NavLink, RouteComponentProps } from "react-router-dom";
 import { GENERAL, UPLOAD_SONG } from "../../constants/route.urls";
 import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
-import { Spinner } from "../../components/common/FormControls";
 import { AccountPage } from "../../pages/AccountPage";
 import styled from "styled-components";
 

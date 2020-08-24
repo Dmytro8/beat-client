@@ -15,7 +15,7 @@
   @extend %chromeSafariScrollBar;
   height: 60vh;
   display: grid;
-  justify-content: end;
+  // justify-content: end;
   overflow: auto;
   overflow-x: hidden;
   table {
@@ -23,9 +23,10 @@
     border-collapse: collapse;
     min-width: 100%;
     color: white;
-    grid-template-columns:
-      minmax(100px, 1fr) minmax(150px, 3fr) minmax(150px, 3fr)
-      minmax(50px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+    // grid-template-columns:
+    //   minmax(100px, 1fr) minmax(150px, 3fr)
+    //   minmax(50px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+    grid-template-columns: 100px minmax(150px, auto) 80px 50px 100px;
   }
   thead,
   tbody,
@@ -49,7 +50,7 @@
     top: 0;
     z-index: 2;
     font-size: 15px;
-    padding: 0 0 0 15px;
+    padding: 10px 0 10px 15px;
     &:last-child {
       border: 0;
     }
@@ -58,6 +59,7 @@
   td {
     @extend %table-cell;
     display: grid;
+    background-color: map-get($map: $webPaletteColors, $key: "background");
     align-content: center;
     padding: auto {
       top: 10px;

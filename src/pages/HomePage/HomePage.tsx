@@ -6,6 +6,11 @@ import { ProfileContext } from "../../contexts/ProfileContext/ProfileContext";
 import { authAPI } from "../../api/authApi";
 import { ACCESS_TOKEN } from "../../constants";
 import { setProfile } from "../../contexts/ProfileContext/actions";
+import { PlayerContext } from "../../contexts/PlayerContext/PlayerContext";
+import { musicAPI } from "../../api/musicAPI";
+import { setPlaylist } from "../../contexts/PlayerContext/actions";
+import { updateErrorStatus } from "../../contexts/AuthContext/actions";
+import { MusicBar } from "../../components/MusicBar";
 
 const HomePage = () => {
   const [authState, authDispatch]: any = useContext(AuthContext);
@@ -16,8 +21,10 @@ const HomePage = () => {
   }, [profileState, authState]);
 
   return (
-    <div className={classes.homePage}>
-      <h1>Home page</h1>
+    <div className={classes.home}>
+      <h1 className={classes.home__title}>Beat</h1>
+      <h3 className={classes.home__text}>We speed up your heartbeat</h3>
+      <MusicBar />
       {authState.isAuthenticated ? (
         <div>
           <h3>

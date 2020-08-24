@@ -1,3 +1,24 @@
-.homePage {
+@import "../../styles/_vars.scss";
+.home {
   // height: 200%;
+  margin-top: 70px;
+  &__title {
+    font-size: 6rem;
+    color: map-get($map: $webPaletteColors, $key: "active");
+    filter: drop-shadow(
+      0 0 2px map-get($map: $webPaletteColors, $key: "active")
+    );
+    letter-spacing: 2px;
+  }
+  &__text {
+    font-size: calc(2em + 2vmin);
+    color: white;
+    letter-spacing: 1px;
+    filter: drop-shadow(
+      0 0 2px map-get($map: $webPaletteColors, $key: "active")
+    );
+  }
+}
+
+@media (max-width: 500px) {
 }

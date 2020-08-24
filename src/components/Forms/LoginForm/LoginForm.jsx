@@ -12,11 +12,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import { LoginSchema } from "../FormValidation";
 import { authAPI } from "../../../api/authApi";
-import {
-  StyledTextField,
-  ButtonSpinner,
-  StyledButton,
-} from "../../common/FormControls";
+import { StyledTextField, StyledButton } from "../../common/FormControls";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import {
   updateAuthentication,
@@ -26,6 +22,7 @@ import {
 } from "../../../contexts/AuthContext/actions";
 import { useHistory } from "react-router";
 import { HOME } from "../../../constants/route.urls";
+import { ButtonSpinner } from "../../common/Spinner";
 
 const LoginForm = () => {
   const history = useHistory();

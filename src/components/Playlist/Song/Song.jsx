@@ -13,9 +13,10 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import { Howl, Howler } from "howler";
-import { Spinner } from "../../common/FormControls";
 import { musicAPI } from "../../../api/musicAPI";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { NotLoggingModal } from "../../common/Modals/NotLoggingModal";
@@ -36,14 +37,19 @@ import {
 import {
   addSongToBasket,
   removeSongFromBasket,
+  addSongToFavourite,
+  removeSongFromFavourite,
 } from "../../../contexts/ProfileContext/actions";
-import { AUDIO_IMAGE_SERVER } from "../../../constants";
+import { AUDIO_IMAGE_SERVER, ACCESS_TOKEN } from "../../../constants";
 import { LikeButon } from "../../common/PlaylistControls";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { IconButton, duration } from "@material-ui/core";
 import { useViewport } from "../../../hooks/useViewport";
 
 import noSongImage from "../../../static/images/microphone.jpg";
+
+import { motion } from "framer-motion";
+import { Spinner } from "../../common/Spinner";
 
 const Song = ({ songId, toggleDrawer }) => {
   const [authState, authDispatch] = useContext(AuthContext);
@@ -57,6 +63,8 @@ const Song = ({ songId, toggleDrawer }) => {
   const [songDuration, setSongDuration] = useState(0);
   const { width, height } = useViewport();
 
+  const [isLiked, setIsLiked] = useState(false);
+
   const handleOpenSign = (state) => {
     setOpenModalSign(state);
   };
@@ -69,40 +77,17 @@ const Song = ({ songId, toggleDrawer }) => {
     return statePlayer.songs.filter((song) => song.id === songId)[0];
   };
 
-  // const getDuration = (id) => {
-  //   let mp3file = `https://beatstart.herokuapp.com/audio/stream/${id}`;
-  //   // Create an instance of AudioContext
-  //   let audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  //   let duration = 0;
-  //   // Open an Http Request
-  //   var request = new XMLHttpRequest();
-  //   request.open("GET", mp3file, true);
-  //   request.responseType = "arraybuffer";
-  //   request.onload = function () {
-  //     audioContext.decodeAudioData(request.response, function (buffer) {
-  //       // Obtain the duration in seconds of the audio file (with milliseconds as well, a float value)
-  //       duration = buffer.duration;
-  //       console.log("The duration of the song is of: " + duration + " seconds");
-  //       // Alternatively, just display the integer value with
-  //       // parseInt(duration)
-  //       // 12 seconds
-  //     });
-  //   };
-
-  //   // Start Request
-  //   request.send();
-  //   return duration;
-  // };
-
   useEffect(() => {
     const thisSong = getSong(songId);
-    // console.log(thisSong);
-    musicAPI
-      .checkIsSongImgExist(`/200x200/${thisSong.uuid}`)
-      .then((response) => {
-        if (response === 500) setIsImageExist(false);
-      });
+    // musicAPI
+    //   .checkIsSongImgExist(`/200x200/${thisSong.uuid}`)
+    //   .then((response) => {
+    //     if (response === 500) setIsImageExist(false);
+    //   });
     setSong(thisSong);
+    setIsLiked(
+      stateProfile.favouriteSongs.indexOf(thisSong.id) !== -1 ? true : false
+    );
     thisSong.howl.load();
     let progress;
     thisSong.howl.on("play", function () {
@@ -133,7 +118,7 @@ const Song = ({ songId, toggleDrawer }) => {
     });
 
     return () => {};
-  }, []);
+  }, [stateProfile.favouriteSongs]);
 
   const handlePlayActionLargeDevices = () => {
     if (width >= 1024) {
@@ -189,6 +174,15 @@ const Song = ({ songId, toggleDrawer }) => {
     }
   };
 
+  const setLike = async (accountId, songId, token) => {
+    let response = await musicAPI.setLike(accountId, songId, token);
+    dispatchProfile(addSongToFavourite(songId));
+  };
+  const unlike = async (accountId, songId, token) => {
+    let response = await musicAPI.unlike(accountId, songId, token);
+    dispatchProfile(removeSongFromFavourite(songId));
+  };
+
   return (
     <Fragment>
       {songFetchingError ? (
@@ -212,6 +206,8 @@ const Song = ({ songId, toggleDrawer }) => {
                   effect="blur"
                   src={`${AUDIO_IMAGE_SERVER}/200x200/${song.uuid}`}
                   height={"100%"}
+                  width={"100%"}
+                  placeholderSrc={noSongImage}
                 />
               ) : (
                 <img src={noSongImage} alt={"no album image"} />
@@ -242,14 +238,44 @@ const Song = ({ songId, toggleDrawer }) => {
             className={classes.songName}
             onClick={handlePlayActionSmallDevices}
           >
-            {song.name}
+            <div>
+              <p>{song.name}</p>
+              <p>{song.artist}</p>
+            </div>
           </td>
-          <td className={classes.artistCell}>
+          {/* <td className={classes.artistCell}>
             <a href={`#${song.artist}`}>{song.artist}</a>
-          </td>
+          </td> */}
           <td className={classes.timeCell}>{song.length ?? 0}</td>
           <td className={classes.likeSongCell}>
-            <AddIcon />
+            <motion.div
+              whileTap={{ scale: 1.2 }}
+              className={classes.favouriteIcon}
+              onClick={() => setIsLiked((prevState) => !prevState)}
+            >
+              {isLiked ? (
+                <FavoriteIcon
+                  className={classes.liked}
+                  onClick={() => {
+                    unlike(
+                      stateProfile.profile.idaccount,
+                      song.id,
+                      localStorage.getItem(ACCESS_TOKEN)
+                    );
+                  }}
+                />
+              ) : (
+                <FavoriteBorderIcon
+                  onClick={() => {
+                    setLike(
+                      stateProfile.profile.idaccount,
+                      song.id,
+                      localStorage.getItem(ACCESS_TOKEN)
+                    );
+                  }}
+                />
+              )}
+            </motion.div>
           </td>
           <td className={classes.priceCell}>
             {authState.isAuthenticated ? (
@@ -278,7 +304,7 @@ const Song = ({ songId, toggleDrawer }) => {
                     }
                     onClick={() => addToBasket(songId)}
                   >
-                    $27
+                    ${song.price ?? 0}
                   </Button>
                 )}
               </Fragment>
@@ -290,7 +316,7 @@ const Song = ({ songId, toggleDrawer }) => {
                 }
                 onClick={() => handleOpenSign(true)}
               >
-                $27
+                ${song.price ?? 0}
               </Button>
             )}
           </td>

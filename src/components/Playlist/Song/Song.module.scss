@@ -109,9 +109,45 @@
       }
     }
   }
+  .songName {
+    & > :nth-child(1) {
+      display: grid;
+      grid-auto-flow: row;
+      justify-items: start;
+    }
+
+    p {
+      display: inline-block;
+      &:nth-child(1) {
+        font-size: 16px;
+        color: white;
+      }
+      &:nth-child(2) {
+        font-size: 13px;
+        color: darken($color: $fontMainColor, $amount: $amounFontDarken);
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .timeCell {
+    // display: grid;
+    // justify-content: center;
+  }
   .likeSongCell {
     display: grid;
     justify-content: center;
+    .favouriteIcon {
+      display: grid;
+      .liked {
+        color: map-get($map: $webPaletteColors, $key: "active");
+        filter: drop-shadow(
+          0 0 0.1rem map-get($map: $webPaletteColors, $key: "active")
+        );
+      }
+    }
   }
   .artistCell {
     a {

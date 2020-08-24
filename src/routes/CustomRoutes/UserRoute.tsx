@@ -22,7 +22,6 @@ export const UserRoute: FC<Props> = ({
 }) => {
   const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN);
   const [profileState, profileDispatch]: any = useContext(ProfileContext);
-  console.log(profileState.profile.accountRole?.role !== "ROLE_USER");
 
   if (
     !isAuthenticated ||
