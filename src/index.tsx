@@ -8,7 +8,6 @@ import { AuthProvider } from "./contexts/AuthContext/AuthContext";
 import { PlayerProvider } from "./contexts/PlayerContext/PlayerContext";
 
 ReactDOM.render(
-  // <React.StrictMode>
   <AuthProvider>
     <ProfileProvider>
       <PlayerProvider>
@@ -16,6 +15,5 @@ ReactDOM.render(
       </PlayerProvider>
     </ProfileProvider>
   </AuthProvider>,
-  // </React.StrictMode>,
   document.getElementById("root")
 );

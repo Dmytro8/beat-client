@@ -24,7 +24,7 @@ import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import ShuffleIcon from "@material-ui/icons/Shuffle";
 import { Spinner } from "../../common/Spinner";
 
-const PlayerControls = () => {
+const PlayerControls = ({ isFavourites }) => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [isSongEnded, setIsSongEnded] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
@@ -151,15 +151,20 @@ const PlayerControls = () => {
 
   return (
     <div className={classes.controls}>
-      {statePlayer.isRepeat ? (
-        <RepeatOneIcon
-          className={classes.activeRepeatIcon}
-          onClick={() => dispatchPlayer(toggleRepeat(false))}
-        />
-      ) : (
-        <RepeatIcon onClick={() => dispatchPlayer(toggleRepeat(true))} />
+      {isFavourites ? null : (
+        <>
+          {statePlayer.isRepeat ? (
+            <RepeatOneIcon
+              className={classes.activeRepeatIcon}
+              onClick={() => dispatchPlayer(toggleRepeat(false))}
+            />
+          ) : (
+            <RepeatIcon onClick={() => dispatchPlayer(toggleRepeat(true))} />
+          )}
+          <SkipPreviousIcon onClick={skipToPreviousSong} />
+        </>
       )}
-      <SkipPreviousIcon onClick={skipToPreviousSong} />
+
       <div className={classes.playIcon}>
         {statePlayer.isLoading ? (
           <div className={classes.spinner}>
@@ -185,16 +190,21 @@ const PlayerControls = () => {
         handleKeys={["right"]}
         onKeyEvent={(key, e) => fastForwardSong()}
       />
-      <SkipNextIcon onClick={skipToNextSong} />
-      {statePlayer.isRandom ? (
-        <ShuffleIcon
-          className={classes.shuffleIcon}
-          onClick={() => dispatchPlayer(toggleRandom(false))}
-        />
-      ) : (
-        <FormatListNumberedIcon
-          onClick={() => dispatchPlayer(toggleRandom(true))}
-        />
+
+      {isFavourites ? null : (
+        <>
+          <SkipNextIcon onClick={skipToNextSong} />
+          {statePlayer.isRandom ? (
+            <ShuffleIcon
+              className={classes.shuffleIcon}
+              onClick={() => dispatchPlayer(toggleRandom(false))}
+            />
+          ) : (
+            <FormatListNumberedIcon
+              onClick={() => dispatchPlayer(toggleRandom(true))}
+            />
+          )}
+        </>
       )}
     </div>
   );

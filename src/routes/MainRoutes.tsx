@@ -31,7 +31,6 @@ import { AccountRoutes } from "./AccountRoutes";
 
 export const MainRoutes = () => {
   return (
-    // <PlayerProvider>
     <MainLayout>
       <AnimatedRoutes exitBeforeEnter>
         <TransitionRoute path={HOME} exact component={HomePage} />
@@ -71,6 +70,5 @@ export const MainRoutes = () => {
         />
       </AnimatedRoutes>
     </MainLayout>
-    // </PlayerProvider>
   );
 };

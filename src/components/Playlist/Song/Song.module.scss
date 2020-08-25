@@ -204,7 +204,11 @@
     @extend %lightenBackground;
   }
   .songName {
-    color: map-get($map: $webPaletteColors, $key: "accent") !important;
+    p {
+      &:nth-child(1) {
+        color: map-get($map: $webPaletteColors, $key: "accent") !important;
+      }
+    }
   }
 }
 

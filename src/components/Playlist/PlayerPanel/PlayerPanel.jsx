@@ -26,6 +26,20 @@ import { AUDIO_IMAGE_SERVER } from "../../../constants";
 
 import { motion } from "framer-motion";
 import { useViewport } from "../../../hooks/useViewport";
+import styled from "styled-components";
+
+const AudioPlayerBottom = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: ${(props) => {
+    if (props.isFavourites) return "50px 1fr 1fr";
+    else return "1fr 1fr 1fr";
+  }};
+  align-items: center;
+  & > div:nth-child(1) {
+    justify-self: "start";
+  }
+`;
 
 const playerMotionVariants = {
   hidden: {
@@ -51,7 +65,7 @@ export const formatTime = (sec) => {
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 };
 
-const PlayerPanel = () => {
+const PlayerPanel = ({ isFavourites }) => {
   const [statePlayer, dispatchPlayer] = useContext(PlayerContext);
   const [position, setPosition] = useState(0);
   const [isVolumeControlOpen, setIsVolumeControlOpen] = useState(false);
@@ -150,7 +164,10 @@ const PlayerPanel = () => {
                 {formatTime(statePlayer.currentSong.howl.duration())}
               </span>
             </div>
-            <div className={classes.audioPlayerBottom}>
+            <AudioPlayerBottom isFavourites={isFavourites}>
+              {isFavourites ? (
+                <PlayerControls isFavourites={isFavourites} />
+              ) : null}
               <div className={classes.songTitle}>
                 <span className={classes.title}>
                   {statePlayer.currentSong.name}
@@ -159,36 +176,51 @@ const PlayerPanel = () => {
                   {statePlayer.currentSong.artist}
                 </a>
               </div>
-              <PlayerControls />
-              <div className={classes.rightContols}>
-                {statePlayer.isRandom ? (
-                  <ShuffleIcon
-                    className={classes.shuffleIcon}
-                    onClick={() => dispatchPlayer(toggleRandom(false))}
-                  />
-                ) : (
-                  <FormatListNumberedIcon
-                    className={classes.formatListNumberedIcon}
-                    onClick={() => dispatchPlayer(toggleRandom(true))}
-                  />
-                )}
-                {statePlayer.isRepeat ? (
-                  <RepeatOneIcon
-                    className={classes.activeRepeatIcon}
-                    onClick={() => dispatchPlayer(toggleRepeat(false))}
-                  />
-                ) : (
-                  <RepeatIcon
-                    className={classes.repeatIcon}
-                    onClick={() => dispatchPlayer(toggleRepeat(true))}
-                  />
-                )}
-                <div className={classes.volume}>
-                  {setVolumeIcon()}
-                  {handleVolumeControl()}
+              {isFavourites ? null : (
+                <PlayerControls isFavourites={isFavourites} />
+              )}
+              {isFavourites ? (
+                <div className={classes.rightContols}>
+                  <div className={classes.volumeLeft}>
+                    {setVolumeIcon()}
+                    <PrettoSlider
+                      onChange={handleVolumeChange}
+                      value={statePlayer.volume}
+                      className={classes.volumeLeft__range}
+                    />
+                  </div>
                 </div>
-              </div>
-            </div>
+              ) : (
+                <div className={classes.rightContols}>
+                  {statePlayer.isRandom ? (
+                    <ShuffleIcon
+                      className={classes.shuffleIcon}
+                      onClick={() => dispatchPlayer(toggleRandom(false))}
+                    />
+                  ) : (
+                    <FormatListNumberedIcon
+                      className={classes.formatListNumberedIcon}
+                      onClick={() => dispatchPlayer(toggleRandom(true))}
+                    />
+                  )}
+                  {statePlayer.isRepeat ? (
+                    <RepeatOneIcon
+                      className={classes.activeRepeatIcon}
+                      onClick={() => dispatchPlayer(toggleRepeat(false))}
+                    />
+                  ) : (
+                    <RepeatIcon
+                      className={classes.repeatIcon}
+                      onClick={() => dispatchPlayer(toggleRepeat(true))}
+                    />
+                  )}
+                  <div className={classes.volume}>
+                    {setVolumeIcon()}
+                    {handleVolumeControl()}
+                  </div>
+                </div>
+              )}
+            </AudioPlayerBottom>
           </div>
         </div>
       </div>

@@ -153,7 +153,9 @@ const Playlist: FC<PlaylistTypeProps> = ({ isFavourites }) => {
           <tbody>{songItems}</tbody>
         </table>
       </div>
-      {statePlayer.isPlaying && !isFavourites ? <PlayerPanel /> : null}
+      {statePlayer.isPlaying && !isFavourites ? (
+        <PlayerPanel isFavourites={isFavourites} />
+      ) : null}
       <SwipeableDrawer
         anchor={"bottom"}
         open={isSongDrawerOpen}

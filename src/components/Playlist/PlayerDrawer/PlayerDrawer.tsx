@@ -65,10 +65,8 @@ export const PlayerDrawer: FC<PlayerDrawerPropsType> = ({ drawerSong }) => {
         <div className={classes.songDrawer__imgWrapper}>
           {drawerSong ? (
             <LazyLoadImage
-              // @ts-ignore
               alt={drawerSong.name}
               effect="blur"
-              // @ts-ignore
               src={`${AUDIO_IMAGE_SERVER}/200x200/${drawerSong.uuid}`}
               height={"100%"}
               width={"100%"}

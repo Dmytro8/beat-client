@@ -2,7 +2,7 @@
 .audioPlayer {
   color: white;
   align-self: end;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -14,7 +14,6 @@
     position: relative;
     width: inherit;
     height: inherit;
-    // overflow: hidden;
     &:before,
     &:after {
       content: ".";
@@ -72,7 +71,6 @@
     .artist {
       font-size: 14px;
       text-decoration: underline;
-      // @extend %darkenFont;
       &:hover {
         text-decoration: underline;
       }
@@ -84,6 +82,18 @@
     display: grid;
     grid-auto-flow: column;
     gap: 18px;
+    .volumeLeft {
+      display: grid;
+      grid-auto-flow: column;
+      align-items: center;
+      gap: 5px;
+      & > :nth-child(1) {
+        grid-column-start: 2;
+      }
+      & > :nth-child(2) {
+        width: 70px;
+      }
+    }
     .volume {
       display: grid;
       grid-auto-flow: column;
@@ -98,7 +108,6 @@
   .shuffleIcon {
     display: none;
     color: map-get($map: $webPaletteColors, $key: "accent");
-    // color: $accentColor;
   }
   .formatListNumberedIcon,
   .repeatIcon {
@@ -108,19 +117,23 @@
 
 @media (max-width: 600px) {
   .rightContols {
-    // justify-items: end;
     gap: 7px !important;
+    .volumeLeft {
+      display: grid;
+      grid-auto-flow: column;
+      align-items: center;
+      gap: 5px;
+      & > :nth-child(1) {
+        grid-column-start: 2;
+      }
+      & > :nth-child(2) {
+        width: 70px;
+      }
+    }
     .volume {
       grid-template-columns: 30px !important;
       justify-items: end;
       width: 100% !important;
-      // .volumeWrapper {
-      //   position: absolute;
-      //   background-color: white;
-      //   height: 30px;
-      //   width: 5px;
-      //   border-radius: 2px;
-      // }
       &__range {
         background-color: white;
         position: absolute;

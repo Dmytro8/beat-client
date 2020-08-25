@@ -11,6 +11,7 @@ import { Playlist } from "../../../../components/Playlist";
 import styled from "styled-components";
 import { Spinner } from "../../../../components/common/Spinner";
 import { setPlaylist } from "../../../../contexts/PlayerContext/actions";
+import { PlayerPanel } from "../../../../components/Playlist/PlayerPanel";
 
 const SpinnerContainer = styled.div`
   width: 100%;
@@ -41,16 +42,23 @@ export const FavouritePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className={classes.favouritePage}>
       <AccountHeader title={"Favourite subpage"} />
-      <div>
-        {isLoading ? (
-          <SpinnerContainer>
-            <Spinner />
-          </SpinnerContainer>
-        ) : (
-          <Playlist isFavourites={true} />
-        )}
+      <div className={classes.favouritePage__contentGrid}>
+        <div>
+          {isLoading ? (
+            <SpinnerContainer>
+              <Spinner />
+            </SpinnerContainer>
+          ) : (
+            <Playlist isFavourites={true} />
+          )}
+        </div>
+        <div
+          style={{ position: "relative", height: "100px", overflow: "hidden" }}
+        >
+          {playerState.isPlaying ? <PlayerPanel isFavourites={true} /> : null}
+        </div>
       </div>
     </div>
   );
