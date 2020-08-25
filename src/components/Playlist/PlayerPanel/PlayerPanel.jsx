@@ -37,7 +37,7 @@ const AudioPlayerBottom = styled.div`
   }};
   align-items: center;
   & > div:nth-child(1) {
-    justify-self: "start";
+    justify-self: start;
   }
 `;
 
