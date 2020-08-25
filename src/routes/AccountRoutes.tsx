@@ -94,8 +94,8 @@ export const AccountRoutes = (props: any) => {
   return (
     <Media
       queries={{
-        small: "(max-width: 700px)",
-        large: "(min-width: 701px)",
+        small: "(max-width: 1000px)",
+        large: "(min-width: 1001px)",
       }}
     >
       {(matches: any) => (

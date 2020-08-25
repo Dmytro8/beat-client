@@ -26,7 +26,7 @@ export const PrettoSlider = withStyles({
     borderRadius: 2,
   },
   rail: {
-    color: "#717171",
+    color: "#eee",
     height: 4,
     borderRadius: 2,
   },

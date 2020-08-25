@@ -88,8 +88,8 @@ export const AccountPage: FC<AccountPagePropsType> = ({ children }) => {
         ) : ( */}
         <Media
           queries={{
-            small: "(max-width: 700px)",
-            large: "(min-width: 701px)",
+            small: "(max-width: 1000px)",
+            large: "(min-width: 1001px)",
           }}
         >
           {(matches: any) => (

@@ -71,7 +71,7 @@ $linkHeight: 50px;
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
   .account {
     grid-template-columns: minmax(280px, 400px);
     justify-content: center;
